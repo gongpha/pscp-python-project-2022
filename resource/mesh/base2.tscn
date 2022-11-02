@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://shared/meshes/brush_nkunion/section_nink/base2.mesh" type="ArrayMesh" id=1]
+
+[node name="s" type="Spatial"]
+
+[node name="nink_base2" type="MeshInstance" parent="."]
+transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )
+use_in_baked_light = true
+mesh = ExtResource( 1 )

@@ -1,0 +1,413 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://resource/texture/prototype1.png" type="Texture" id=1]
+[ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
+[ext_resource path="res://scene/sub/clock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scene/sub/lamp.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
+[ext_resource path="res://resource/mesh/bridge1.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://resource/mesh/nink_hanoi.mesh" type="ArrayMesh" id=8]
+[ext_resource path="res://resource/mesh/base2.mesh" type="ArrayMesh" id=9]
+[ext_resource path="res://resource/mesh/nink_domemesh1.mesh" type="ArrayMesh" id=10]
+[ext_resource path="res://resource/font/font_secondary.tres" type="DynamicFont" id=11]
+[ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
+[ext_resource path="res://resource/texture/3d/white_e10_noglow.tres" type="Material" id=13]
+[ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
+
+[sub_resource type="BoxShape" id=20]
+extents = Vector3( 2, 1, 0.5 )
+
+[sub_resource type="BoxShape" id=19]
+extents = Vector3( 32, 1, 32 )
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 1 )
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSky" id=16]
+sky_top_color = Color( 0.0745098, 0.6, 0.666667, 1 )
+sky_horizon_color = Color( 0, 0.254902, 0.615686, 1 )
+ground_bottom_color = Color( 0, 0.254902, 0.615686, 1 )
+ground_horizon_color = Color( 0, 0.254902, 0.615686, 1 )
+sun_latitude = 32.54
+sun_longitude = 57.6
+
+[sub_resource type="Environment" id=26]
+background_mode = 2
+background_sky = SubResource( 16 )
+background_color = Color( 0, 0.670588, 1, 1 )
+ambient_light_sky_contribution = 0.25
+ssao_enabled = true
+ssao_quality = 2
+glow_enabled = true
+glow_bloom = 0.13
+glow_blend_mode = 0
+
+[sub_resource type="BoxShape" id=24]
+extents = Vector3( 1.37343, 1.15453, 0.585009 )
+
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 4.08889, 1.73512, 3.49327 )
+
+[sub_resource type="SphereShape" id=34]
+radius = 0.320368
+
+[sub_resource type="SpatialMaterial" id=27]
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="PlaneMesh" id=28]
+size = Vector2( 2048, 2048 )
+
+[sub_resource type="CubeMesh" id=33]
+size = Vector3( 33.072, 2.703, 19.9 )
+
+[sub_resource type="TextMesh" id=30]
+text = "Do your lovely"
+font = ExtResource( 11 )
+pixel_size = 0.2873
+curve_step = 0.1
+depth = 1.047
+
+[sub_resource type="TextMesh" id=31]
+text = "<e>judge"
+font = ExtResource( 11 )
+pixel_size = 0.5117
+curve_step = 0.1
+depth = 1.047
+
+[sub_resource type="CylinderMesh" id=32]
+height = 81.343
+radial_segments = 4
+
+[node name="worldspawn" type="Spatial"]
+
+[node name="stall" parent="." instance=ExtResource( 6 )]
+
+[node name="clockbarrier" type="StaticBody" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="col" type="CollisionShape" parent="clockbarrier"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2 )
+shape = SubResource( 20 )
+
+[node name="world" type="StaticBody" parent="."]
+
+[node name="floor" type="CollisionShape" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+shape = SubResource( 19 )
+
+[node name="prototype" type="CSGCombiner" parent="."]
+visible = false
+material_override = SubResource( 1 )
+
+[node name="000" type="CSGBox" parent="prototype"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0 )
+width = 4.0
+height = 0.75
+
+[node name="002" type="CSGBox" parent="prototype"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.595739, 4.4063 )
+width = 4.0
+height = 1.0
+
+[node name="001" type="CSGBox" parent="prototype"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4 )
+width = 6.0
+height = 4.0
+depth = 6.0
+
+[node name="002" type="CSGBox" parent="prototype/001"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
+operation = 2
+height = 3.0
+depth = 4.0
+
+[node name="environment" type="WorldEnvironment" parent="."]
+environment = SubResource( 26 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="sun" type="DirectionalLight" parent="."]
+transform = Transform( 0.0539164, 0.75, 0.659237, 0.384005, -0.625, 0.679643, 0.921755, 0.216506, -0.321702, 4.41723, 3.20862, -11.926 )
+light_energy = 0.5
+shadow_enabled = true
+directional_shadow_normal_bias = 0.0
+
+[node name="clock" parent="." instance=ExtResource( 3 )]
+
+[node name="light" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.30844, -1.16102 )
+visible = false
+light_color = Color( 1, 0.996078, 0.623529, 1 )
+shadow_enabled = true
+spot_angle = 36.1
+
+[node name="light2" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.603097, 0.797668, 0, -0.797668, -0.603097, 0, 3.30844, 0.240562 )
+light_color = Color( 1, 0.996078, 0.623529, 1 )
+shadow_enabled = true
+spot_angle = 65.8705
+
+[node name="counter_good" type="Area" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+__meta__ = {
+"_editor_description_": "The best place for placing items on"
+}
+
+[node name="c" type="CollisionShape" parent="counter_good"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.02961, -1.35308 )
+shape = SubResource( 24 )
+
+[node name="counter_bad" type="Area" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+__meta__ = {
+"_editor_description_": "Another area that also allowed to place items on. But wtf why aren't you placing them in the right place ???"
+}
+
+[node name="c" type="CollisionShape" parent="counter_bad"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56488, -5.06782 )
+shape = SubResource( 25 )
+
+[node name="itemspawner" type="Spatial" parent="."]
+
+[node name="0" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12205, 3.08032, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="1" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.296564, 3.08032, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="2" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.451282, 3.08032, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="3" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15418, 3.08032, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="4" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12205, 2.2843, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="5" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.296564, 2.2843, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="6" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.451282, 2.2843, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="7" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15418, 2.2843, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="8" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12205, 1.41678, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="9" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.296564, 1.41678, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="10" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.451282, 1.41678, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="11" type="Area" parent="itemspawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15418, 1.41678, 1.6262 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
+shape = SubResource( 34 )
+
+[node name="deco" type="Spatial" parent="."]
+
+[node name="deco2" type="Spatial" parent="."]
+
+[node name="lamp" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 3.14153, 0, -11.8483 )
+
+[node name="lamp2" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -1.85847, 0, -11.8483 )
+
+[node name="lamp3" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -6.85847, 0, -11.8483 )
+
+[node name="lamp4" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -11.8585, 0, -11.8483 )
+
+[node name="lamp5" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 23.1415, 0, -11.8483 )
+
+[node name="lamp6" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 18.1415, 0, -11.8483 )
+
+[node name="lamp7" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 13.1415, 0, -11.8483 )
+
+[node name="lamp8" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 8.14153, 0, -11.8483 )
+
+[node name="lamp9" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -16.8585, 0, -11.8483 )
+
+[node name="lamp10" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -21.8585, 0, -11.8483 )
+
+[node name="lamp11" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -26.8585, 0, -11.8483 )
+
+[node name="lamp12" parent="deco2" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -31.8585, 0, -11.8483 )
+
+[node name="bridge" type="MeshInstance" parent="."]
+transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, 0, -1.32431, -5.6056 )
+mesh = ExtResource( 7 )
+
+[node name="bridge2" type="MeshInstance" parent="."]
+transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, 34.979, -1.324, -5.606 )
+mesh = ExtResource( 7 )
+
+[node name="bridge4" type="MeshInstance" parent="."]
+transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, -34.979, -1.324, -5.606 )
+mesh = ExtResource( 7 )
+
+[node name="building1" type="MeshInstance" parent="."]
+transform = Transform( 159.379, 0, 0, 0, 159.379, 0, 0, 0, 159.379, -299.33, -11.9778, -639.069 )
+mesh = ExtResource( 8 )
+
+[node name="building2" type="MeshInstance" parent="."]
+transform = Transform( 139.932, 0, 76.2934, 0, 159.379, 0, -76.2934, 0, 139.932, 271.188, -158.866, -639.069 )
+mesh = ExtResource( 14 )
+
+[node name="fakesea" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.2917, 0 )
+visible = false
+material_override = SubResource( 27 )
+mesh = SubResource( 28 )
+
+[node name="dome" type="MeshInstance" parent="."]
+transform = Transform( 7.9043, 0, 0, 0, 7.9043, 0, 0, 0, 7.9043, -144.897, -22.6209, -377.705 )
+mesh = ExtResource( 10 )
+
+[node name="dome2" type="MeshInstance" parent="."]
+transform = Transform( 7.9043, 0, 0, 0, 7.9043, 0, 0, 0, 7.9043, 120.852, -22.6209, -390.926 )
+mesh = ExtResource( 10 )
+
+[node name="base" type="MeshInstance" parent="."]
+transform = Transform( 1.85325, 0, 0, 0, 1.85325, 0, 0, 0, 1.85325, -115.195, -22.6209, -213.771 )
+mesh = ExtResource( 9 )
+
+[node name="base2" type="MeshInstance" parent="."]
+transform = Transform( 1.84221, 0, 0.202015, 0, 1.85325, 0, -0.202015, 0, 1.84221, 8.4306, -22.6209, -259.15 )
+mesh = ExtResource( 9 )
+
+[node name="base3" type="MeshInstance" parent="."]
+transform = Transform( -1.79504, 0, 0.460822, 0, 1.85325, 0, -0.460822, 0, -1.79504, 146.572, -1.56961, -252.275 )
+mesh = ExtResource( 9 )
+
+[node name="sign" type="MeshInstance" parent="."]
+transform = Transform( 0.102107, -0.0262603, 1.14788e-09, 0, -4.60848e-09, -0.10543, 0.0262603, 0.102107, -4.46324e-09, 5.64917, 4.97645, -10.7777 )
+mesh = SubResource( 33 )
+material/0 = ExtResource( 13 )
+
+[node name="blueberry" type="Sprite3D" parent="sign"]
+transform = Transform( -1, 8.74228e-08, 4.47035e-08, -4.47035e-08, -7.10543e-15, -1, -8.74228e-08, -1, 3.55271e-15, -11.554, -3.18751, -16.9339 )
+pixel_size = 0.0695
+alpha_cut = 1
+texture = ExtResource( 12 )
+
+[node name="000" type="MeshInstance" parent="sign"]
+transform = Transform( 1, 1.77636e-15, -1.49012e-08, 1.49012e-08, 7.10543e-15, 1, -8.88178e-16, -1, 7.10543e-15, 0.176012, 1.80254, -3.42723 )
+mesh = SubResource( 30 )
+
+[node name="001" type="MeshInstance" parent="sign"]
+transform = Transform( 1, 1.77636e-15, -1.49012e-08, 1.49012e-08, 7.10543e-15, 1, -8.88178e-16, -1, 7.10543e-15, 0.578066, 1.76855, 4.62302 )
+mesh = SubResource( 31 )
+
+[node name="002" type="MeshInstance" parent="sign"]
+transform = Transform( 1, 1.77636e-15, -1.49012e-08, 1.49012e-08, 7.10543e-15, 1, -8.88178e-16, -1, 7.10543e-15, 0.578075, -1.41598, 44.9962 )
+mesh = SubResource( 32 )
+
+[node name="test" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
+stream = ExtResource( 2 )
+autoplay = true

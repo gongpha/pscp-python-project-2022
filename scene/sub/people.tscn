@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resource/texture/someone.jpg" type="Texture" id=1]
+[ext_resource path="res://resource/font/font_secondary.tres" type="DynamicFont" id=2]
+
+[node name="hbox" type="VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 320.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_constants/separation = 16
+
+[node name="pic" type="TextureRect" parent="."]
+margin_right = 300.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 7
+
+[node name="vbox" type="VBoxContainer" parent="."]
+margin_top = 216.0
+margin_right = 300.0
+margin_bottom = 270.0
+
+[node name="name" type="Label" parent="vbox"]
+margin_right = 300.0
+margin_bottom = 29.0
+text = "Kongfa Waroros"
+align = 1
+
+[node name="id" type="Label" parent="vbox"]
+margin_top = 33.0
+margin_right = 300.0
+margin_bottom = 54.0
+custom_colors/font_color = Color( 1, 1, 1, 0.752941 )
+custom_fonts/font = ExtResource( 2 )
+text = "it65070013"
+align = 1
+valign = 1

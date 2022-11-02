@@ -1,0 +1,11 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shared/prefabs/bin/nink001/004_sao_bench.glb" type="PackedScene" id=1]
+[ext_resource path="res://shared/textures/section_nkunion/pop14.tres" type="Material" id=2]
+[ext_resource path="res://shared/textures/section_nkunion/pop15.tres" type="Material" id=3]
+[ext_resource path="res://shared/textures/section_nkunion/pop11.tres" type="Material" id=4]
+
+[node name="sao_bench" instance=ExtResource( 1 )]
+material/0 = ExtResource( 3 )
+material/1 = ExtResource( 2 )
+material/2 = ExtResource( 4 )

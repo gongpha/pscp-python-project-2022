@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://resource/mesh/nink_saolamp1.mesh" type="ArrayMesh" id=1]
+
+[node name="lamp" type="MeshInstance"]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 0, 0, -5.62235 )
+mesh = ExtResource( 1 )

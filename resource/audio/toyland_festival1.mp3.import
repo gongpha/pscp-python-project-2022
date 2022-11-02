@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/toyland_festival1.mp3-ef0d30468450290d6ce46695c822fcf7.mp3str"
+
+[deps]
+
+source_file="res://resource/audio/toyland_festival1.mp3"
+dest_files=[ "res://.import/toyland_festival1.mp3-ef0d30468450290d6ce46695c822fcf7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
