@@ -1,3 +1,1 @@
-*.tcl -linguist-detectable
-*.c -linguist-detectable
-*.pxd -linguist-detectable
+addons/* linguist-vendored
