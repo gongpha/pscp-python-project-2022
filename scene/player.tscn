@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.5
+height = 2.0
+
+[node name="player" type="StaticBody"]
+
+[node name="camera" type="Camera" parent="."]
+far = 2048.0
+
+[node name="ray" type="RayCast" parent="camera"]
+cast_to = Vector3( 0, 0, -8 )
+collision_mask = 2
+
+[node name="itemfront" type="Position3D" parent="camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+
+[node name="col" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1, 4.37114e-08 )
+shape = SubResource( 1 )
