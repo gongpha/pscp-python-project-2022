@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://script/item.py" type="Script" id=1]
 
 [sub_resource type="CubeMesh" id=4]
 size = Vector3( 0.25, 0.25, 0.25 )
@@ -15,9 +17,12 @@ extents = Vector3( 0.125, 0.125, 0.125 )
 [node name="clock" type="RigidBody"]
 transform = Transform( 0.84327, 0, -0.537491, 0, 1, 0, 0.537491, 0, 0.84327, 0.0964321, 1.17075, -1.32318 )
 collision_layer = 5
+script = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": "The clock. You can't throw it away from your booth !"
 }
+item_name = "Clock"
+price = 0
 
 [node name="model" type="MeshInstance" parent="."]
 mesh = SubResource( 4 )

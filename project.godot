@@ -24,6 +24,10 @@ config/name="pygodotgame"
 run/main_scene="res://scene/game.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+PORT="*res://script_gd/PORT.gd"
+
 [gdnative]
 
 singletons=[ "res://pythonscript.gdnlib" ]

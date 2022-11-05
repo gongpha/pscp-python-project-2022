@@ -7,4 +7,4 @@ class_name InputProxy
 signal input()
 
 func _input(e) :
-	call_deferred("emit_signal", "input", e)
+	emit_signal("input", e)

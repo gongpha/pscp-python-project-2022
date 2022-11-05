@@ -1,4 +1,5 @@
-from godot import exposed, Vector3
+from godot.builtins import Basis
+from godot import exposed, Vector3, Array
 from godot import *
 import math
 
@@ -17,7 +18,7 @@ class Player(StaticBody):
 
     sens = 100 * 0.5  # Sensitivity of the mouse
 
-    picking = None
+    picking: Item = None
     block_pick: bool = False
     old_rot_y: float = 1.0
     is_look_front: bool = False
@@ -31,7 +32,8 @@ class Player(StaticBody):
 
         input_node: Node = self.get_node("input")
 
-        input_node.connect("input", self, "_input_proxy")
+        input_node.connect("input", self, "_input_proxy",
+                           Array(), Object.CONNECT_DEFERRED)
         Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
     def _input_proxy(self, event):
@@ -44,8 +46,10 @@ class Player(StaticBody):
             self.rotate(Vector3(0, 1, 0), rel.x)
             self.camera.rotate(Vector3(1, 0, 0), rel.y)
 
-            self.camera.rotation_degrees.x = clamp(
-                self.camera.rotation_degrees.x, -90.0, 90.0
+            self.camera.rotation_degrees = Vector3(
+                clamp(
+                    self.camera.rotation_degrees.x, -90.0, 90.0
+                ), self.camera.rotation_degrees.y, self.camera.rotation_degrees.z
             )
 
             new_look = abs(self.rotation_degrees.y) < 45
@@ -61,14 +65,13 @@ class Player(StaticBody):
                     # Check if the ray hit something
                     self.ray.force_raycast_update()
                     that_thing = self.ray.get_collider()
-                    if not that_thing is Item :
-                        return
-
                     self.picking = that_thing
-                    self.picking.get_picking = self.itemfront
+                    self.picking.set_meta('get_picking', self.itemfront)
                     self.picking.sleeping = False
-                    self.picking.prev_point_quat = self.itemfront.global_transform.basis.get_rotation_quat()
             else:
                 if self.picking:
-                    self.picking.get_picking = None
-                    self.picking = None  # release
+                    self.picking.remove_meta('get_picking')
+                self.picking = None  # release
+
+
+dad = Basis()
