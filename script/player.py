@@ -1,14 +1,15 @@
-from godot import exposed, export, Vector3
+from godot import exposed, Vector3
 from godot import *
 import math
 
 from .utils import clamp
+from .item import Item
 
 # The player body
 
 
 @exposed
-class player(StaticBody):
+class Player(StaticBody):
     # nodes
     camera: Camera
     ray: RayCast
@@ -60,9 +61,8 @@ class player(StaticBody):
                     # Check if the ray hit something
                     self.ray.force_raycast_update()
                     that_thing = self.ray.get_collider()
-                    # TODO : ITEMS !
-                    # if not that_thing is Item :
-                    #    return
+                    if not that_thing is Item :
+                        return
 
                     self.picking = that_thing
                     self.picking.get_picking = self.itemfront
