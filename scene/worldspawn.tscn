@@ -95,7 +95,7 @@ shape = SubResource( 20 )
 [node name="world" type="StaticBody" parent="."]
 
 [node name="floor" type="CollisionShape" parent="world"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.826476, 0 )
 shape = SubResource( 19 )
 
 [node name="prototype" type="CSGCombiner" parent="."]
