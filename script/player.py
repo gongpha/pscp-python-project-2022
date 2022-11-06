@@ -1,4 +1,3 @@
-from godot.builtins import Basis
 from godot import exposed, Vector3, Array
 from godot import *
 import math
@@ -72,6 +71,3 @@ class Player(StaticBody):
                 if self.picking:
                     self.picking.remove_meta('get_picking')
                 self.picking = None  # release
-
-
-dad = Basis()
