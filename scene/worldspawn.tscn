@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://resource/texture/prototype1.png" type="Texture" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
 [ext_resource path="res://scene/sub/clock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://script/worldspawn.py" type="Script" id=4]
 [ext_resource path="res://scene/sub/lamp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
 [ext_resource path="res://resource/mesh/bridge1.mesh" type="ArrayMesh" id=7]
@@ -81,6 +82,7 @@ height = 81.343
 radial_segments = 4
 
 [node name="worldspawn" type="Spatial"]
+script = ExtResource( 4 )
 
 [node name="stall" parent="." instance=ExtResource( 6 )]
 
