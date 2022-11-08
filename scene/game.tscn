@@ -132,6 +132,18 @@ tracks/9/keys = {
 "update": 0,
 "values": [ false ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath("dialogue/rich/advance:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "customer_enter"
@@ -213,6 +225,18 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("dialogue/rich/advance:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -297,7 +321,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=14]
 resource_name = "motd"
-length = 2.5
+length = 2.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("motd:anchor_top")
 tracks/0/interp = 1
@@ -305,7 +329,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2, 2.5 ),
+"times": PoolRealArray( 0, 1.8, 2.3 ),
 "transitions": PoolRealArray( 1, 0.25, 1 ),
 "update": 0,
 "values": [ 0.0, 0.0, -1.0 ]
@@ -317,7 +341,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 2, 2.5 ),
+"times": PoolRealArray( 0, 1.8, 2.3 ),
 "transitions": PoolRealArray( 1, 0.25, 1 ),
 "update": 0,
 "values": [ 1.0, 1.0, 0.0 ]
@@ -329,7 +353,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 2.5 ),
+"times": PoolRealArray( 0, 2.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
