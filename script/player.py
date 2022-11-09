@@ -65,8 +65,9 @@ class Player(StaticBody):
                     self.ray.force_raycast_update()
                     that_thing = self.ray.get_collider()
                     self.picking = that_thing
-                    self.picking.set_meta('get_picking', self.itemfront)
-                    self.picking.sleeping = False
+                    if that_thing :
+                        self.picking.set_meta('get_picking', self.itemfront)
+                        self.picking.sleeping = False
             else:
                 if self.picking:
                     self.picking.remove_meta('get_picking')

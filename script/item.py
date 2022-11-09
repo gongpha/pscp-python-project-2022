@@ -15,7 +15,7 @@ class Item(RigidBody):
 
     def _ready(self):
         self.mode = RigidBody.MODE_CHARACTER  # HL Physics style (no rotation)
-        if self.name != "clock":
+        if str(self.name) != "clock":
             # Add item to the group. But not the clock
             self.add_to_group('item')
         self.collision_layer = 0b10

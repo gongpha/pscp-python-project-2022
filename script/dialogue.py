@@ -1,5 +1,6 @@
 """dialogue storage"""
 
+greeting = ["Hello"]
 order = ["Can I have {}x {}, please"]
 order_ok = ["Thanks!"]
 order_not_complete = ["The order is not complete!"]

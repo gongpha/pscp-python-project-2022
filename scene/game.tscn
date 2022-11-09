@@ -678,5 +678,4 @@ custom_fonts/font = ExtResource( 9 )
 text = "Day ?"
 align = 1
 
-[connection signal="animation_finished" from="ani" to="." method="_on_ani_animation_finished"]
 [connection signal="pressed" from="endday/endday/vbox/continue" to="." method="_on_continue_pressed"]
