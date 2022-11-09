@@ -332,7 +332,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1.8, 2.3 ),
 "transitions": PoolRealArray( 1, 0.25, 1 ),
 "update": 0,
-"values": [ 0.0, 0.0, -1.0 ]
+"values": [ 0.0, 0.0, 1.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("motd:anchor_bottom")
@@ -344,7 +344,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1.8, 2.3 ),
 "transitions": PoolRealArray( 1, 0.25, 1 ),
 "update": 0,
-"values": [ 1.0, 1.0, 0.0 ]
+"values": [ 1.0, 1.0, 2.0 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("motd:visible")
