@@ -3,7 +3,7 @@ from godot import *
 import math
 
 from .utils import clamp
-from .item import Item
+#from .item import Item
 
 # The player body
 
@@ -17,7 +17,7 @@ class Player(StaticBody):
 
     sens = 100 * 0.5  # Sensitivity of the mouse
 
-    picking: Item = None
+    picking: RigidBody = None
     block_pick: bool = False
     old_rot_y: float = 1.0
     is_look_front: bool = False
@@ -66,9 +66,9 @@ class Player(StaticBody):
                     that_thing = self.ray.get_collider()
                     self.picking = that_thing
                     if that_thing :
-                        self.picking.set_meta('get_picking', self.itemfront)
-                        self.picking.sleeping = False
+                        self.picking.set('get_picking', self.itemfront)
+                        self.picking.set('sleeping', False)
             else:
                 if self.picking:
-                    self.picking.remove_meta('get_picking')
+                    self.picking.set('get_picking', Reference())
                 self.picking = None  # release

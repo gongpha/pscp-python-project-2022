@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "InputProxy",
 "language": "GDScript",
 "path": "res://script_gd/input.gd"
+}, {
+"base": "RigidBody",
+"class": "Item",
+"language": "GDScript",
+"path": "res://script_gd/item.gd"
 } ]
 _global_script_class_icons={
-"InputProxy": ""
+"InputProxy": "",
+"Item": ""
 }
 
 [application]
@@ -26,7 +32,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-PORT="*res://script_gd/PORT.gd"
+GDPORT="*res://script_gd/PORT.gd"
+PYPORT="*res://script/PORT.py"
 
 [gdnative]
 

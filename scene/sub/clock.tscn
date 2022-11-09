@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://script/item.py" type="Script" id=1]
+[ext_resource path="res://script_gd/item.gd" type="Script" id=1]
 
 [sub_resource type="CubeMesh" id=4]
 size = Vector3( 0.25, 0.25, 0.25 )
@@ -21,8 +21,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": "The clock. You can't throw it away from your booth !"
 }
-item_name = "Clock"
-price = 0
 
 [node name="model" type="MeshInstance" parent="."]
 mesh = SubResource( 4 )

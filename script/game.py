@@ -97,9 +97,7 @@ class Game(Control):
         #
         items = self.get_all_item_objects()
 
-        if not items:
-            # no items in the world ?
-            assert(False, "No items in the world")
+        assert items, "No items in the world"
 
         order_item = {}
 
@@ -110,7 +108,7 @@ class Game(Control):
 
         # Randomize an item count
         item_count = self.rng.randi_range(1, 6)
-        for i in range(item_count):
+        for _ in range(item_count):
             # Randomize an item
             item: Node = items[self.rng.randi_range(0, len(items) - 1)]
             if item.filename in order_item:

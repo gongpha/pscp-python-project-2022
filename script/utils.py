@@ -3,9 +3,13 @@
 # Most of them are implemented like Godot's built-in functions.
 
 
-def PORT(self):
-    """ Get the PORT node. """
-    return self.get_node("/root/PORT")
+def GDPORT(self):
+    """ Get the GDScript PORT node. """
+    return self.get_node("/root/GDPORT")
+
+def PYPORT(self):
+    """ Get the Python PORT node. """
+    return self.get_node("/root/PYPORT")
 
 
 def clamp(value, min_value, max_value):
