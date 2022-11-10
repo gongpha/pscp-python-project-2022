@@ -35,6 +35,10 @@ config/icon="res://icon.png"
 GDPORT="*res://script_gd/PORT.gd"
 PYPORT="*res://script/PORT.py"
 
+[display]
+
+window/stretch/shrink=1.5
+
 [gdnative]
 
 singletons=[ "res://pythonscript.gdnlib" ]
@@ -42,6 +46,7 @@ singletons=[ "res://pythonscript.gdnlib" ]
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://resource/maintheme.tres"
 
 [physics]
 

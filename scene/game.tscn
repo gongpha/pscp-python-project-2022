@@ -94,7 +94,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ false ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("motd:anchor_top")
@@ -442,6 +442,7 @@ pixel_size = 0.075
 texture = ExtResource( 4 )
 
 [node name="dialogue" type="PanelContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.83
 anchor_right = 0.5
@@ -482,9 +483,9 @@ stretch_mode = 4
 
 [node name="text" type="Label" parent="dialogue/rich/advance"]
 margin_left = 80.0
-margin_top = 19.0
-margin_right = 134.0
-margin_bottom = 33.0
+margin_top = 15.0
+margin_right = 164.0
+margin_bottom = 37.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Advance"
 
@@ -511,15 +512,15 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="day" type="Label" parent="ui/vbox"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_right = 52.0
+margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Day #"
 
 [node name="balance" type="Label" parent="ui/vbox"]
-margin_top = 18.0
-margin_right = 40.0
-margin_bottom = 32.0
+margin_top = 26.0
+margin_right = 52.0
+margin_bottom = 48.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "$0"
 
@@ -529,7 +530,7 @@ anchor_bottom = 1.0
 grow_vertical = 0
 
 [node name="confirmorder" type="Control" parent="ui/hint"]
-margin_right = 124.0
+margin_right = 148.0
 margin_bottom = 29.0
 rect_min_size = Vector2( 0, 29 )
 rect_pivot_offset = Vector2( -256, 512 )
@@ -550,51 +551,49 @@ stretch_mode = 4
 
 [node name="text" type="Label" parent="ui/hint/confirmorder/hbox"]
 margin_left = 80.0
-margin_top = 7.0
-margin_right = 171.0
-margin_bottom = 21.0
+margin_top = 3.0
+margin_right = 218.0
+margin_bottom = 25.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Confirm Order"
 
 [node name="repeat" type="HBoxContainer" parent="ui/hint"]
 margin_top = 33.0
-margin_right = 124.0
-margin_bottom = 49.0
+margin_right = 148.0
+margin_bottom = 55.0
 custom_constants/separation = 16
 
 [node name="icon" type="TextureRect" parent="ui/hint/repeat"]
 margin_right = 64.0
-margin_bottom = 16.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 64, 0 )
 texture = SubResource( 11 )
 stretch_mode = 4
 
 [node name="text" type="Label" parent="ui/hint/repeat"]
 margin_left = 80.0
-margin_top = 1.0
-margin_right = 124.0
-margin_bottom = 15.0
+margin_right = 148.0
+margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Repeat"
 
 [node name="pick" type="HBoxContainer" parent="ui/hint"]
-margin_top = 53.0
-margin_right = 124.0
-margin_bottom = 69.0
+margin_top = 59.0
+margin_right = 148.0
+margin_bottom = 81.0
 custom_constants/separation = 16
 
 [node name="icon" type="TextureRect" parent="ui/hint/pick"]
 margin_right = 64.0
-margin_bottom = 16.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 64, 0 )
 texture = SubResource( 12 )
 stretch_mode = 4
 
 [node name="text" type="Label" parent="ui/hint/pick"]
 margin_left = 80.0
-margin_top = 1.0
-margin_right = 106.0
-margin_bottom = 15.0
+margin_right = 118.0
+margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Pick"
 
