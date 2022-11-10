@@ -3,6 +3,7 @@ from godot import *
 
 from .worldspawn import Worldspawn
 from . import dialogue
+from .player import Player
 
 # THE GAME LOGIC
 
@@ -10,6 +11,15 @@ from . import dialogue
 @exposed
 class Game(Control):
     worldspawn: Worldspawn
+    dialogue_richtext : RichTextLabel
+    dialogue_panel : PanelContainer
+    crosshair : TextureRect
+    linetween : Tween
+    adv_hint : Control
+    hint : Control
+
+    player : Player
+
     # The number generator for randomizing the item spawn points and more
     rng: RandomNumberGenerator
 
@@ -33,9 +43,21 @@ class Game(Control):
     dialogue_lines : list = ["hello"]
     dialogue_repeat : list
 
+    dialogue_animating_chars : bool = False
+    holding_confirm : bool = False
+
     def _ready(self):
         # Get the nodes
         self.worldspawn = self.get_node("worldspawn")
+        self.dialogue_richtext = self.get_node("dialogue/rich")
+        self.dialogue_panel = self.get_node("dialogue")
+        self.crosshair = self.get_node("crosshair")
+        self.linetween = self.get_node("linetween")
+        self.adv_hint = self.get_node("dialogue/rich/advance")
+        self.hint = self.get_node("ui/hint")
+
+        self.player = self.get_node("player")
+
         self.ani = self.get_node("ani")
         self.ani.connect("animation_finished", self, "_on_ani_finished")
 
@@ -79,6 +101,8 @@ class Game(Control):
             self.feed_customer()
         elif ani_name == "customer_enter":
             self.fetch_order()
+        elif ani_name == "dialogue_enter":
+            self.feed_dialogue()
 
     def feed_customer(self):
         """ Summon thee customer """
@@ -118,17 +142,44 @@ class Game(Control):
 
             break
 
-        order_dialogue = []
-        for vvv in order_item.values() :
-            order_dialogue.append("%s x%d" % vvv)
+        # Prepare the texts
+        order_dialogue = ["%s x%d" % vvv for vvv in order_item.values()]
 
         self.dialogue_repeat = [', '.join(order_dialogue)]
         self.dialogue_lines = dialogue.greeting + self.dialogue_repeat
 
-        print(self.dialogue_lines)
         self.show_dialogue()
 
     def show_dialogue(self):
         """ Show the dialogue """
-        # TODO : Show the dialogue
-        pass
+        # Animate the dialogue
+        if not self.dialogue_lines or self.dialogue_panel.visible :
+            return # Already showed the dialogue. SKIP
+            
+        self.dialogue_richtext.text = "" # clear texts
+        self.ani.play("dialogue_enter")
+        self.player.block_pick = True # Block player from picking items
+
+        # Hide other UIs
+        self.hint.hide()
+        self.crosshair.hide()
+
+    def feed_dialogue(self) -> bool :
+        """ Advance the dialogue text from the list """
+        if not self.dialogue_panel.visible :
+            return False # NOT VISIBLE AT FIRST lets ignore this event
+            
+        self.adv_hint.hide()
+        
+        if self.dialogue_lines.empty() :
+            self.ani.play("dialogue_exit")
+            self.player.block_pick = False
+            self.hint.show()
+            self.crosshair.show()
+            return True
+        current : str = self.dialogue_lines.pop_front()
+        self.dialogue_richtext.bbcode_text = current
+        self.dialogue_richtext.percent_visible = 0.0
+        self.dialogue_animating_chars = True
+        self.holding_confirm = False
+        return True
