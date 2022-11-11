@@ -3,14 +3,17 @@ from godot import *
 
 # just a game world. not a Quake's Worldspawn
 
+
 @exposed
 class Worldspawn(Spatial):
-    counter_good: Area # The area that determines a GOOD AREA for placing items
-    counter_bad : Area # Opposite of counter_good
-    sun : DirectionalLight # The sun. (Just a light source)
-    clock_hand_root : Spatial # The 3D root of the clock hand. For rotating the clock hand by the time
+    counter_good: Area  # The area that determines a GOOD AREA for placing items
+    counter_bad: Area  # Opposite of counter_good
+    sun: DirectionalLight  # The sun. (Just a light source)
+    # The 3D root of the clock hand. For rotating the clock hand by the time
+    clock_hand_root: Spatial
 
-    itemspawnpoints = [] # The list of item spawn points that placed in the world (Areas)
+    # The list of item spawn points that placed in the world (Areas)
+    itemspawnpoints = []
 
     def _ready(self):
         self.counter_good = self.get_node("counter_good")
@@ -23,3 +26,4 @@ class Worldspawn(Spatial):
         for c in self.get_node("itemspawner").get_children():
             if isinstance(c, Area):
                 self.itemspawnpoints.append(c)
+        self.set("itemspawnpoints", Array(self.itemspawnpoints))

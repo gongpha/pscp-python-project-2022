@@ -18,11 +18,14 @@ class Player(StaticBody):
     sens = 100 * 0.5  # Sensitivity of the mouse
 
     picking: RigidBody = None
-    block_pick: bool = False
+    #block_pick: bool = False
     old_rot_y: float = 1.0
     is_look_front: bool = False
 
     look_front = signal()
+
+    def _init(self):
+        self.set("block_pick", False)
 
     def _ready(self):
         self.camera = self.get_node("camera")
@@ -60,12 +63,12 @@ class Player(StaticBody):
         # Picking (left click)
         elif isinstance(event, InputEventMouseButton):
             if event.pressed:
-                if event.button_index == BUTTON_LEFT and not self.block_pick:
+                if event.button_index == BUTTON_LEFT and not self.get("block_pick"):
                     # Check if the ray hit something
                     self.ray.force_raycast_update()
                     that_thing = self.ray.get_collider()
                     self.picking = that_thing
-                    if that_thing :
+                    if that_thing:
                         self.picking.set('get_picking', self.itemfront)
                         self.picking.set('sleeping', False)
             else:

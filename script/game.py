@@ -5,20 +5,27 @@ from .worldspawn import Worldspawn
 from . import dialogue
 from .player import Player
 
+import math
+
 # THE GAME LOGIC
+
+ITEM_PATHS = [
+    "res://scene/item/carton.tscn",
+    "res://scene/item/tin.tscn"
+]
 
 
 @exposed
 class Game(Control):
     worldspawn: Worldspawn
-    dialogue_richtext : RichTextLabel
-    dialogue_panel : PanelContainer
-    crosshair : TextureRect
-    linetween : Tween
-    adv_hint : Control
-    hint : Control
+    dialogue_richtext: RichTextLabel
+    dialogue_panel: PanelContainer
+    crosshair: TextureRect
+    linetween: Tween
+    adv_hint: Control
+    hint: Control
 
-    player : Player
+    player: Player
 
     # The number generator for randomizing the item spawn points and more
     rng: RandomNumberGenerator
@@ -40,11 +47,11 @@ class Game(Control):
     ###########################
 
     order: dict  # Order
-    dialogue_lines : list = ["hello"]
-    dialogue_repeat : list
+    dialogue_lines: list = ["hello"]
+    dialogue_repeat: list
 
-    dialogue_animating_chars : bool = False
-    holding_confirm : bool = False
+    dialogue_animating_chars: bool = False
+    holding_confirm: bool = False
 
     def _ready(self):
         # Get the nodes
@@ -81,6 +88,9 @@ class Game(Control):
         # Random its seed by the current time
         self.rng.randomize()
 
+        # Prepare items on the shelf
+        self.prepare_items()
+
         # Show MOTD screen
         self.motd_day.text = "Day %d" % self.current_day
         self.hint_day.text = self.motd_day.text
@@ -106,7 +116,7 @@ class Game(Control):
 
     def feed_customer(self):
         """ Summon thee customer """
-        
+
         # TODO : Add a various customer here
         self.ani.play("customer_enter")
 
@@ -117,7 +127,6 @@ class Game(Control):
     def fetch_order(self):
         """ Fetch the order from the customer """
 
-        
         #
         items = self.get_all_item_objects()
 
@@ -153,33 +162,69 @@ class Game(Control):
     def show_dialogue(self):
         """ Show the dialogue """
         # Animate the dialogue
-        if not self.dialogue_lines or self.dialogue_panel.visible :
-            return # Already showed the dialogue. SKIP
-            
-        self.dialogue_richtext.text = "" # clear texts
+        if not self.dialogue_lines or self.dialogue_panel.visible:
+            return  # Already showed the dialogue. SKIP
+
+        self.dialogue_richtext.text = ""  # clear texts
         self.ani.play("dialogue_enter")
-        self.player.block_pick = True # Block player from picking items
+        self.player.set("block_pick", True)  # Block player from picking items
 
         # Hide other UIs
         self.hint.hide()
         self.crosshair.hide()
 
-    def feed_dialogue(self) -> bool :
+    def feed_dialogue(self) -> bool:
         """ Advance the dialogue text from the list """
-        if not self.dialogue_panel.visible :
-            return False # NOT VISIBLE AT FIRST lets ignore this event
-            
+        if not self.dialogue_panel.visible:
+            return False  # NOT VISIBLE AT FIRST lets ignore this event
+
         self.adv_hint.hide()
-        
-        if self.dialogue_lines.empty() :
+
+        if not self.dialogue_lines:  # empty
             self.ani.play("dialogue_exit")
             self.player.block_pick = False
             self.hint.show()
             self.crosshair.show()
             return True
-        current : str = self.dialogue_lines.pop_front()
+        current: str = self.dialogue_lines.pop(0)
         self.dialogue_richtext.bbcode_text = current
         self.dialogue_richtext.percent_visible = 0.0
         self.dialogue_animating_chars = True
         self.holding_confirm = False
         return True
+
+    def prepare_items(self):
+        """
+            Place items on the shelf
+            Also charge the balance :/
+        """
+        for area in self.worldspawn.get("itemspawnpoints"):
+            # Check if there's an item on the area
+            overlapping: Area = area.get_overlapping_bodies()
+            if overlapping.size() > 0:
+                continue  # Okay, there's an item on the area. SKIP
+
+            # TODO : The items are completely random. Make it more balanced to the order
+
+            path = ITEM_PATHS[self.rng.randi_range(0, len(ITEM_PATHS) - 1)]
+            item_scene: PackedScene = ResourceLoader.load(path)
+            item: RigidBody = item_scene.instance()
+            self.add_child(item)  # Add the item to the world
+            self.update_balance(self.balance - item.price)
+            item.global_translation = area.global_translation
+            item.home_place = area.global_translation
+
+    def update_balance(self, new_b: int):
+        self.balance = new_b
+        self.balance_text.text = "$" + str(self.balance)
+
+    def _process(self, delta: float):
+        """ Called every frame """
+
+        if self.dialogue_animating_chars:
+            self.dialogue_richtext.percent_visible += 0.25 / \
+                max(0.1, self.dialogue_richtext.bbcode_text.length())
+            if self.dialogue_richtext.percent_visible == 1.0:
+                # STOP
+                self.dialogue_animating_chars = False
+                self.adv_hint.show()
