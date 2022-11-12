@@ -24,9 +24,9 @@ class Game(Control):
     linetween: Tween
     adv_hint: Control
     hint: Control
-    confirmorder : Control
-    confirmorder_hbox : HBoxContainer
-    pick : Control
+    confirmorder: Control
+    confirmorder_hbox: HBoxContainer
+    pick: Control
 
     player: Player
 
@@ -152,17 +152,18 @@ class Game(Control):
         # Randomize an item count
         item_count = self.rng.randi_range(1, 6)
         for _ in range(item_count):
-            while True :
+            while True:
                 # Randomize an item
                 item: Node = items[self.rng.randi_range(0, len(items) - 1)]
                 ttt = order_item.get(item.filename, [item.item_name, 1])
                 ttt[1] += 1
                 order_item[item.filename] = ttt
-                break # TODO : Fix this
+                break  # TODO : Fix this
 
         # Prepare the texts
         print(order_item)
-        order_dialogue = ["%s x%d" % (vvv[0], vvv[1]) for vvv in order_item.values()]
+        order_dialogue = ["%s x%d" % (vvv[0], vvv[1])
+                          for vvv in order_item.values()]
 
         self.dialogue_repeat = [', '.join(order_dialogue)]
         self.dialogue_lines = dialogue.greeting + self.dialogue_repeat
@@ -239,34 +240,34 @@ class Game(Control):
                 self.dialogue_animating_chars = False
                 self.adv_hint.show()
 
-    def _input_proxy(self, event) :
+    def _input_proxy(self, event):
         """ Proxy for the input event """
-        if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED :
+        if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
             return
 
-        if event.is_action_pressed("ui_select") :
+        if event.is_action_pressed("ui_select"):
             self.confirmorder.modulate = Color(1, 1, 0, 1)
-            if self.dialogue_animating_chars :
+            if self.dialogue_animating_chars:
                 # animating ? skip it
                 self.dialogue_richtext.percent_visible = 1.0
                 self.dialogue_animating_chars = False
                 self.adv_hint.show()
-            else :
-                if self.feed_dialogue() :
+            else:
+                if self.feed_dialogue():
                     return
                 self.holding_confirm = True and self.order != None
-        elif event.is_action_pressed("repeat") :
+        elif event.is_action_pressed("repeat"):
             # repeat the dialogue
             self.repeat_dialogue()
             # >:(
 
-        if event.is_action_released("ui_select") :
+        if event.is_action_released("ui_select"):
             self.confirmorder.modulate = Color(1, 1, 1, 1)
             self.holding_confirm = False
-            
-        if Input.is_mouse_button_pressed(BUTTON_LEFT) :
+
+        if Input.is_mouse_button_pressed(BUTTON_LEFT):
             self.pick.modulate = Color(1, 1, 0, 1)
-        else :
+        else:
             self.pick.modulate = Color(1, 1, 1, 1)
 
         self.player._input_proxy(event)
