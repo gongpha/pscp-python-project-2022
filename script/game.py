@@ -1,4 +1,4 @@
-from godot import exposed, Vector3, Array
+from godot import exposed, Vector3, Array, Color
 from godot import *
 
 from .worldspawn import Worldspawn
@@ -24,6 +24,9 @@ class Game(Control):
     linetween: Tween
     adv_hint: Control
     hint: Control
+    confirmorder : Control
+    confirmorder_hbox : HBoxContainer
+    pick : Control
 
     player: Player
 
@@ -62,6 +65,9 @@ class Game(Control):
         self.linetween = self.get_node("linetween")
         self.adv_hint = self.get_node("dialogue/rich/advance")
         self.hint = self.get_node("ui/hint")
+        self.confirmorder = self.get_node("ui/hint/confirmorder")
+        self.confirmorder_hbox = self.get_node("ui/hint/confirmorder/hbox")
+        self.pick = self.get_node("ui/hint/pick")
 
         self.player = self.get_node("player")
 
@@ -75,6 +81,10 @@ class Game(Control):
 
         self.hint_day = self.get_node("ui/vbox/day")
         self.balance_text = self.get_node("ui/vbox/balance")
+
+        input_node: Node = self.get_node("input")
+        input_node.connect("input", self, "_input_proxy",
+                           Array(), Object.CONNECT_DEFERRED)
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
@@ -142,17 +152,17 @@ class Game(Control):
         # Randomize an item count
         item_count = self.rng.randi_range(1, 6)
         for _ in range(item_count):
-            # Randomize an item
-            item: Node = items[self.rng.randi_range(0, len(items) - 1)]
-            if item.filename in order_item:
-                order_item[item.filename][1] += 1
-            else:
-                order_item[item.filename] = (item.item_name, 1)
-
-            break
+            while True :
+                # Randomize an item
+                item: Node = items[self.rng.randi_range(0, len(items) - 1)]
+                ttt = order_item.get(item.filename, [item.item_name, 1])
+                ttt[1] += 1
+                order_item[item.filename] = ttt
+                break # TODO : Fix this
 
         # Prepare the texts
-        order_dialogue = ["%s x%d" % vvv for vvv in order_item.values()]
+        print(order_item)
+        order_dialogue = ["%s x%d" % (vvv[0], vvv[1]) for vvv in order_item.values()]
 
         self.dialogue_repeat = [', '.join(order_dialogue)]
         self.dialogue_lines = dialogue.greeting + self.dialogue_repeat
@@ -182,7 +192,7 @@ class Game(Control):
 
         if not self.dialogue_lines:  # empty
             self.ani.play("dialogue_exit")
-            self.player.block_pick = False
+            self.player.set("block_pick", False)
             self.hint.show()
             self.crosshair.show()
             return True
@@ -228,3 +238,35 @@ class Game(Control):
                 # STOP
                 self.dialogue_animating_chars = False
                 self.adv_hint.show()
+
+    def _input_proxy(self, event) :
+        """ Proxy for the input event """
+        if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED :
+            return
+
+        if event.is_action_pressed("ui_select") :
+            self.confirmorder.modulate = Color(1, 1, 0, 1)
+            if self.dialogue_animating_chars :
+                # animating ? skip it
+                self.dialogue_richtext.percent_visible = 1.0
+                self.dialogue_animating_chars = False
+                self.adv_hint.show()
+            else :
+                if self.feed_dialogue() :
+                    return
+                self.holding_confirm = True and self.order != None
+        elif event.is_action_pressed("repeat") :
+            # repeat the dialogue
+            self.repeat_dialogue()
+            # >:(
+
+        if event.is_action_released("ui_select") :
+            self.confirmorder.modulate = Color(1, 1, 1, 1)
+            self.holding_confirm = False
+            
+        if Input.is_mouse_button_pressed(BUTTON_LEFT) :
+            self.pick.modulate = Color(1, 1, 0, 1)
+        else :
+            self.pick.modulate = Color(1, 1, 1, 1)
+
+        self.player._input_proxy(event)

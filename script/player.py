@@ -32,12 +32,6 @@ class Player(StaticBody):
         self.ray = self.get_node("camera/ray")
         self.itemfront = self.get_node("camera/itemfront")
 
-        input_node: Node = self.get_node("input")
-
-        input_node.connect("input", self, "_input_proxy",
-                           Array(), Object.CONNECT_DEFERRED)
-        Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
     def _input_proxy(self, event):
         if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
             return

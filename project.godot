@@ -48,6 +48,14 @@ singletons=[ "res://pythonscript.gdnlib" ]
 common/drop_mouse_on_gui_input_disabled=true
 theme/custom="res://resource/maintheme.tres"
 
+[input]
+
+repeat={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
 [physics]
 
 common/physics_fps=180
