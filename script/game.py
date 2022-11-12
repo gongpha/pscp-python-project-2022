@@ -1,9 +1,10 @@
-from godot import exposed, Vector3, Array, Color
+from godot import exposed, Vector2, Array, Color
 from godot import *
 
 from .worldspawn import Worldspawn
 from . import dialogue
 from .player import Player
+from .utils import lerp
 
 import math
 
@@ -49,12 +50,13 @@ class Game(Control):
 
     ###########################
 
-    order: dict  # Order
+    order = {}  # Order
     dialogue_lines: list = ["hello"]
     dialogue_repeat: list
 
     dialogue_animating_chars: bool = False
     holding_confirm: bool = False
+    confirm_order_value: float = 0.0
 
     def _ready(self):
         # Get the nodes
@@ -161,7 +163,6 @@ class Game(Control):
                 break  # TODO : Fix this
 
         # Prepare the texts
-        print(order_item)
         order_dialogue = ["%s x%d" % (vvv[0], vvv[1])
                           for vvv in order_item.values()]
 
@@ -232,6 +233,25 @@ class Game(Control):
     def _process(self, delta: float):
         """ Called every frame """
 
+        if self.holding_confirm:
+            self.confirm_order_value += delta * 75
+            if self.confirm_order_value >= 100:
+                # CONFIRMED !
+                self.check_items()
+                self.holding_confirm = False
+        else:
+            if self.confirm_order_value > 0:
+                self.confirm_order_value -= 800 * delta
+            else:
+                self.confirm_order_value = 0.0
+
+        self.confirmorder_hbox.rect_rotation = self.confirm_order_value * \
+            math.sin(self.confirm_order_value) * 0.075
+        self.confirmorder.rect_scale = Vector2(
+            lerp(1.0, 1.5, self.confirm_order_value / 100.0),
+            lerp(1.0, 1.5, self.confirm_order_value / 100.0)
+        )
+
         if self.dialogue_animating_chars:
             self.dialogue_richtext.percent_visible += 0.25 / \
                 max(0.1, self.dialogue_richtext.bbcode_text.length())
@@ -239,6 +259,11 @@ class Game(Control):
                 # STOP
                 self.dialogue_animating_chars = False
                 self.adv_hint.show()
+
+    def check_items(self):
+        """ Check items on the counter """
+        # TODO
+        pass
 
     def _input_proxy(self, event):
         """ Proxy for the input event """

@@ -13,6 +13,10 @@ def PYPORT(self):
     return self.get_node("/root/PYPORT")
 
 
-def clamp(value, min_value, max_value):
+def clamp(value: float, min_value: float, max_value: float) -> float:
     """ Clamp a value between a minimum and maximum value. """
     return max(min_value, min(max_value, value))
+
+def lerp(a: float, b: float, t: float) -> float:
+    """Linear interpolate on the value. """
+    return (1 - t) * a + t * b
