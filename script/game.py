@@ -296,3 +296,10 @@ class Game(Control):
             self.pick.modulate = Color(1, 1, 1, 1)
 
         self.player._input_proxy(event)
+
+    def repeat_dialogue(self) :
+        """ Repeat the dialogue """
+        if self.dialogue_panel.visible:
+            return
+        self.dialogue_lines = self.dialogue_repeat.copy()
+        self.show_dialogue()
