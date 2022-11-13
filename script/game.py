@@ -293,11 +293,11 @@ class Game(Control):
             item_on_counter += 1
 
         if item_on_counter > total + 2:
-            self.dialogue_lines = [' any_items_on_the_counter', 'bro dude']
+            self.dialogue_lines = dialogue.order_too_many_items
 
         if clone_list:
             # not complete shit
-            self.dialogue_lines = ['raise NotCompleted()', 'rating = 1']
+            self.dialogue_lines = dialogue.order_not_complete
             clone_list = self.order["items"].copy()
         else:
             # YES
@@ -305,7 +305,7 @@ class Game(Control):
                 self.update_balance(self.balance + (a.price * 1.2))
                 a.queue_free()
                 self.day_counter_item += 1
-            self.dialogue_lines = ['NICE BRO']
+            self.dialogue_lines = dialogue.order_ok
             self.order["completed"] = True
         self.show_dialogue()
 
