@@ -46,7 +46,7 @@ class Game(Control):
 
     tscale: float = 0.05  # Time scale
     current_day: int = 1
-    balance: int = 200
+    balance: int = 1000
 
     ###########################
 
@@ -57,6 +57,8 @@ class Game(Control):
     dialogue_animating_chars: bool = False
     holding_confirm: bool = False
     confirm_order_value: float = 0.0
+
+    day_counter_item : int = 0
 
     def _ready(self):
         # Get the nodes
@@ -132,7 +134,7 @@ class Game(Control):
         # TODO : Add a various customer here
         self.ani.play("customer_enter")
 
-    def get_all_item_objects(self):
+    def get_all_item_objects(self) -> list:
         """ Get all item objects """
         return self.get_tree().get_nodes_in_group("item")
 
@@ -227,7 +229,7 @@ class Game(Control):
             item.home_place = area.global_translation
 
     def update_balance(self, new_b: int):
-        self.balance = new_b
+        self.balance = int(new_b)
         self.balance_text.text = "$" + str(self.balance)
 
     def _process(self, delta: float):
@@ -262,8 +264,50 @@ class Game(Control):
 
     def check_items(self):
         """ Check items on the counter """
-        # TODO
-        pass
+        items = self.get_all_item_objects()
+        clone_list = self.order["items"].copy()
+        added : list = []
+        total: int = 0
+
+        for c in clone_list:
+            total += clone_list[c][1]
+
+        item_on_counter: int = 0
+
+        for item in items:
+            if item.name == "clock":
+                # NO CLOCKS !
+                continue
+            in_good = self.worldspawn.get("counter_good").overlaps_body(item)
+
+            if not in_good:
+                # the item still around in the shop bruh
+                continue
+
+            # if it's in the list. mark them
+            if item.filename in clone_list:
+                clone_list[item.filename][1] -= 1
+                if clone_list[item.filename][1] == 0:
+                    del clone_list[item.filename]  # no more...
+                added.append(item)
+            item_on_counter += 1
+
+        if item_on_counter > total + 2:
+            self.dialogue_lines = [' any_items_on_the_counter', 'bro dude']
+
+        if clone_list:
+            # not complete shit
+            self.dialogue_lines = ['raise NotCompleted()', 'rating = 1']
+            clone_list = self.order["items"].copy()
+        else:
+            # YES
+            for a in added:
+                self.update_balance(self.balance + (a.price * 1.2))
+                a.queue_free()
+                self.day_counter_item += 1
+            self.dialogue_lines = ['NICE BRO']
+            self.order["completed"] = True
+        self.show_dialogue()
 
     def _input_proxy(self, event):
         """ Proxy for the input event """
@@ -297,7 +341,7 @@ class Game(Control):
 
         self.player._input_proxy(event)
 
-    def repeat_dialogue(self) :
+    def repeat_dialogue(self):
         """ Repeat the dialogue """
         if self.dialogue_panel.visible:
             return

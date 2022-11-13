@@ -6,8 +6,6 @@ from godot import *
 
 @exposed
 class Worldspawn(Spatial):
-    counter_good: Area  # The area that determines a GOOD AREA for placing items
-    counter_bad: Area  # Opposite of counter_good
     sun: DirectionalLight  # The sun. (Just a light source)
     # The 3D root of the clock hand. For rotating the clock hand by the time
     clock_hand_root: Spatial
@@ -16,8 +14,8 @@ class Worldspawn(Spatial):
     itemspawnpoints = []
 
     def _ready(self):
-        self.counter_good = self.get_node("counter_good")
-        self.counter_bad = self.get_node("counter_bad")
+        self.set("counter_good", self.get_node("counter_good"))
+        self.set("counter_bad", self.get_node("counter_bad"))
         self.sun = self.get_node("sun")
         self.clock_hand_root = self.get_node("clock/hand")
 
