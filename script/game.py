@@ -127,6 +127,15 @@ class Game(Control):
             self.fetch_order()
         elif ani_name == "dialogue_enter":
             self.feed_dialogue()
+        elif ani_name == "dialogue_exit":
+            if self.order:
+                if self.order["completed"]:
+                    self.ani.play("customer_exit")
+                    self.order = None
+                    self.dialogue_repeat = []
+        elif ani_name == "customer_exit":
+            # NEXT
+            self.feed_customer()
 
     def feed_customer(self):
         """ Summon thee customer """
@@ -307,6 +316,7 @@ class Game(Control):
                 self.day_counter_item += 1
             self.dialogue_lines = dialogue.order_ok
             self.order["completed"] = True
+        self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
 
     def _input_proxy(self, event):
