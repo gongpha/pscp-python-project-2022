@@ -74,6 +74,7 @@ class Game(Control):
         self.pick = self.get_node("ui/hint/pick")
 
         self.player = self.get_node("player")
+        self.player.connect("look_front", self, "_on_player_look_front")
 
         self.ani = self.get_node("ani")
         self.ani.connect("animation_finished", self, "_on_ani_finished")
@@ -357,3 +358,11 @@ class Game(Control):
             return
         self.dialogue_lines = self.dialogue_repeat.copy()
         self.show_dialogue()
+
+    def _on_player_look_front(self) :
+        """ when the player turns away from the shelf """
+        if self.player.get("is_look_front") :
+            return
+        items = self.get_all_item_objects()
+        if items.size() < 10 :
+            self.prepare_items()

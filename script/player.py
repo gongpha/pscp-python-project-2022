@@ -20,12 +20,12 @@ class Player(StaticBody):
     picking: RigidBody = None
     #block_pick: bool = False
     old_rot_y: float = 1.0
-    is_look_front: bool = False
 
     look_front = signal()
 
     def _init(self):
         self.set("block_pick", False)
+        self.set("is_look_front", False)
 
     def _ready(self):
         self.camera = self.get_node("camera")
@@ -47,12 +47,12 @@ class Player(StaticBody):
                     self.camera.rotation_degrees.x, -90.0, 90.0
                 ), self.camera.rotation_degrees.y, self.camera.rotation_degrees.z
             )
-
+            
             new_look = abs(self.rotation_degrees.y) < 45
-            if new_look != self.is_look_front:
+            if new_look != self.get("is_look_front"):
                 if new_look:
                     self.call("emit_signal", "look_front")
-                self.is_look_front = new_look
+                self.set("is_look_front", new_look)
 
         # Picking (left click)
         elif isinstance(event, InputEventMouseButton):
