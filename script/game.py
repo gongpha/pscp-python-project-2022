@@ -44,7 +44,7 @@ class Game(Control):
     hint_day: Label  # Day text
     balance_text: Label  # Balance Text (used $ as a placeholder)
 
-    tscale: float = 0.05  # Time scale
+    tscale: float = 1.0  # Time scale
     current_day: int = 1
     balance: int = 1000
 
@@ -272,6 +272,15 @@ class Game(Control):
                 self.dialogue_animating_chars = False
                 self.adv_hint.show()
 
+        sun = self.worldspawn.get("sun")
+        clock_hand_root = self.worldspawn.get("clock_hand_root")
+
+        if clock_hand_root.rotation.z < math.pi * -2.0 :
+            self.go_endday()
+        else :
+            sun.rotate_x(delta * self.tscale)
+            clock_hand_root.rotate_z(-delta * 2.0 * self.tscale)
+
     def check_items(self):
         """ Check items on the counter """
         items = self.get_all_item_objects()
@@ -366,3 +375,7 @@ class Game(Control):
         items = self.get_all_item_objects()
         if items.size() < 10 :
             self.prepare_items()
+
+    def go_endday(self):
+        """ Emit the end day screen """
+        pass # TODO

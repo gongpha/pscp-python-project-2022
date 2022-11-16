@@ -136,7 +136,10 @@ __meta__ = {
 transform = Transform( 0.0539164, 0.75, 0.659237, 0.384005, -0.625, 0.679643, 0.921755, 0.216506, -0.321702, 4.41723, 3.20862, -11.926 )
 light_energy = 0.5
 shadow_enabled = true
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.05
 directional_shadow_normal_bias = 0.0
+directional_shadow_max_distance = 64.0
 
 [node name="clock" parent="." instance=ExtResource( 3 )]
 
