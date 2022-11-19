@@ -5,3 +5,9 @@
 [node name="lamp" type="MeshInstance"]
 transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 0, 0, -5.62235 )
 mesh = ExtResource( 1 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 3.37577, 0, 0, 0, 3.37577, 0, 0, 0, 3.37577, 0, 8.82174, 0 )
+light_color = Color( 1, 0.933333, 0.584314, 1 )
+light_energy = 0.232
+omni_range = 15.0

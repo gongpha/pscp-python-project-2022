@@ -528,6 +528,8 @@ margin_bottom = 40.0
 margin_right = 52.0
 margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 text = "Day #"
 
 [node name="balance" type="Label" parent="ui/vbox"]
@@ -535,6 +537,8 @@ margin_top = 26.0
 margin_right = 52.0
 margin_bottom = 48.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 text = "$0"
 
 [node name="hint" type="VBoxContainer" parent="ui"]
@@ -568,6 +572,8 @@ margin_top = 3.0
 margin_right = 218.0
 margin_bottom = 25.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 text = "Confirm Order"
 
 [node name="repeat" type="HBoxContainer" parent="ui/hint"]
@@ -588,6 +594,8 @@ margin_left = 80.0
 margin_right = 148.0
 margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 text = "Repeat"
 
 [node name="pick" type="HBoxContainer" parent="ui/hint"]
@@ -608,6 +616,8 @@ margin_left = 80.0
 margin_right = 118.0
 margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 text = "Pick"
 
 [node name="player" parent="." instance=ExtResource( 8 )]
