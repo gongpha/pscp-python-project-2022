@@ -297,7 +297,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -467,7 +467,7 @@ custom_styles/panel = SubResource( 9 )
 [node name="rich" type="RichTextLabel" parent="dialogue"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 504.0
+margin_right = 91.7908
 margin_bottom = 56.0
 rect_clip_content = false
 custom_colors/default_color = Color( 1, 1, 1, 1 )

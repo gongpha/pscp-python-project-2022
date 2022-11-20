@@ -50,7 +50,7 @@ class Game(Control):
 
     ###########################
 
-    order = {}  # Order
+    order = None  # Order
     dialogue_lines: list = ["hello"]
     dialogue_repeat: list
 
@@ -244,7 +244,6 @@ class Game(Control):
 
     def _process(self, delta: float):
         """ Called every frame """
-
         if self.holding_confirm:
             self.confirm_order_value += delta * 75
             if self.confirm_order_value >= 100:
@@ -344,7 +343,7 @@ class Game(Control):
             else:
                 if self.feed_dialogue():
                     return
-                self.holding_confirm = True and self.order != None
+                self.holding_confirm = self.order != None
         elif event.is_action_pressed("repeat"):
             # repeat the dialogue
             self.repeat_dialogue()
