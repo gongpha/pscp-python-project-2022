@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/font/font_title.tres" type="DynamicFont" id=2]
+[ext_resource path="res://script/mainmenu.py" type="Script" id=3]
 
 [sub_resource type="ProceduralSky" id=16]
 sky_top_color = Color( 0.121569, 0.0196078, 0.270588, 1 )
@@ -68,6 +69,7 @@ glow_bicubic_upscale = true
 [node name="mainmenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 3 )
 
 [node name="background" type="ColorRect" parent="."]
 anchor_right = 1.0

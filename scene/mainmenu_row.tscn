@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://script/mainmenu_row.py" type="Script" id=1]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0.75, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "glow_end"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 3, 2.25, 0, 1 ), Color( 1, 0.75, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "glow_start"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.75, 0, 1 ), Color( 3, 2.25, 0, 1 ) ]
+}
+
+[node name="row" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+
+[node name="text" type="Label" parent="."]
+margin_right = 256.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 256, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+size_flags_vertical = 7
+custom_colors/font_color = Color( 1, 0.75, 0, 1 )
+text = "Name"
+valign = 1
+
+[node name="description" type="Label" parent="."]
+margin_left = 260.0
+margin_right = 516.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 256, 0 )
+size_flags_vertical = 7
+custom_colors/font_color = Color( 1, 1, 1, 0.501961 )
+text = "Description"
+valign = 1
+
+[node name="ani" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/glow_end = SubResource( 2 )
+anims/glow_start = SubResource( 3 )
+
+[connection signal="gui_input" from="text" to="." method="_on_text_gui_input"]
+[connection signal="mouse_entered" from="text" to="." method="_on_text_mouse_entered"]
+[connection signal="mouse_exited" from="text" to="." method="_on_text_mouse_exited"]
