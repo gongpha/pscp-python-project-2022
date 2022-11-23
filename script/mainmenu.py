@@ -23,25 +23,21 @@ class mainmenu(Control):
 
 		# Customize this to change the menu list
 		self.item_list = {
-			"test1": {
-				'description': "TEST ITEM 1",
-				'callback': self.test1
+			"Start": {
+				'description': "Start the game",
+				'callback': None
 			},
-			"test2": {
-				'description': "TEST ITEM 2",
-				'callback': self.test1
+			"Settings": {
+				'description': "Change the game settings",
+				'callback': self.option_settings
 			},
-			"test3": {
-				'description': "TEST ITEM 3",
-				'callback': self.test1
+			"Credits": {
+				'description': "See the credits",
+				'callback': self.option_credits
 			},
-			"test4": {
-				'description': "TEST ITEM 4",
-				'callback': self.test1
-			},
-			"test5": {
-				'description': "TEST ITEM 5",
-				'callback': self.test1
+			"Exit": {
+				'description': "Exit the game",
+				'callback': self.option_exit
 			}
 		}
 
@@ -166,15 +162,37 @@ class mainmenu(Control):
 		which_item.get_node("text").modulate = Color(1, 1, 1, 0)
 		self.previous_clicked_item_name = which_key
 
-	def test1(self, item_that_was_clicked):
+	def option_settings(self, item_that_was_clicked):
 		""" Settings """
 		self.go_to({
-			"HELLOOOOO": {
-				'description': "How are you ?",
-				'callback': None
-			},
 			"Back": {
 				'description': "Go back to the main menu",
 				'callback': -1
 			}
+		}, item_that_was_clicked, ResourceLoader.load("res://scene/sub/settings.tscn"))
+
+	def option_credits(self, item_that_was_clicked):
+		""" Credits """
+		self.go_to({
+			"Back": {
+				'description': "Go back to the main menu",
+				'callback': -1
+			}
+		}, item_that_was_clicked, ResourceLoader.load("res://scene/sub/credits.tscn"))
+
+	def option_exit(self, item_that_was_clicked):
+		""" Exit """
+		self.go_to({
+			"Yes": {
+				'description': "Close the game",
+				'callback': self.option_exit_confirmed
+			},
+			"No": {
+				'description': "Go back to the main menu",
+				'callback': -1
+			}
 		}, item_that_was_clicked)
+
+	def option_exit_confirmed(self, _):
+		""" Exit (REAL) """
+		self.get_tree().quit()
