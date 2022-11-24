@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="pygodotgame"
-run/main_scene="res://scene/game.tscn"
+run/main_scene="res://scene/mainmenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
