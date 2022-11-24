@@ -48,7 +48,7 @@ class Game(Control):
     balance_text: Label  # Balance Text (used $ as a placeholder)
 
     starting : bool = False
-    tscale: float = 1.0  # Time scale
+    tscale: float = 0.04  # Time scale
     current_day: int = 1
     balance: int = 1000
 
