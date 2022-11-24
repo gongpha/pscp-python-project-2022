@@ -1,4 +1,4 @@
-from godot import exposed, export, Array, GDString
+from godot import exposed, Vector2, Array, GDString, Color
 from godot import *
 
 # inspired (?) from half-life WON-edition menu
@@ -7,7 +7,7 @@ from godot import *
 class mainmenu(Control):
 	""" Main menu """
 
-	def_item_scale = Vector2(0.46875, 0.46875)
+	def_item_scale = Vector2(0.25, 0.25)
 	current_menu_list = {}
 	previous_clicked_item_name = None
 
