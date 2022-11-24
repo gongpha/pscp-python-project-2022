@@ -467,7 +467,7 @@ custom_styles/panel = SubResource( 9 )
 [node name="rich" type="RichTextLabel" parent="dialogue"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 91.7908
+margin_right = 504.0
 margin_bottom = 56.0
 rect_clip_content = false
 custom_colors/default_color = Color( 1, 1, 1, 1 )
@@ -498,16 +498,6 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Advance"
 
 [node name="linetween" type="Tween" parent="."]
-
-[node name="wait_counter" type="ProgressBar" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -2.0
-margin_right = 2.0
-margin_bottom = 29.0
-grow_horizontal = 2
-rect_min_size = Vector2( 512, 0 )
 
 [node name="ui" type="Control" parent="."]
 anchor_left = 0.05
@@ -630,7 +620,6 @@ __meta__ = {
 }
 
 [node name="endday" type="ColorRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.501961 )
@@ -651,39 +640,39 @@ grow_vertical = 2
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 242.0
-margin_bottom = 146.0
+margin_bottom = 205.0
 
 [node name="title" type="Label" parent="endday/endday/vbox"]
 margin_right = 235.0
-margin_bottom = 14.0
+margin_bottom = 22.0
 text = "The end of the day"
 
 [node name="day" type="Label" parent="endday/endday/vbox"]
-margin_top = 18.0
+margin_top = 26.0
 margin_right = 235.0
-margin_bottom = 79.0
+margin_bottom = 114.0
 custom_fonts/font = ExtResource( 9 )
 text = "1"
 align = 1
 
 [node name="sold" type="Label" parent="endday/endday/vbox"]
-margin_top = 83.0
+margin_top = 118.0
 margin_right = 235.0
-margin_bottom = 97.0
+margin_bottom = 140.0
 text = "[ . . . ]"
 align = 1
 
 [node name="add_bal" type="Label" parent="endday/endday/vbox"]
-margin_top = 101.0
+margin_top = 144.0
 margin_right = 235.0
-margin_bottom = 115.0
+margin_bottom = 166.0
 text = "[ . . . ]"
 align = 1
 
 [node name="continue" type="Button" parent="endday/endday/vbox"]
-margin_top = 119.0
+margin_top = 170.0
 margin_right = 235.0
-margin_bottom = 139.0
+margin_bottom = 198.0
 text = "Sleep"
 
 [node name="motd" type="ColorRect" parent="."]
@@ -705,5 +694,3 @@ align = 1
 
 [node name="input" type="Node" parent="."]
 script = ExtResource( 10 )
-
-[connection signal="pressed" from="endday/endday/vbox/continue" to="." method="_on_continue_pressed"]

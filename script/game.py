@@ -1,4 +1,4 @@
-from godot import exposed, Vector2, Array, Color
+from godot import exposed, Vector2, Array, Color, Vector3
 from godot import *
 
 from .worldspawn import Worldspawn
@@ -29,6 +29,9 @@ class Game(Control):
     confirmorder_hbox: HBoxContainer
     pick: Control
 
+    sun : DirectionalLight
+    clock_hand_root : Spatial
+
     player: Player
 
     # The number generator for randomizing the item spawn points and more
@@ -44,6 +47,7 @@ class Game(Control):
     hint_day: Label  # Day text
     balance_text: Label  # Balance Text (used $ as a placeholder)
 
+    starting : bool = False
     tscale: float = 1.0  # Time scale
     current_day: int = 1
     balance: int = 1000
@@ -63,6 +67,10 @@ class Game(Control):
     def _ready(self):
         # Get the nodes
         self.worldspawn = self.get_node("worldspawn")
+
+        self.sun = self.worldspawn.get("sun")
+        self.clock_hand_root = self.worldspawn.get("clock_hand_root")
+
         self.dialogue_richtext = self.get_node("dialogue/rich")
         self.dialogue_panel = self.get_node("dialogue")
         self.crosshair = self.get_node("crosshair")
@@ -91,6 +99,9 @@ class Game(Control):
         input_node.connect("input", self, "_input_proxy",
                            Array(), Object.CONNECT_DEFERRED)
 
+        next_button = self.get_node("endday/endday/vbox/continue")
+        next_button.connect("pressed", self, "_on_next_button_pressed")
+
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
 
@@ -99,6 +110,10 @@ class Game(Control):
 
     def newday(self):
         """ Called when a game day starts """
+
+        # Reset these
+        self.sun.rotation = Vector3()
+        self.clock_hand_root.rotation = Vector3()
 
         # Random its seed by the current time
         self.rng.randomize()
@@ -121,6 +136,8 @@ class Game(Control):
             Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
             self.set_process(True)  # Start the game loop
             self.rng.randomize()  # Randomize the seed
+
+            self.starting = True
 
             # Summon the customer
             self.feed_customer()
@@ -271,14 +288,13 @@ class Game(Control):
                 self.dialogue_animating_chars = False
                 self.adv_hint.show()
 
-        sun = self.worldspawn.get("sun")
-        clock_hand_root = self.worldspawn.get("clock_hand_root")
-
-        if clock_hand_root.rotation.z < math.pi * -2.0 :
+        if 0.01 < self.clock_hand_root.rotation.z < 0.1 :
+            self.starting = False
             self.go_endday()
         else :
-            sun.rotate_x(delta * self.tscale)
-            clock_hand_root.rotate_z(-delta * 2.0 * self.tscale)
+            if self.starting : 
+                self.sun.rotate_x(delta * self.tscale)
+                self.clock_hand_root.rotate_z(-delta * 2.0 * self.tscale)
 
     def check_items(self):
         """ Check items on the counter """
@@ -377,4 +393,16 @@ class Game(Control):
 
     def go_endday(self):
         """ Emit the end day screen """
-        pass # TODO
+        self.endday_day.text = str(self.current_day)
+        Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+        self.endday.show()
+        self.set_process(False)
+        
+        self.sold.text = "%d items sold" % self.day_counter_item
+        self.add_bal.text = "+$%d" % (self.balance - self.day_start_balance)
+
+    def _on_next_button_pressed(self) :
+        """ Go to the next day """
+        self.current_day += 1
+        self.ani.play("RESET")
+        self.get_tree().create_timer(0.001).connect("timeout", self, "newday")

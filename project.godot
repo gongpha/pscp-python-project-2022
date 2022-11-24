@@ -59,6 +59,10 @@ repeat={
  ]
 }
 
+[network]
+
+limits/debugger_stdout/max_chars_per_second=8192
+
 [physics]
 
 common/physics_fps=180
