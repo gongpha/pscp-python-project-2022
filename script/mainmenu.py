@@ -25,7 +25,7 @@ class mainmenu(Control):
 		self.item_list = {
 			"Start": {
 				'description': "Start the game",
-				'callback': None
+				'callback': self.start
 			},
 			"Settings": {
 				'description': "Change the game settings",
@@ -196,3 +196,7 @@ class mainmenu(Control):
 	def option_exit_confirmed(self, _):
 		""" Exit (REAL) """
 		self.get_tree().quit()
+
+	def start(self, _):
+		""" LET'S GOOOOOOOOOO """
+		self.get_tree().change_scene("res://scene/game.tscn")
