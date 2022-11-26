@@ -1,7 +1,7 @@
 from godot import exposed, Vector2, Array, Color, Vector3
 from godot import *
 
-from .utils import linear2db
+from .utils import PYPORT
 
 @exposed
 class Settings(Control):
@@ -9,10 +9,12 @@ class Settings(Control):
     music_slider : HSlider
     fullscreen_box : CheckBox
     vsync_box : CheckBox
+    pyport : Node
+    settings_dict : dict
 
     def _ready(self) :
-        self.master_slider = self.get_node("vbox/master_label")
-        self.music_slider = self.get_node("vbox/music_label")
+        self.master_slider = self.get_node("vbox/master")
+        self.music_slider = self.get_node("vbox/music")
         self.fullscreen_box = self.get_node("vbox/fullscreen")
         self.vsync_box = self.get_node("vbox/vsync")
 
@@ -21,14 +23,35 @@ class Settings(Control):
         self.fullscreen_box.connect("toggled", self, "_fullscreen_toggled")
         self.vsync_box.connect("toggled", self, "_vsync_toggled")
 
+        self.pyport = PYPORT(self)
+        self.settings_dict = self.pyport.get("settings")
+
+        self.update_settings()
+
+    def update_settings(self) :
+        """ Update the settings from the files """
+        self.master_slider.value = self.settings_dict.get("master_volume", 1.0)
+        self.music_slider.value = self.settings_dict.get("music_volume", 1.0)
+        self.fullscreen_box.pressed = self.settings_dict.get("fullscreen", False)
+        self.vsync_box.pressed = self.settings_dict.get("vsync", True)
+
+
     def _master_volume_changed(self, val : float):
-        AudioServer.get_bus_index("Master").set_volume_db(linear2db(val))
+        self.settings_dict["master_volume"] = val
+        self.apply()
 
     def _music_volume_changed(self, val : float):
-        AudioServer.get_bus_index("Music").set_volume_db(linear2db(val))
+        self.settings_dict["music_volume"] = val
+        self.apply()
 
     def _fullscreen_toggled(self, val : bool):
-        OS.set_window_fullscreen(val)
+        self.settings_dict["fullscreen"] = val
+        self.apply()
 
     def _vsync_toggled(self, val : bool):
-        OS.set_use_vsync(val)
+        self.settings_dict["vsync"] = val
+        self.apply()
+
+    def apply(self):
+        self.pyport.call("settings_apply")
+        self.pyport.call("settings_save")
