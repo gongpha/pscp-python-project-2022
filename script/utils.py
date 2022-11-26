@@ -2,6 +2,7 @@
 
 # Most of them are implemented like Godot's built-in functions.
 
+import math
 
 def GDPORT(self):
     """ Get the GDScript PORT node. """
@@ -20,3 +21,7 @@ def clamp(value: float, min_value: float, max_value: float) -> float:
 def lerp(a: float, b: float, t: float) -> float:
     """Linear interpolate on the value. """
     return (1 - t) * a + t * b
+
+def linear2db(volume : float) -> float:
+    """ Convert linear volume to decibel. """
+    return math.log(volume) * 8.6858896380650365530225783783321
