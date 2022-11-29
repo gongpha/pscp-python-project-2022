@@ -20,6 +20,7 @@ class mainmenu(Control):
 		self.title_original = self.title.text
 		self.ani = self.get_node("ani")
 		self.things = self.get_node("things/inside")
+		self.settings_node = self.things.get_node("SETTINGS")
 
 		# Customize this to change the menu list
 		self.item_list = {
@@ -60,7 +61,7 @@ class mainmenu(Control):
 		# And the item too
 		target_item.get_node("text").modulate = Color(1, 1, 1, 1)
 
-	def go_to(self, item_list, current_item=None, attached_scene: PackedScene = None):
+	def go_to(self, item_list, current_item=None, attached_scene = None):
 		""" Go to a layout """
 		self.current_menu_list = item_list
 
@@ -91,8 +92,10 @@ class mainmenu(Control):
 		# First, clear the menu
 		for node in self.menu_list.get_children():
 			node.queue_free()  # Delete the node (item)
-		if self.things.get_child_count() > 0:
-			self.things.get_child(0).queue_free()
+		for c in self.things.get_children() :
+			if str(c.name) != "SETTINGS" :
+				c.queue_free()
+		self.settings_node.hide()
 
 		# Load "Menu Items" scene
 		row_scene = ResourceLoader.load("res://scene/mainmenu_row.tscn")
@@ -112,10 +115,15 @@ class mainmenu(Control):
 			row_node.connect("on_clicked", self,
 							 "_on_item_clicked", Array([name, row_node]))
 		
-		if attached_scene:
+		if isinstance(attached_scene, PackedScene):
 			# Add "things" here
 			new_thing_instance = attached_scene.instance()
 			self.things.add_child(new_thing_instance)
+			new_thing_instance.raise_()
+
+		elif isinstance(attached_scene, GDString):
+			# Show settings
+			self.settings_node.show()
 
 		if isinstance(current_item, GDString):
 			self.get_tree().create_timer(0.001).connect(
@@ -169,7 +177,7 @@ class mainmenu(Control):
 				'description': "Go back to the main menu",
 				'callback': -1
 			}
-		}, item_that_was_clicked, ResourceLoader.load("res://scene/sub/settings.tscn"))
+		}, item_that_was_clicked, "SETTINGS")
 
 	def option_credits(self, item_that_was_clicked):
 		""" Credits """

@@ -1,10 +1,10 @@
-from godot import exposed, Vector2, Array, Color, Vector3
+from godot import exposed, Node
 from godot import *
 
 from .utils import PYPORT
 
 @exposed
-class Settings(Control):
+class Settings(Node):
     master_slider : HSlider
     music_slider : HSlider
     fullscreen_box : CheckBox

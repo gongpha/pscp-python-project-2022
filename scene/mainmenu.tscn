@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/font/font_title.tres" type="DynamicFont" id=2]
 [ext_resource path="res://script/mainmenu.py" type="Script" id=3]
+[ext_resource path="res://scene/sub/settings.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ProceduralSky" id=16]
 sky_top_color = Color( 0.121569, 0.0196078, 0.270588, 1 )
@@ -112,6 +113,12 @@ margin_right = 819.2
 margin_bottom = 360.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="SETTINGS" parent="things/inside" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 819.0
+margin_bottom = 360.0
 
 [node name="menu_list" type="VBoxContainer" parent="."]
 anchor_left = 0.1

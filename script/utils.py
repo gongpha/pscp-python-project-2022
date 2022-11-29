@@ -24,4 +24,6 @@ def lerp(a: float, b: float, t: float) -> float:
 
 def linear2db(volume : float) -> float:
     """ Convert linear volume to decibel. """
+    if volume == 0:
+        return -80 # math domain goes bruh
     return math.log(volume, 10) * 8.6858896380650365530225783783321
