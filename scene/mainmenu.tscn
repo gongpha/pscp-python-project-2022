@@ -90,10 +90,10 @@ render_target_update_mode = 3
 
 [node name="worldspawn" parent="vc/v" instance=ExtResource( 1 )]
 
-[node name="environment" parent="vc/v/worldspawn" index="5"]
+[node name="environment" parent="vc/v/worldspawn" index="4"]
 environment = null
 
-[node name="clock" parent="vc/v/worldspawn" index="7"]
+[node name="clock" parent="vc/v/worldspawn" index="5"]
 visible = false
 
 [node name="cam" type="Camera" parent="vc/v"]

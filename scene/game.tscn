@@ -431,7 +431,7 @@ texture = ExtResource( 3 )
 stretch_mode = 4
 
 [node name="customer" type="Spatial" parent="."]
-transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.634208, 0.000517964, 0.267385 )
 
 [node name="mesh" type="MeshInstance" parent="customer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.986392, -2.5575 )
@@ -614,7 +614,7 @@ texture = SubResource( 12 )
 stretch_mode = 4
 
 [node name="player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77254, 0 )
+transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.150936, 1.76804, 0.0503787 )
 __meta__ = {
 "_editor_description_": "A python pet"
 }

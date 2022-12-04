@@ -55,6 +55,15 @@ singletons=[ "res://pythonscript.gdnlib" ]
 common/drop_mouse_on_gui_input_disabled=true
 theme/custom="res://resource/maintheme.tres"
 
+[importer_defaults]
+
+texture_3d={
+"flags/filter": false
+}
+texture={
+"flags/filter": false
+}
+
 [input]
 
 repeat={
