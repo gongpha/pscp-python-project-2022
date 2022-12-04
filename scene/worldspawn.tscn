@@ -1,5 +1,6 @@
 [gd_scene load_steps=31 format=2]
 
+[ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
 [ext_resource path="res://scene/sub/clock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/worldspawn.py" type="Script" id=4]
@@ -13,7 +14,6 @@
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
 [ext_resource path="res://resource/texture/3d/white_e10_noglow.tres" type="Material" id=13]
 [ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
-[ext_resource path="res://resource/worldspawn_default_env.tres" type="Environment" id=15]
 [ext_resource path="res://resource/mesh/box1h3.mesh" type="ArrayMesh" id=16]
 [ext_resource path="res://resource/texture/3d/pop14.png" type="Texture" id=17]
 
@@ -103,7 +103,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.826476, 0 )
 shape = SubResource( 19 )
 
 [node name="environment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 15 )
+environment = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
