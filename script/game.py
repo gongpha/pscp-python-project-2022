@@ -46,10 +46,22 @@ class Game(Control):
     motd: ColorRect  # MOTD (Message of the day) Black screen
     endday: ColorRect  # End day black transparent screen
     endday_day: Label  # The current day text
+
+    won_left: Label
+    won_right: Label
+    streak_left: Label
+    streak_right: Label
+    rank: Label
+
     motd_day: Label  # The current day in MOTD (THE BIG TEXT)
 
     hint_day: Label  # Day text
     balance_text: Label  # Balance Text (used $ as a placeholder)
+    customer_counter: Label # Customer Label
+
+    sold: Label
+    add_bal: Label
+    streak_label: Label
 
     counting : bool = False
     #tscale: float = 0.04  # Time scale
@@ -67,6 +79,11 @@ class Game(Control):
     confirm_order_value: float = 0.0
 
     day_counter_item : int = 0
+
+    customer_count : int = 0
+
+    who : int = 0
+    streak : int = 0
 
     def _ready(self):
         # Get the nodes
@@ -93,11 +110,23 @@ class Game(Control):
 
         self.motd = self.get_node("motd")
         self.endday = self.get_node("endday")
-        self.endday_day = self.get_node("endday/endday/vbox/day")
+
+        self.endday_day = self.get_node("endday/endday/vbox/hbox/day")
+        self.won_left = self.get_node("endday/endday/vbox/won/a")
+        self.won_right = self.get_node("endday/endday/vbox/won/b")
+        self.streak_left = self.get_node("endday/endday/vbox/streak/a")
+        self.streak_right = self.get_node("endday/endday/vbox/streak/b")
+        self.rank = self.get_node("endday/endday/vbox/rank/b")
+
+        self.sold = self.get_node("endday/endday/vbox/sold")
+        self.add_bal = self.get_node("endday/endday/vbox/add_bal")
+        self.streak_label = self.get_node("ui/vbox/streak")
+
         self.motd_day = self.get_node("motd/day")
 
         self.hint_day = self.get_node("ui/vbox/day")
         self.balance_text = self.get_node("ui/vbox/balance")
+        self.customer_counter = self.get_node("ui/vbox/customer_counter")
 
         input_node: Node = self.get_node("input")
         input_node.connect("input", self, "_input_proxy",
@@ -124,6 +153,10 @@ class Game(Control):
 
         # Prepare items on the shelf
         self.prepare_items()
+
+        self.update_customer_count(0)
+        self.update_streak_count(0)
+        self.won = 0
 
         # Show MOTD screen
         self.motd_day.text = "Day %d" % self.current_day
@@ -156,7 +189,11 @@ class Game(Control):
                     self.dialogue_repeat = []
         elif ani_name == "customer_exit":
             # NEXT
-            self.feed_customer()
+            self.update_customer_count(self.customer_count + 1)
+            if self.customer_count >= MAX_CUSTOMERS:
+                self.go_endday() # end
+            else :
+                self.feed_customer() # NEXT !
 
     def feed_customer(self):
         """ Summon thee customer """
@@ -262,6 +299,14 @@ class Game(Control):
         self.balance = int(new_b)
         self.balance_text.text = "$" + str(self.balance)
 
+    def update_customer_count(self, ccc : int):
+        self.customer_count = ccc
+        self.customer_counter.text = "Encountered %d Customers" % ccc
+
+    def update_streak_count(self, ccc : int):
+        self.streak = ccc
+        self.streak_label.text = "%d STREAK" % ccc
+
     def _process(self, delta: float):
         """ Called every frame """
         if self.holding_confirm:
@@ -348,12 +393,15 @@ class Game(Control):
             # not complete shit
             self.dialogue_lines = dialogue.order_not_complete
             clone_list = self.order["items"].copy()
+            self.update_streak_count(0)
         else:
             # YES
             for a in added:
                 self.update_balance(self.balance + (a.price * 1.2))
                 a.queue_free()
                 self.day_counter_item += 1
+            self.update_streak_count(self.streak + 1)
+            self.won += 1
             self.dialogue_lines = dialogue.order_ok
             self.order["status"] = "completed"
         self.dialogue_lines = self.dialogue_lines.copy()
@@ -406,6 +454,7 @@ class Game(Control):
             return
         if self.order:
             self.order["status"] = "failed"
+            self.update_streak_count(0)
         self.dialogue_lines = dialogue.order_timeout.copy()
         self.show_dialogue()
 
@@ -414,18 +463,45 @@ class Game(Control):
         if self.player.get("is_look_front") :
             return
         items = self.get_all_item_objects()
-        if items.size() < 4 :
+        if items.size() < 6 :
             self.prepare_items()
 
     def go_endday(self):
         """ Emit the end day screen """
         self.endday_day.text = str(self.current_day)
         Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-        self.endday.show()
-        self.set_process(False)
+
+        self.endday_day.text = str(self.current_day)
+        self.won_left.text = "Won : %d/%d" % (
+            self.won, self.customer_count
+        )
+        self.won_right.text = "%d x 50 = %d" % (
+            self.won, self.won * 50
+        )
+        self.streak_left.text = "Longest Streak : %d" % (
+            self.streak
+        )
+        self.streak_right.text = "%d x 50 = %d" % (
+            self.streak, self.streak * 50
+        )
+        self.rank.text = '?'
         
         self.sold.text = "%d items sold" % self.day_counter_item
-        self.add_bal.text = "+$%d" % (self.balance - self.day_start_balance)
+        
+        diff = self.balance - self.day_start_balance
+        if diff > 0:
+            self.add_bal.text = "+$%d" % diff
+            self.add_bal.add_color_override("font_color", Color(0.5, 1, 0.5, 1))
+            self.add_bal.show()
+        elif diff < 0:
+            self.add_bal.text = "-$%d" % diff
+            self.add_bal.add_color_override("font_color", Color(1, 0.5, 0.5, 1))
+            self.add_bal.show()
+        else:
+            self.add_bal.hide()
+
+        self.endday.show()
+        self.set_process(False)
 
     def _on_next_button_pressed(self) :
         """ Go to the next day """

@@ -72,11 +72,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
 
-[node name="background" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 1 )
-
 [node name="vc" type="ViewportContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0

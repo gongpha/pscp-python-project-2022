@@ -1,9 +1,9 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
 [ext_resource path="res://resource/texture/cursor.png" type="Texture" id=3]
-[ext_resource path="res://resource/texture/customer_base.png" type="Texture" id=4]
+[ext_resource path="res://resource/spritesheet/customer.tres" type="SpriteFrames" id=4]
 [ext_resource path="res://resource/texture/ui1.png" type="Texture" id=5]
 [ext_resource path="res://resource/texture/key1.png" type="Texture" id=6]
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=8]
@@ -444,54 +444,6 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="AtlasTexture" id=15]
-flags = 19
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=16]
-flags = 19
-atlas = ExtResource( 4 )
-region = Rect2( 0, 32, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=17]
-flags = 19
-atlas = ExtResource( 4 )
-region = Rect2( 0, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=18]
-flags = 19
-atlas = ExtResource( 4 )
-region = Rect2( 96, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=19]
-flags = 19
-atlas = ExtResource( 4 )
-region = Rect2( 96, 32, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=20]
-flags = 19
-atlas = ExtResource( 4 )
-region = Rect2( 96, 64, 32, 32 )
-
-[sub_resource type="SpriteFrames" id=21]
-animations = [ {
-"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 15 ), SubResource( 17 ) ],
-"loop": true,
-"name": "down",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 15 ) ],
-"loop": true,
-"name": "down_reset",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 18 ), SubResource( 20 ) ],
-"loop": true,
-"name": "right",
-"speed": 5.0
-} ]
-
 [sub_resource type="StyleBoxTexture" id=9]
 texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 16, 16 )
@@ -546,8 +498,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.2, -3 )
 [node name="customer" type="AnimatedSprite3D" parent="customer"]
 pixel_size = 0.075
 shaded = true
+double_sided = false
 alpha_cut = 2
-frames = SubResource( 21 )
+frames = ExtResource( 4 )
 animation = "right"
 
 [node name="dialogue" type="PanelContainer" parent="."]
@@ -607,7 +560,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="day" type="Label" parent="ui/vbox"]
-margin_right = 52.0
+margin_right = 252.0
 margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
@@ -616,12 +569,30 @@ text = "Day #"
 
 [node name="balance" type="Label" parent="ui/vbox"]
 margin_top = 26.0
-margin_right = 52.0
+margin_right = 252.0
 margin_bottom = 48.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "$0"
+
+[node name="customer_counter" type="Label" parent="ui/vbox"]
+margin_top = 52.0
+margin_right = 252.0
+margin_bottom = 74.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "Encountered 0 Customers"
+
+[node name="streak" type="Label" parent="ui/vbox"]
+margin_top = 78.0
+margin_right = 252.0
+margin_bottom = 100.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "0 STREAK"
 
 [node name="hint" type="VBoxContainer" parent="ui"]
 anchor_left = 1.0
@@ -732,44 +703,111 @@ margin_right = 124.5
 margin_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
+rect_min_size = Vector2( 512, 0 )
 
 [node name="vbox" type="VBoxContainer" parent="endday/endday"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 242.0
-margin_bottom = 205.0
+margin_right = 505.0
+margin_bottom = 279.0
 
-[node name="title" type="Label" parent="endday/endday/vbox"]
-margin_right = 235.0
-margin_bottom = 22.0
+[node name="hbox" type="HBoxContainer" parent="endday/endday/vbox"]
+margin_left = 140.0
+margin_right = 358.0
+margin_bottom = 66.0
+size_flags_horizontal = 4
+
+[node name="title" type="Label" parent="endday/endday/vbox/hbox"]
+margin_top = 22.0
+margin_right = 178.0
+margin_bottom = 44.0
 text = "The end of the day"
 
-[node name="day" type="Label" parent="endday/endday/vbox"]
-margin_top = 26.0
-margin_right = 235.0
-margin_bottom = 114.0
+[node name="day" type="Label" parent="endday/endday/vbox/hbox"]
+margin_left = 182.0
+margin_right = 218.0
+margin_bottom = 66.0
 custom_fonts/font = ExtResource( 9 )
 text = "1"
 align = 1
 
+[node name="won" type="HBoxContainer" parent="endday/endday/vbox"]
+margin_top = 70.0
+margin_right = 498.0
+margin_bottom = 92.0
+
+[node name="a" type="Label" parent="endday/endday/vbox/won"]
+margin_right = 108.0
+margin_bottom = 22.0
+text = "Won : 15/15"
+
+[node name="b" type="Label" parent="endday/endday/vbox/won"]
+margin_left = 374.0
+margin_right = 498.0
+margin_bottom = 22.0
+size_flags_horizontal = 14
+text = "15 x 50 = 750"
+align = 1
+
+[node name="streak" type="HBoxContainer" parent="endday/endday/vbox"]
+margin_top = 96.0
+margin_right = 498.0
+margin_bottom = 118.0
+
+[node name="a" type="Label" parent="endday/endday/vbox/streak"]
+margin_right = 186.0
+margin_bottom = 22.0
+text = "Longest Streak : 15"
+
+[node name="b" type="Label" parent="endday/endday/vbox/streak"]
+margin_left = 374.0
+margin_right = 498.0
+margin_bottom = 22.0
+size_flags_horizontal = 14
+text = "15 x 50 = 750"
+align = 1
+
+[node name="rank" type="HBoxContainer" parent="endday/endday/vbox"]
+margin_left = 192.0
+margin_top = 122.0
+margin_right = 306.0
+margin_bottom = 188.0
+size_flags_horizontal = 4
+custom_constants/separation = 32
+
+[node name="a" type="Label" parent="endday/endday/vbox/rank"]
+margin_top = 22.0
+margin_right = 46.0
+margin_bottom = 44.0
+text = "Rank"
+
+[node name="b" type="Label" parent="endday/endday/vbox/rank"]
+margin_left = 78.0
+margin_right = 114.0
+margin_bottom = 66.0
+size_flags_horizontal = 14
+custom_fonts/font = ExtResource( 9 )
+text = "A"
+align = 1
+
 [node name="sold" type="Label" parent="endday/endday/vbox"]
-margin_top = 118.0
-margin_right = 235.0
-margin_bottom = 140.0
+margin_top = 192.0
+margin_right = 498.0
+margin_bottom = 214.0
 text = "[ . . . ]"
 align = 1
 
 [node name="add_bal" type="Label" parent="endday/endday/vbox"]
-margin_top = 144.0
-margin_right = 235.0
-margin_bottom = 166.0
+margin_top = 218.0
+margin_right = 498.0
+margin_bottom = 240.0
 text = "[ . . . ]"
 align = 1
 
 [node name="continue" type="Button" parent="endday/endday/vbox"]
-margin_top = 170.0
-margin_right = 235.0
-margin_bottom = 198.0
+margin_top = 244.0
+margin_right = 498.0
+margin_bottom = 272.0
 text = "Sleep"
 
 [node name="motd" type="ColorRect" parent="."]
