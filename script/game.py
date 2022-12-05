@@ -16,6 +16,9 @@ ITEM_PATHS = [
 ]
 
 MAX_EACH_ITEM_COUNT = 3
+MIN_CUSTOMERS = 10
+MAX_CUSTOMERS = 30
+CUSTOMER_TIMER = 15.0
 
 @exposed
 class Game(Control):
@@ -48,8 +51,8 @@ class Game(Control):
     hint_day: Label  # Day text
     balance_text: Label  # Balance Text (used $ as a placeholder)
 
-    starting : bool = False
-    tscale: float = 0.04  # Time scale
+    counting : bool = False
+    #tscale: float = 0.04  # Time scale
     current_day: int = 1
     balance: int = 1000
 
@@ -113,8 +116,8 @@ class Game(Control):
         """ Called when a game day starts """
 
         # Reset these
-        self.sun.rotation = Vector3()
-        self.clock_hand_root.rotation = Vector3()
+        #self.sun.rotation = Vector3()
+        self.reset_clock()
 
         # Random its seed by the current time
         self.rng.randomize()
@@ -138,20 +141,21 @@ class Game(Control):
             self.set_process(True)  # Start the game loop
             self.rng.randomize()  # Randomize the seed
 
-            self.starting = True
-
             # Summon the customer
             self.feed_customer()
         elif ani_name == "customer_enter":
             self.fetch_order()
+            self.counting = True
         elif ani_name == "dialogue_enter":
             self.feed_dialogue()
         elif ani_name == "dialogue_exit":
             if self.order:
-                if self.order["completed"]:
+                if self.order["status"] != "pending":
                     self.ani.play("customer_exit")
+                    self.counting = False
                     self.order = None
                     self.dialogue_repeat = []
+                    self.reset_clock()
         elif ani_name == "customer_exit":
             # NEXT
             self.feed_customer()
@@ -178,7 +182,7 @@ class Game(Control):
 
         self.order = {
             'items': order_item,
-            'completed': False
+            'status': "pending",
         }
 
         # Randomize an item count
@@ -289,13 +293,24 @@ class Game(Control):
                 self.dialogue_animating_chars = False
                 self.adv_hint.show()
 
-        if 0.01 < self.clock_hand_root.rotation.z < 0.1 :
-            self.starting = False
-            self.go_endday()
+        self.update_clock(delta)
+
+    def reset_clock(self):
+        self.clock_hand_root.rotation = Vector3()
+
+    def update_clock(self, delta: float):
+        """ clock """
+        if 0.001 < self.clock_hand_root.rotation.z < 0.01 :
+            # when the clock hand is about to reach the 12 o'clock
+            # TIMEOUT !!!
+            self.counting = False
+            self.force_timeout()
+            #self.go_endday()
         else :
-            if self.starting : 
-                self.sun.rotate_x(delta * self.tscale)
-                self.clock_hand_root.rotate_z(-delta * 2.0 * self.tscale)
+            if self.counting :
+                add = (delta / CUSTOMER_TIMER)
+                #self.sun.rotate_x(delta * inv)
+                self.clock_hand_root.rotate_z(-add * 2 * math.pi)
 
     def check_items(self):
         """ Check items on the counter """
@@ -341,7 +356,7 @@ class Game(Control):
                 a.queue_free()
                 self.day_counter_item += 1
             self.dialogue_lines = dialogue.order_ok
-            self.order["completed"] = True
+            self.order["status"] = "completed"
         self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
 
@@ -382,6 +397,15 @@ class Game(Control):
         if self.dialogue_panel.visible:
             return
         self.dialogue_lines = self.dialogue_repeat.copy()
+        self.show_dialogue()
+
+    def force_timeout(self):
+        """ Repeat the dialogue """
+        if self.dialogue_panel.visible:
+            return
+        if self.order:
+            self.order["status"] = "failed"
+        self.dialogue_lines = dialogue.order_timeout
         self.show_dialogue()
 
     def _on_player_look_front(self) :
