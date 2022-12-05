@@ -1,9 +1,9 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
 [ext_resource path="res://resource/texture/cursor.png" type="Texture" id=3]
-[ext_resource path="res://resource/texture/customer_prototype1.png" type="Texture" id=4]
+[ext_resource path="res://resource/texture/customer_base.png" type="Texture" id=4]
 [ext_resource path="res://resource/texture/ui1.png" type="Texture" id=5]
 [ext_resource path="res://resource/texture/key1.png" type="Texture" id=6]
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=8]
@@ -37,7 +37,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("customer:scale")
+tracks/2/path = NodePath("dialogue:anchor_top")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -46,10 +46,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ) ]
+"values": [ 0.83 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("dialogue:anchor_top")
+tracks/3/path = NodePath("dialogue:anchor_bottom")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -61,7 +61,7 @@ tracks/3/keys = {
 "values": [ 0.83 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("dialogue:anchor_bottom")
+tracks/4/path = NodePath("dialogue:rect_min_size")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -70,10 +70,10 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.83 ]
+"values": [ Vector2( 512, 64 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("dialogue:rect_min_size")
+tracks/5/path = NodePath("dialogue:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -82,10 +82,10 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 512, 64 ) ]
+"values": [ false ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("dialogue:visible")
+tracks/6/path = NodePath("motd:anchor_top")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -94,10 +94,10 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ 0.0 ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("motd:anchor_top")
+tracks/7/path = NodePath("motd:anchor_bottom")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -106,10 +106,10 @@ tracks/7/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ 1.0 ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("motd:anchor_bottom")
+tracks/8/path = NodePath("motd:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -118,10 +118,10 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 1.0 ]
+"values": [ false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("motd:visible")
+tracks/9/path = NodePath("dialogue/rich/advance:modulate")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -130,10 +130,10 @@ tracks/9/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("dialogue/rich/advance:modulate")
+tracks/10/path = NodePath("dialogue/rich/advance:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -142,10 +142,10 @@ tracks/10/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"values": [ true ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("dialogue/rich/advance:visible")
+tracks/11/path = NodePath("customer:translation")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -154,37 +154,110 @@ tracks/11/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ Vector3( -4, 1.2, -3 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("customer/customer:playing")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("customer/customer:animation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "right" ]
 }
 
 [sub_resource type="Animation" id=6]
 resource_name = "customer_enter"
+length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("customer:scale")
+tracks/0/path = NodePath("customer:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 1, 1, 1 ) ]
+"values": [ Vector3( -4, 1.2, -3 ), Vector3( 0.7, 1.2, -3 ), Vector3( 0.7, 1.2, -2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("customer/customer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("customer/customer:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ "right", "down", "down_reset" ]
 }
 
 [sub_resource type="Animation" id=13]
 resource_name = "customer_exit"
 tracks/0/type = "value"
-tracks/0/path = NodePath("customer:scale")
+tracks/0/path = NodePath("customer/customer:playing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("customer/customer:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "right" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("customer:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 1, 1, 1 ), Vector3( 0, 0, 0 ) ]
+"values": [ Vector3( 0.7, 1.2, -2 ), Vector3( 3, 1.2, -2 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -371,16 +444,53 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="CapsuleMesh" id=3]
-radius = 0.5
+[sub_resource type="AtlasTexture" id=15]
+flags = 19
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0, 0, 0, 1 )
+[sub_resource type="AtlasTexture" id=16]
+flags = 19
+atlas = ExtResource( 4 )
+region = Rect2( 0, 32, 32, 32 )
 
-[sub_resource type="SphereMesh" id=5]
-material = SubResource( 4 )
-radius = 0.064
-height = 0.128
+[sub_resource type="AtlasTexture" id=17]
+flags = 19
+atlas = ExtResource( 4 )
+region = Rect2( 0, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 19
+atlas = ExtResource( 4 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 19
+atlas = ExtResource( 4 )
+region = Rect2( 96, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 19
+atlas = ExtResource( 4 )
+region = Rect2( 96, 64, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=21]
+animations = [ {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 15 ), SubResource( 17 ) ],
+"loop": true,
+"name": "down",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ) ],
+"loop": true,
+"name": "down_reset",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 18 ), SubResource( 20 ) ],
+"loop": true,
+"name": "right",
+"speed": 5.0
+} ]
 
 [sub_resource type="StyleBoxTexture" id=9]
 texture = ExtResource( 5 )
@@ -431,27 +541,14 @@ texture = ExtResource( 3 )
 stretch_mode = 4
 
 [node name="customer" type="Spatial" parent="."]
-transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.634208, 0.000517964, 0.267385 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.2, -3 )
 
-[node name="mesh" type="MeshInstance" parent="customer"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.986392, -2.5575 )
-visible = false
-mesh = SubResource( 3 )
-
-[node name="eye" type="MeshInstance" parent="customer"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.273014, 1.49891, -2.07936 )
-visible = false
-mesh = SubResource( 5 )
-
-[node name="eye2" type="MeshInstance" parent="customer"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.273, 1.48894, -2.095 )
-visible = false
-mesh = SubResource( 5 )
-
-[node name="Sprite3D" type="Sprite3D" parent="customer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14152, -1.79993 )
+[node name="customer" type="AnimatedSprite3D" parent="customer"]
 pixel_size = 0.075
-texture = ExtResource( 4 )
+shaded = true
+alpha_cut = 2
+frames = SubResource( 21 )
+animation = "right"
 
 [node name="dialogue" type="PanelContainer" parent="."]
 visible = false

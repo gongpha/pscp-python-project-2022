@@ -152,10 +152,8 @@ class Game(Control):
             if self.order:
                 if self.order["status"] != "pending":
                     self.ani.play("customer_exit")
-                    self.counting = False
                     self.order = None
                     self.dialogue_repeat = []
-                    self.reset_clock()
         elif ani_name == "customer_exit":
             # NEXT
             self.feed_customer()
@@ -304,6 +302,7 @@ class Game(Control):
             # when the clock hand is about to reach the 12 o'clock
             # TIMEOUT !!!
             self.counting = False
+            self.reset_clock()
             self.force_timeout()
             #self.go_endday()
         else :
@@ -359,6 +358,8 @@ class Game(Control):
             self.order["status"] = "completed"
         self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
+        self.counting = False
+        self.reset_clock()
 
     def _input_proxy(self, event):
         """ Proxy for the input event """
@@ -405,7 +406,7 @@ class Game(Control):
             return
         if self.order:
             self.order["status"] = "failed"
-        self.dialogue_lines = dialogue.order_timeout
+        self.dialogue_lines = dialogue.order_timeout.copy()
         self.show_dialogue()
 
     def _on_player_look_front(self) :
