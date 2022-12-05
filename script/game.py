@@ -443,6 +443,8 @@ class Game(Control):
         """ Proxy for the input event """
         if event.is_action_released("ui_cancel"):
             self.toggle_pausemenu()
+            self.confirmorder.modulate = Color(1, 1, 1, 1)
+            self.holding_confirm = False
 
         if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
             return
