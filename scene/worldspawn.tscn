@@ -227,6 +227,7 @@ shape = SubResource( 34 )
 [node name="test" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
 stream = ExtResource( 2 )
+autoplay = true
 
 [node name="clock" type="MeshInstance" parent="."]
 transform = Transform( 0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1.63823, 2.60426, -0.917271 )

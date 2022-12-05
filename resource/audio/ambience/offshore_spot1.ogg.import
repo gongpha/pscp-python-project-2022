@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/offshore_spot1.ogg-cb55af2cdaf7156dcce97fed1e9f2ff3.oggstr"
+
+[deps]
+
+source_file="res://resource/audio/ambience/offshore_spot1.ogg"
+dest_files=[ "res://.import/offshore_spot1.ogg-cb55af2cdaf7156dcce97fed1e9f2ff3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

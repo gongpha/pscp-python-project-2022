@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/woods_coast.ogg-ec8f37bba47027618df51abc87a8c26b.oggstr"
+
+[deps]
+
+source_file="res://resource/audio/ambience/woods_coast.ogg"
+dest_files=[ "res://.import/woods_coast.ogg-ec8f37bba47027618df51abc87a8c26b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
