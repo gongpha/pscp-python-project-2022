@@ -15,6 +15,7 @@ ITEM_PATHS = [
     "res://scene/item/tin.tscn"
 ]
 
+MAX_EACH_ITEM_COUNT = 3
 
 @exposed
 class Game(Control):
@@ -181,7 +182,7 @@ class Game(Control):
         }
 
         # Randomize an item count
-        item_count = self.rng.randi_range(1, 6)
+        item_count = self.rng.randi_range(1, MAX_EACH_ITEM_COUNT)
         for _ in range(item_count):
             while True:
                 # Randomize an item
@@ -388,7 +389,7 @@ class Game(Control):
         if self.player.get("is_look_front") :
             return
         items = self.get_all_item_objects()
-        if items.size() < 10 :
+        if items.size() < 4 :
             self.prepare_items()
 
     def go_endday(self):
