@@ -121,10 +121,13 @@ margin_right = 819.0
 margin_bottom = 360.0
 
 [node name="menu_list" type="VBoxContainer" parent="."]
-anchor_left = 0.1
-anchor_top = 0.9
-anchor_right = 0.1
+anchor_left = 0.056
+anchor_top = 0.324
+anchor_right = 0.929
 anchor_bottom = 0.9
+margin_left = 44.656
+margin_top = 345.6
+margin_right = -849.296
 grow_vertical = 0
 
 [node name="title" type="Label" parent="."]
