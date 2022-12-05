@@ -3,17 +3,25 @@ from godot import *
 
 # inspired (?) from half-life WON-edition menu
 
+from .utils import GDPORT
+
 @exposed
-class mainmenu(Control):
+class MainMenu(Control):
     """ Main menu """
 
     def_item_scale = Vector2(0.25, 0.25)
     current_menu_list = {}
     previous_clicked_item_name = None
 
+    item_scene : PackedScene
+
     def _ready(self):
         """ Ready ! """
+        self.item_scene = ResourceLoader.load("res://scene/mainmenu_row.tscn")
+
         # Setup nodes
+        self.pause_mode = Node.PAUSE_MODE_PROCESS
+
         self.menu_list = self.get_node("menu_list")
         self.tween = self.get_node("tween")
         self.title = self.get_node("title")
@@ -22,6 +30,12 @@ class mainmenu(Control):
         self.things = self.get_node("things/inside")
         self.settings_node = self.things.get_node("SETTINGS")
 
+        self.layout()
+
+        # Create a default menu
+        self.go_to(self.item_list)
+
+    def layout(self) :
         # Customize this to change the menu list
         self.item_list = {
             "Start": {
@@ -41,9 +55,6 @@ class mainmenu(Control):
                 'callback': self.option_exit
             }
         }
-
-        # Create a default menu
-        self.go_to(self.item_list)
 
     def _animated_normal(self, attached_scene):
         """ Called when the title animation is done """
@@ -98,11 +109,11 @@ class mainmenu(Control):
         self.settings_node.hide()
 
         # Load "Menu Items" scene
-        row_scene = ResourceLoader.load("res://scene/mainmenu_row.tscn")
+        
 
         # Add each item to the menu list
         for name, data in item_list.items():
-            row_node = row_scene.instance()  # Create a new instance of the item
+            row_node = self.item_scene.instance()  # Create a new instance of the item
             row_node.name = name  # Set the name of the item
             row_node.get_node("text").text = name  # Set item name
             # Set item description
@@ -207,4 +218,4 @@ class mainmenu(Control):
 
     def start(self, _):
         """ LET'S GOOOOOOOOOO """
-        self.get_tree().change_scene("res://scene/game.tscn")
+        GDPORT(self).call("go_to_game")

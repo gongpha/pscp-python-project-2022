@@ -7,6 +7,8 @@ from godot import *
 @exposed
 class Worldspawn(Spatial):
     def _ready(self):
+        self.pause_mode = Node.PAUSE_MODE_STOP
+
         self.set("counter_good", self.get_node("counter_good"))
         self.set("counter_bad", self.get_node("counter_bad"))
         self.set("sun", self.get_node("sun"))

@@ -79,7 +79,3 @@ valign = 1
 anims/RESET = SubResource( 1 )
 anims/glow_end = SubResource( 2 )
 anims/glow_start = SubResource( 3 )
-
-[connection signal="gui_input" from="text" to="." method="_on_text_gui_input"]
-[connection signal="mouse_entered" from="text" to="." method="_on_text_mouse_entered"]
-[connection signal="mouse_exited" from="text" to="." method="_on_text_mouse_exited"]

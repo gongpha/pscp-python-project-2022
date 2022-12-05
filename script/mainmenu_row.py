@@ -3,7 +3,7 @@ from godot import *
 
 
 @exposed
-class mainmenu_row(HBoxContainer):
+class MainMenuRow(HBoxContainer):
     """ Main menu choices """
 
     on_clicked = signal()
@@ -16,6 +16,9 @@ class mainmenu_row(HBoxContainer):
 
         # Get node references
         self.text_node = self.get_node("text")
+        self.text_node.connect("gui_input", self, "_on_text_gui_input")
+        self.text_node.connect("mouse_entered", self, "_on_text_mouse_entered")
+        self.text_node.connect("mouse_exited", self, "_on_text_mouse_exited")
         self.animation: AnimationPlayer = self.get_node("ani")
 
     def _on_text_gui_input(self, event):

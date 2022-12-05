@@ -85,7 +85,11 @@ class Game(Control):
     who : int = 0
     streak : int = 0
 
+    pausemenu : Control
+
     def _ready(self):
+        self.pause_mode = Node.PAUSE_MODE_PROCESS
+
         # Get the nodes
         self.worldspawn = self.get_node("worldspawn")
 
@@ -104,9 +108,11 @@ class Game(Control):
 
         self.player = self.get_node("player")
         self.player.connect("look_front", self, "_on_player_look_front")
+        self.player.pause_mode = Node.PAUSE_MODE_STOP
 
         self.ani = self.get_node("ani")
         self.ani.connect("animation_finished", self, "_on_ani_finished")
+        self.ani.pause_mode = Node.PAUSE_MODE_STOP
 
         self.motd = self.get_node("motd")
         self.endday = self.get_node("endday")
@@ -128,6 +134,14 @@ class Game(Control):
         self.balance_text = self.get_node("ui/vbox/balance")
         self.customer_counter = self.get_node("ui/vbox/customer_counter")
 
+        customer = self.get_node("customer")
+        customer.pause_mode = Node.PAUSE_MODE_STOP
+
+        self.pausemenu = self.get_node("pausemenu")
+        self.pausemenu.connect("on_resume", self, "toggle_pausemenu")
+        self.pausemenu.hide()
+        self.pausemenu.pause_mode = Node.PAUSE_MODE_PROCESS
+
         input_node: Node = self.get_node("input")
         input_node.connect("input", self, "_input_proxy",
                            Array(), Object.CONNECT_DEFERRED)
@@ -140,6 +154,18 @@ class Game(Control):
 
         # Now, LET'S GOOOOOOOOOOOOOOOOO
         self.newday()
+
+    def toggle_pausemenu(self):
+        if self.get_tree().paused:
+            self.get_tree().paused = False
+            self.pausemenu.reset()
+            self.pausemenu.hide()
+            if self.is_processing():
+                Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+        else:
+            self.pausemenu.show()
+            Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+            self.get_tree().paused = True
 
     def newday(self):
         """ Called when a game day starts """
@@ -309,6 +335,10 @@ class Game(Control):
 
     def _process(self, delta: float):
         """ Called every frame """
+
+        if self.get_tree().paused:
+            return
+
         if self.holding_confirm:
             self.confirm_order_value += delta * 75
             if self.confirm_order_value >= 100:
@@ -411,6 +441,9 @@ class Game(Control):
 
     def _input_proxy(self, event):
         """ Proxy for the input event """
+        if event.is_action_released("ui_cancel"):
+            self.toggle_pausemenu()
+
         if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
             return
 
@@ -503,7 +536,7 @@ class Game(Control):
         self.endday.show()
         self.set_process(False)
 
-    def _on_next_button_pressed(self) :
+    def _on_next_button_pressed(self):
         """ Go to the next day """
         self.current_day += 1
         self.ani.play("RESET")
