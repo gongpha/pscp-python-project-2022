@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
@@ -10,9 +10,7 @@
 [ext_resource path="res://resource/mesh/nink_hanoi.mesh" type="ArrayMesh" id=8]
 [ext_resource path="res://resource/mesh/base2.mesh" type="ArrayMesh" id=9]
 [ext_resource path="res://resource/mesh/nink_domemesh1.mesh" type="ArrayMesh" id=10]
-[ext_resource path="res://resource/font/font_secondary.tres" type="DynamicFont" id=11]
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
-[ext_resource path="res://resource/texture/3d/white_e10_noglow.tres" type="Material" id=13]
 [ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
 [ext_resource path="res://resource/mesh/box1h3.mesh" type="ArrayMesh" id=16]
 [ext_resource path="res://resource/texture/3d/pop14.png" type="Texture" id=17]
@@ -38,42 +36,6 @@ roughness = 0.0
 
 [sub_resource type="PlaneMesh" id=28]
 size = Vector2( 2048, 2048 )
-
-[sub_resource type="CubeMesh" id=33]
-size = Vector3( 33.072, 2.703, 19.9 )
-
-[sub_resource type="TextMesh" id=30]
-text = "Do your lovely"
-font = ExtResource( 11 )
-pixel_size = 0.2873
-curve_step = 0.1
-depth = 1.047
-
-[sub_resource type="SpatialMaterial" id=36]
-emission_enabled = true
-emission = Color( 1, 1, 1, 1 )
-emission_energy = 4.02
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="TextMesh" id=31]
-text = "<e>judge"
-font = ExtResource( 11 )
-pixel_size = 0.5117
-curve_step = 0.1
-depth = 1.047
-
-[sub_resource type="SpatialMaterial" id=35]
-albedo_color = Color( 0.0313726, 0, 1, 1 )
-emission_enabled = true
-emission = Color( 0, 0.317647, 1, 1 )
-emission_energy = 16.0
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="CylinderMesh" id=32]
-height = 40.674
-radial_segments = 4
 
 [sub_resource type="SpatialMaterial" id=37]
 albedo_texture = ExtResource( 17 )
@@ -337,30 +299,14 @@ transform = Transform( -1.09613, 0, 0.281398, 0, 1.13167, 0, -0.281398, 0, -1.09
 visible = false
 mesh = ExtResource( 9 )
 
-[node name="sign" type="MeshInstance" parent="."]
-transform = Transform( 0.103517, 0.0199924, -8.7389e-10, 0, -4.60848e-09, -0.10543, -0.0199924, 0.103517, -4.52487e-09, -0.558984, 1.7279, -14.6198 )
-mesh = SubResource( 33 )
-material/0 = ExtResource( 13 )
-
-[node name="blueberry" type="Sprite3D" parent="sign"]
-transform = Transform( -1, 8.74228e-08, 2.98023e-08, -2.98023e-08, -7.10543e-15, -1, -8.74228e-08, -1, 3.55271e-15, -11.554, -3.18752, -16.9339 )
-pixel_size = 0.0695
+[node name="blueberry" type="Sprite3D" parent="."]
+transform = Transform( -4.47787e-09, 1.08943e-09, -0.10543, 0.0249233, 0.102442, -3.99739e-16, 0.102442, -0.0249234, -4.60849e-09, 1.65249, 1.62221, -1.08227 )
+pixel_size = 0.012
+transparent = false
+shaded = true
+double_sided = false
 alpha_cut = 1
 texture = ExtResource( 12 )
-
-[node name="000" type="MeshInstance" parent="sign"]
-transform = Transform( 1, 4.44089e-15, -5.96046e-08, 5.96046e-08, 1.06581e-14, 1, -1.77636e-15, -1, 1.42109e-14, 0.401337, 1.02594, -3.42723 )
-mesh = SubResource( 30 )
-material/0 = SubResource( 36 )
-
-[node name="001" type="MeshInstance" parent="sign"]
-transform = Transform( 1, 4.44089e-15, -5.96046e-08, 5.96046e-08, 1.06581e-14, 1, -1.77636e-15, -1, 1.42109e-14, 0.788631, 1.04286, 4.62302 )
-mesh = SubResource( 31 )
-material/0 = SubResource( 35 )
-
-[node name="002" type="MeshInstance" parent="sign"]
-transform = Transform( 1, 0, -5.96046e-08, 5.96046e-08, -3.55271e-15, 1, -1.77636e-15, -1, 1.06581e-14, 0.704758, -1.34081, 23.1463 )
-mesh = SubResource( 32 )
 
 [node name="test" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
