@@ -204,7 +204,6 @@ class Game(Control):
             self.feed_customer()
         elif ani_name == "customer_enter":
             self.fetch_order()
-            self.counting = True
         elif ani_name == "dialogue_enter":
             self.feed_dialogue()
         elif ani_name == "dialogue_exit":
@@ -213,6 +212,8 @@ class Game(Control):
                     self.ani.play("customer_exit")
                     self.order = None
                     self.dialogue_repeat = []
+                else :
+                    self.counting = True
         elif ani_name == "customer_exit":
             # NEXT
             self.update_customer_count(self.customer_count + 1)
