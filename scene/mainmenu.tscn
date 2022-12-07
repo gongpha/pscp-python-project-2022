@@ -46,18 +46,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "re_glow_title"
 length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("title:custom_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 0.63728, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 3, 2, 1, 1 ) ]
-}
 
 [sub_resource type="Environment" id=5]
 background_mode = 4
@@ -88,7 +76,7 @@ render_target_update_mode = 3
 [node name="environment" parent="vc/v/worldspawn" index="4"]
 environment = null
 
-[node name="clock" parent="vc/v/worldspawn" index="15"]
+[node name="clock" parent="vc/v/worldspawn" index="16"]
 visible = false
 
 [node name="cam" type="Camera" parent="vc/v"]

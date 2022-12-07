@@ -144,8 +144,8 @@ class MainMenu(Control):
     def reverse_animation(self, current_item):
         """ Reverse the animation (Click a back button) """
         duration = 0.2
-        trans = 1  # Sine
-        ease = 1  # Out
+        trans = 7  # Cubic
+        ease = 0  # In
         self.title.text = current_item
         target_item = self.menu_list.get_node(str(current_item))
         target_item.get_node("text").modulate = Color(1, 1, 1, 0) # Hide that item !
