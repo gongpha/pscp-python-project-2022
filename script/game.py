@@ -435,10 +435,10 @@ class Game(Control):
             self.won += 1
             self.dialogue_lines = dialogue.order_ok
             self.order["status"] = "completed"
+            self.counting = False
+            self.reset_clock()
         self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
-        self.counting = False
-        self.reset_clock()
 
     def _input_proxy(self, event):
         """ Proxy for the input event """
@@ -486,8 +486,7 @@ class Game(Control):
 
     def force_timeout(self):
         """ Repeat the dialogue """
-        if self.dialogue_panel.visible:
-            return
+        # push the dialogue
         if self.order:
             self.order["status"] = "failed"
             self.update_streak_count(0)
