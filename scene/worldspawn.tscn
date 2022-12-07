@@ -2,10 +2,10 @@
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
+[ext_resource path="res://resource/mesh/bridge.mesh" type="ArrayMesh" id=3]
 [ext_resource path="res://script/worldspawn.py" type="Script" id=4]
 [ext_resource path="res://scene/sub/lamp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
-[ext_resource path="res://resource/mesh/bridge1.mesh" type="ArrayMesh" id=7]
 [ext_resource path="res://resource/mesh/nink_hanoi.mesh" type="ArrayMesh" id=8]
 [ext_resource path="res://resource/mesh/base2.mesh" type="ArrayMesh" id=9]
 [ext_resource path="res://resource/mesh/nink_domemesh1.mesh" type="ArrayMesh" id=10]
@@ -227,18 +227,6 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
 shape = SubResource( 34 )
 
-[node name="bridge1" type="MeshInstance" parent="."]
-transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, -34.979, -1.324, -5.606 )
-mesh = ExtResource( 7 )
-
-[node name="bridge2" type="MeshInstance" parent="."]
-transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, 34.979, -1.324, -5.606 )
-mesh = ExtResource( 7 )
-
-[node name="bridge3" type="MeshInstance" parent="."]
-transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, 0, -1.32431, -5.6056 )
-mesh = ExtResource( 7 )
-
 [node name="sign" type="MeshInstance" parent="."]
 transform = Transform( 0.103517, 0.0199924, -8.7389e-10, 0, -4.60848e-09, -0.10543, -0.0199924, 0.103517, -4.52487e-09, -0.558984, 1.7279, -14.6198 )
 mesh = SubResource( 33 )
@@ -406,3 +394,7 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.3841
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.180205, 0 )
 mesh = SubResource( 38 )
 skeleton = NodePath("../../..")
+
+[node name="bridge" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.00453, -9.53674e-07, -6.40234 )
+mesh = ExtResource( 3 )
