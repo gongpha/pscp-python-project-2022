@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/carton.png-e2108c1ac8662c3cc6e390e04b97cfcd.s3tc.stex"
-path.etc2="res://.import/carton.png-e2108c1ac8662c3cc6e390e04b97cfcd.etc2.stex"
+path.s3tc="res://.import/stool.png-88c05f5d30aa4cf7ecbdc9d05784aca7.s3tc.stex"
+path.etc2="res://.import/stool.png-88c05f5d30aa4cf7ecbdc9d05784aca7.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scene/item/carton.png"
-dest_files=[ "res://.import/carton.png-e2108c1ac8662c3cc6e390e04b97cfcd.s3tc.stex", "res://.import/carton.png-e2108c1ac8662c3cc6e390e04b97cfcd.etc2.stex" ]
+source_file="res://resource/mesh/stool.png"
+dest_files=[ "res://.import/stool.png-88c05f5d30aa4cf7ecbdc9d05784aca7.s3tc.stex", "res://.import/stool.png-88c05f5d30aa4cf7ecbdc9d05784aca7.etc2.stex" ]
 
 [params]
 

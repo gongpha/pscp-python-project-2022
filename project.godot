@@ -41,6 +41,7 @@ PYPORT="*res://script/PORT.py"
 
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
+window/stretch/shrink=1.5
 
 [editor_plugins]
 
@@ -80,7 +81,6 @@ limits/debugger_stdout/max_chars_per_second=8192
 
 3d/smooth_trimesh_collision=true
 common/physics_fps=180
-common/enable_pause_aware_picking=true
 3d/active_soft_world=false
 
 [rendering]

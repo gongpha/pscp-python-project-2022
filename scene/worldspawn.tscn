@@ -1,8 +1,7 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
-[ext_resource path="res://scene/sub/clock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/worldspawn.py" type="Script" id=4]
 [ext_resource path="res://scene/sub/lamp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
@@ -16,6 +15,7 @@
 [ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
 [ext_resource path="res://resource/mesh/box1h3.mesh" type="ArrayMesh" id=16]
 [ext_resource path="res://resource/texture/3d/pop14.png" type="Texture" id=17]
+[ext_resource path="res://resource/mesh/clock.mesh" type="ArrayMesh" id=20]
 
 [sub_resource type="BoxShape" id=20]
 extents = Vector3( 2, 1, 0.5 )
@@ -26,18 +26,8 @@ extents = Vector3( 32, 1, 32 )
 [sub_resource type="BoxShape" id=24]
 extents = Vector3( 1.37343, 1.15453, 0.585009 )
 
-[sub_resource type="BoxShape" id=25]
-extents = Vector3( 4.08889, 1.73512, 3.49327 )
-
 [sub_resource type="SphereShape" id=34]
 radius = 0.320368
-
-[sub_resource type="SpatialMaterial" id=27]
-metallic = 1.0
-roughness = 0.0
-
-[sub_resource type="PlaneMesh" id=28]
-size = Vector2( 2048, 2048 )
 
 [sub_resource type="CubeMesh" id=33]
 size = Vector3( 33.072, 2.703, 19.9 )
@@ -75,14 +65,27 @@ emission_on_uv2 = false
 height = 40.674
 radial_segments = 4
 
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 4.08889, 1.73512, 3.49327 )
+
+[sub_resource type="SpatialMaterial" id=27]
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="PlaneMesh" id=28]
+size = Vector2( 2048, 2048 )
+
 [sub_resource type="SpatialMaterial" id=37]
 albedo_texture = ExtResource( 17 )
+
+[sub_resource type="CubeMesh" id=38]
+size = Vector3( 0.075, 0.4, 0.075 )
 
 [node name="worldspawn" type="Spatial"]
 script = ExtResource( 4 )
 
 [node name="stall" parent="." instance=ExtResource( 6 )]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.0302835, 0.112267, 0.0306592 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0302835, 0.112267, 0.0306592 )
 
 [node name="PUT YOUR MUSIC HERE" type="AudioStreamPlayer" parent="."]
 autoplay = true
@@ -107,9 +110,6 @@ environment = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
-
-[node name="clock" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.90251, 0, 0.430669, 0, 1, 0, -0.430669, 0, 0.90251, -0.0870801, 1.17436, -1.30623 )
 
 [node name="light" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0240548, 3.26179, 0.021996 )
@@ -143,19 +143,6 @@ __meta__ = {
 [node name="c" type="CollisionShape" parent="counter_good"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.02961, -1.35308 )
 shape = SubResource( 24 )
-
-[node name="counter_bad" type="Area" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 2
-monitorable = false
-__meta__ = {
-"_editor_description_": "Another area that also allowed to place items on. But wtf why aren't you placing them in the right place ???"
-}
-
-[node name="c" type="CollisionShape" parent="counter_bad"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56488, -5.06782 )
-shape = SubResource( 25 )
 
 [node name="itemspawner" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.250302, -0.606594, -0.259804 )
@@ -240,45 +227,6 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
 shape = SubResource( 34 )
 
-[node name="lamps" type="Spatial" parent="."]
-visible = false
-
-[node name="lamp" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 3.14153, 0, -11.8483 )
-
-[node name="lamp2" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -1.85847, 0, -11.8483 )
-
-[node name="lamp3" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -6.85847, 0, -11.8483 )
-
-[node name="lamp4" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -11.8585, 0, -11.8483 )
-
-[node name="lamp5" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 23.1415, 0, -11.8483 )
-
-[node name="lamp6" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 18.1415, 0, -11.8483 )
-
-[node name="lamp7" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 13.1415, 0, -11.8483 )
-
-[node name="lamp8" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 8.14153, 0, -11.8483 )
-
-[node name="lamp9" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -16.8585, 0, -11.8483 )
-
-[node name="lamp10" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -21.8585, 0, -11.8483 )
-
-[node name="lamp11" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -26.8585, 0, -11.8483 )
-
-[node name="lamp12" parent="lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -31.8585, 0, -11.8483 )
-
 [node name="bridge1" type="MeshInstance" parent="."]
 transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, -34.979, -1.324, -5.606 )
 mesh = ExtResource( 7 )
@@ -290,52 +238,6 @@ mesh = ExtResource( 7 )
 [node name="bridge3" type="MeshInstance" parent="."]
 transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, 0, -1.32431, -5.6056 )
 mesh = ExtResource( 7 )
-
-[node name="building1" type="MeshInstance" parent="."]
-transform = Transform( 97.3237, 0, 0, 0, 97.3237, 0, 0, 0, 97.3237, -214.233, 0.32589, -348.905 )
-visible = false
-mesh = ExtResource( 8 )
-
-[node name="building2" type="MeshInstance" parent="."]
-transform = Transform( 85.4486, 0, 46.5881, 0, 97.3237, 0, -46.5881, 0, 85.4486, 134.15, -89.3704, -348.905 )
-visible = false
-mesh = ExtResource( 14 )
-
-[node name="OmniLight" type="OmniLight" parent="building2"]
-transform = Transform( 0.010275, 0, 0, 0, 0.010275, 0, 0, 0, 0.010275, 0, 1.91794, 0 )
-light_energy = 64.0
-omni_range = 95.0311
-
-[node name="fakesea" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.2917, 0 )
-visible = false
-material_override = SubResource( 27 )
-mesh = SubResource( 28 )
-
-[node name="dome" type="MeshInstance" parent="."]
-transform = Transform( 4.82671, 0, 0, 0, 4.82671, 0, 0, 0, 4.82671, -119.93, -6.17325, -189.305 )
-visible = false
-mesh = ExtResource( 10 )
-
-[node name="dome2" type="MeshInstance" parent="."]
-transform = Transform( 4.82671, 0, 0, 0, 4.82671, 0, 0, 0, 4.82671, 42.3479, -6.17325, -197.379 )
-visible = false
-mesh = ExtResource( 10 )
-
-[node name="base" type="MeshInstance" parent="."]
-transform = Transform( 1.13167, 0, 0, 0, 1.13167, 0, 0, 0, 1.13167, -101.793, -6.17325, -89.2001 )
-visible = false
-mesh = ExtResource( 9 )
-
-[node name="base2" type="MeshInstance" parent="."]
-transform = Transform( 1.12493, 0, 0.123359, 0, 1.13167, 0, -0.123359, 0, 1.12493, -26.3015, -6.17325, -116.91 )
-visible = false
-mesh = ExtResource( 9 )
-
-[node name="base3" type="MeshInstance" parent="."]
-transform = Transform( -1.09613, 0, 0.281398, 0, 1.13167, 0, -0.281398, 0, -1.09613, 58.0537, 6.68158, -112.712 )
-visible = false
-mesh = ExtResource( 9 )
 
 [node name="sign" type="MeshInstance" parent="."]
 transform = Transform( 0.103517, 0.0199924, -8.7389e-10, 0, -4.60848e-09, -0.10543, -0.0199924, 0.103517, -4.52487e-09, -0.558984, 1.7279, -14.6198 )
@@ -366,26 +268,141 @@ mesh = SubResource( 32 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
 stream = ExtResource( 2 )
 
-[node name="box1" type="MeshInstance" parent="."]
+[node name="_unused" type="Spatial" parent="."]
+visible = false
+
+[node name="counter_bad" type="Area" parent="_unused"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+__meta__ = {
+"_editor_description_": "Another area that also allowed to place items on. But wtf why aren't you placing them in the right place ???"
+}
+
+[node name="c" type="CollisionShape" parent="_unused/counter_bad"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56488, -5.06782 )
+shape = SubResource( 25 )
+
+[node name="lamps" type="Spatial" parent="_unused"]
+
+[node name="lamp" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 3.14153, 0, -11.8483 )
+
+[node name="lamp2" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -1.85847, 0, -11.8483 )
+
+[node name="lamp3" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -6.85847, 0, -11.8483 )
+
+[node name="lamp4" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -11.8585, 0, -11.8483 )
+
+[node name="lamp5" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 23.1415, 0, -11.8483 )
+
+[node name="lamp6" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 18.1415, 0, -11.8483 )
+
+[node name="lamp7" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 13.1415, 0, -11.8483 )
+
+[node name="lamp8" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 8.14153, 0, -11.8483 )
+
+[node name="lamp9" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -16.8585, 0, -11.8483 )
+
+[node name="lamp10" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -21.8585, 0, -11.8483 )
+
+[node name="lamp11" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -26.8585, 0, -11.8483 )
+
+[node name="lamp12" parent="_unused/lamps" instance=ExtResource( 5 )]
+transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -31.8585, 0, -11.8483 )
+
+[node name="building1" type="MeshInstance" parent="_unused"]
+transform = Transform( 97.3237, 0, 0, 0, 97.3237, 0, 0, 0, 97.3237, -214.233, 0.32589, -348.905 )
+mesh = ExtResource( 8 )
+skeleton = NodePath("../..")
+
+[node name="building2" type="MeshInstance" parent="_unused"]
+transform = Transform( 85.4486, 0, 46.5881, 0, 97.3237, 0, -46.5881, 0, 85.4486, 134.15, -89.3704, -348.905 )
+mesh = ExtResource( 14 )
+skeleton = NodePath("../..")
+
+[node name="OmniLight" type="OmniLight" parent="_unused/building2"]
+transform = Transform( 0.010275, 0, 0, 0, 0.010275, 0, 0, 0, 0.010275, 0, 1.91794, 0 )
+light_energy = 64.0
+omni_range = 95.0311
+
+[node name="fakesea" type="MeshInstance" parent="_unused"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.2917, 0 )
+material_override = SubResource( 27 )
+mesh = SubResource( 28 )
+skeleton = NodePath("../..")
+
+[node name="dome" type="MeshInstance" parent="_unused"]
+transform = Transform( 4.82671, 0, 0, 0, 4.82671, 0, 0, 0, 4.82671, -119.93, -6.17325, -189.305 )
+mesh = ExtResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="dome2" type="MeshInstance" parent="_unused"]
+transform = Transform( 4.82671, 0, 0, 0, 4.82671, 0, 0, 0, 4.82671, 42.3479, -6.17325, -197.379 )
+mesh = ExtResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="base" type="MeshInstance" parent="_unused"]
+transform = Transform( 1.13167, 0, 0, 0, 1.13167, 0, 0, 0, 1.13167, -101.793, -6.17325, -89.2001 )
+mesh = ExtResource( 9 )
+skeleton = NodePath("../..")
+
+[node name="base2" type="MeshInstance" parent="_unused"]
+transform = Transform( 1.12493, 0, 0.123359, 0, 1.13167, 0, -0.123359, 0, 1.12493, -26.3015, -6.17325, -116.91 )
+mesh = ExtResource( 9 )
+skeleton = NodePath("../..")
+
+[node name="base3" type="MeshInstance" parent="_unused"]
+transform = Transform( -1.09613, 0, 0.281398, 0, 1.13167, 0, -0.281398, 0, -1.09613, 58.0537, 6.68158, -112.712 )
+mesh = ExtResource( 9 )
+skeleton = NodePath("../..")
+
+[node name="box1" type="MeshInstance" parent="_unused"]
 transform = Transform( 1.72883, 0, 0, 0, 1.72883, 0, 0, 0, 1.72883, 13.9856, 6.68158, -553.284 )
-visible = false
 material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
+skeleton = NodePath("../..")
 
-[node name="box2" type="MeshInstance" parent="."]
+[node name="box2" type="MeshInstance" parent="_unused"]
 transform = Transform( 2.15431, 0, 0, 0, 2.15431, 0, 0, 0, 2.15431, -203.281, 6.68158, -553.284 )
-visible = false
 material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
+skeleton = NodePath("../..")
 
-[node name="box3" type="MeshInstance" parent="."]
+[node name="box3" type="MeshInstance" parent="_unused"]
 transform = Transform( 2.69547, 0, 0, 0, 3.78838, 0, 0, 0, 2.15431, -412.696, 6.68158, -553.284 )
-visible = false
 material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
+skeleton = NodePath("../..")
 
-[node name="box4" type="MeshInstance" parent="."]
+[node name="box4" type="MeshInstance" parent="_unused"]
 transform = Transform( 3.09615, 0, 0, 0, 3.09616, 0, 0, 0, 3.09615, 251.15, 6.68158, -553.284 )
 visible = false
 material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
+skeleton = NodePath("../..")
+
+[node name="clock" type="MeshInstance" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.63823, 2.42411, -0.17387 )
+mesh = ExtResource( 20 )
+
+[node name="hand" type="Spatial" parent="clock"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -0.4, 0 )
+
+[node name="root" type="Spatial" parent="clock/hand"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.38419e-07, 0, 0 )
+
+[node name="model" type="MeshInstance" parent="clock/hand/root"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.180205, 0 )
+mesh = SubResource( 38 )
+skeleton = NodePath("../../..")
