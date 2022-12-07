@@ -11,8 +11,15 @@ import math
 # THE GAME LOGIC
 
 ITEM_PATHS = [
-    "res://scene/item/carton.tscn",
-    "res://scene/item/tin.tscn"
+    "res://scene/item/carton1.tscn",
+    "res://scene/item/carton2.tscn",
+    "res://scene/item/carton3.tscn",
+    "res://scene/item/tin1.tscn",
+    "res://scene/item/tin2.tscn",
+    "res://scene/item/tin3.tscn",
+    "res://scene/item/sachet1.tscn",
+    "res://scene/item/sachet2.tscn",
+    "res://scene/item/sachet3.tscn"
 ]
 
 MAX_EACH_ITEM_COUNT = 3
@@ -409,9 +416,6 @@ class Game(Control):
         item_on_counter: int = 0
 
         for item in items:
-            if item.name == "clock":
-                # NO CLOCKS !
-                continue
             in_good = self.worldspawn.get("counter_good").overlaps_body(item)
 
             if not in_good:
