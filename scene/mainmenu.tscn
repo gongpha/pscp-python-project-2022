@@ -93,11 +93,11 @@ render_target_update_mode = 3
 [node name="environment" parent="vc/v/worldspawn" index="4"]
 environment = null
 
-[node name="clock" parent="vc/v/worldspawn" index="5"]
+[node name="clock" parent="vc/v/worldspawn" index="15"]
 visible = false
 
 [node name="cam" type="Camera" parent="vc/v"]
-transform = Transform( 0.974275, -0.121609, 0.189736, 0.138117, 0.987472, -0.0763102, -0.178079, 0.100553, 0.978865, 0.141481, 1.16494, 0.718488 )
+transform = Transform( 0.974275, -0.121609, 0.189736, 0.138117, 0.987472, -0.0763102, -0.178079, 0.100553, 0.978865, 0.623059, 1.16494, 1.0163 )
 current = true
 far = 2048.0
 
