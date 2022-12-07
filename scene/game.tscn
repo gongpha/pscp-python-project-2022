@@ -683,7 +683,7 @@ texture = SubResource( 12 )
 stretch_mode = 4
 
 [node name="player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.150936, 1.76804, 0.0503787 )
+transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.603607, 1.76804, -0.119545 )
 __meta__ = {
 "_editor_description_": "A python pet"
 }
