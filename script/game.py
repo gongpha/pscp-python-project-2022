@@ -341,7 +341,7 @@ class Game(Control):
             return
 
         if self.holding_confirm:
-            self.confirm_order_value += delta * 75
+            self.confirm_order_value += delta * 125
             if self.confirm_order_value >= 100:
                 # CONFIRMED !
                 self.check_items()
