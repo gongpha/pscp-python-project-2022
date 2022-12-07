@@ -387,10 +387,19 @@ class Game(Control):
                 #self.sun.rotate_x(delta * inv)
                 self.clock_hand_root.rotate_z(-add * 2 * math.pi)
 
+    def copy_order_items(self):
+        """ handmade dict deepcopy """
+        clone = {}
+        iii = self.order["items"]
+        for kkk in iii:
+            eee = iii[kkk]
+            clone[kkk] = eee.copy()
+        return clone
+
     def check_items(self):
         """ Check items on the counter """
         items = self.get_all_item_objects()
-        clone_list = self.order["items"].copy()
+        clone_list = self.copy_order_items()
         added : list = []
         total: int = 0
 
@@ -421,9 +430,8 @@ class Game(Control):
             self.dialogue_lines = dialogue.order_too_many_items
 
         if clone_list:
-            # not complete shit
+            # not completed
             self.dialogue_lines = dialogue.order_not_complete
-            clone_list = self.order["items"].copy()
             self.update_streak_count(0)
         else:
             # YES
