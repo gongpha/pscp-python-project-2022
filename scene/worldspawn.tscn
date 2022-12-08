@@ -1,16 +1,18 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
+[ext_resource path="res://resource/mesh/bridge.mesh" type="ArrayMesh" id=3]
 [ext_resource path="res://script/worldspawn.py" type="Script" id=4]
 [ext_resource path="res://scene/sub/lamp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
-[ext_resource path="res://resource/mesh/bridge1.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://resource/mesh/building1.mesh" type="ArrayMesh" id=7]
 [ext_resource path="res://resource/mesh/nink_hanoi.mesh" type="ArrayMesh" id=8]
 [ext_resource path="res://resource/mesh/base2.mesh" type="ArrayMesh" id=9]
 [ext_resource path="res://resource/mesh/nink_domemesh1.mesh" type="ArrayMesh" id=10]
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
 [ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
+[ext_resource path="res://resource/mesh/lamp.mesh" type="ArrayMesh" id=15]
 [ext_resource path="res://resource/mesh/box1h3.mesh" type="ArrayMesh" id=16]
 [ext_resource path="res://resource/texture/3d/pop14.png" type="Texture" id=17]
 [ext_resource path="res://resource/mesh/clock.mesh" type="ArrayMesh" id=20]
@@ -24,26 +26,23 @@ extents = Vector3( 32, 1, 32 )
 [sub_resource type="BoxShape" id=24]
 extents = Vector3( 1.37343, 1.15453, 0.585009 )
 
-[sub_resource type="BoxShape" id=25]
-extents = Vector3( 4.08889, 1.73512, 3.49327 )
-
 [sub_resource type="SphereShape" id=34]
 radius = 0.320368
 
-[sub_resource type="BoxShape" id=35]
+[sub_resource type="BoxShape" id=25]
 extents = Vector3( 4.08889, 1.73512, 3.49327 )
 
-[sub_resource type="SpatialMaterial" id=36]
+[sub_resource type="SpatialMaterial" id=27]
 metallic = 1.0
 roughness = 0.0
 
-[sub_resource type="PlaneMesh" id=37]
+[sub_resource type="PlaneMesh" id=28]
 size = Vector2( 2048, 2048 )
 
-[sub_resource type="SpatialMaterial" id=38]
+[sub_resource type="SpatialMaterial" id=37]
 albedo_texture = ExtResource( 17 )
 
-[sub_resource type="CubeMesh" id=39]
+[sub_resource type="CubeMesh" id=38]
 size = Vector3( 0.075, 0.4, 0.075 )
 
 [node name="worldspawn" type="Spatial"]
@@ -108,19 +107,6 @@ __meta__ = {
 [node name="c" type="CollisionShape" parent="counter_good"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.02961, -1.35308 )
 shape = SubResource( 24 )
-
-[node name="counter_bad" type="Area" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 2
-monitorable = false
-__meta__ = {
-"_editor_description_": "Another area that also allowed to place items on. But wtf why aren't you placing them in the right place ???"
-}
-
-[node name="c" type="CollisionShape" parent="counter_bad"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56488, -5.06782 )
-shape = SubResource( 25 )
 
 [node name="itemspawner" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.250302, -0.606594, -0.259804 )
@@ -205,27 +191,6 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
 shape = SubResource( 34 )
 
-[node name="bridge1" type="MeshInstance" parent="."]
-transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, -34.979, -1.324, -5.606 )
-mesh = ExtResource( 7 )
-
-[node name="bridge2" type="MeshInstance" parent="."]
-transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, 34.979, -1.324, -5.606 )
-mesh = ExtResource( 7 )
-
-[node name="bridge3" type="MeshInstance" parent="."]
-transform = Transform( 0.460305, 0, 0, 0, 0.460305, 0, 0, 0, 0.460305, 0, -1.32431, -5.6056 )
-mesh = ExtResource( 7 )
-
-[node name="blueberry" type="Sprite3D" parent="."]
-transform = Transform( -4.47787e-09, 1.08943e-09, -0.10543, 0.0249233, 0.102442, -3.99739e-16, 0.102442, -0.0249234, -4.60849e-09, 1.65249, 1.62221, -1.08227 )
-pixel_size = 0.012
-transparent = false
-shaded = true
-double_sided = false
-alpha_cut = 1
-texture = ExtResource( 12 )
-
 [node name="test" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
 stream = ExtResource( 2 )
@@ -243,7 +208,7 @@ __meta__ = {
 
 [node name="c" type="CollisionShape" parent="_unused/counter_bad"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56488, -5.06782 )
-shape = SubResource( 35 )
+shape = SubResource( 25 )
 
 [node name="lamps" type="Spatial" parent="_unused"]
 
@@ -300,8 +265,8 @@ omni_range = 95.0311
 
 [node name="fakesea" type="MeshInstance" parent="_unused"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.2917, 0 )
-material_override = SubResource( 36 )
-mesh = SubResource( 37 )
+material_override = SubResource( 27 )
+mesh = SubResource( 28 )
 skeleton = NodePath("../..")
 
 [node name="dome" type="MeshInstance" parent="_unused"]
@@ -331,26 +296,26 @@ skeleton = NodePath("../..")
 
 [node name="box1" type="MeshInstance" parent="_unused"]
 transform = Transform( 1.72883, 0, 0, 0, 1.72883, 0, 0, 0, 1.72883, 13.9856, 6.68158, -553.284 )
-material_override = SubResource( 38 )
+material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
 skeleton = NodePath("../..")
 
 [node name="box2" type="MeshInstance" parent="_unused"]
 transform = Transform( 2.15431, 0, 0, 0, 2.15431, 0, 0, 0, 2.15431, -203.281, 6.68158, -553.284 )
-material_override = SubResource( 38 )
+material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
 skeleton = NodePath("../..")
 
 [node name="box3" type="MeshInstance" parent="_unused"]
 transform = Transform( 2.69547, 0, 0, 0, 3.78838, 0, 0, 0, 2.15431, -412.696, 6.68158, -553.284 )
-material_override = SubResource( 38 )
+material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
 skeleton = NodePath("../..")
 
 [node name="box4" type="MeshInstance" parent="_unused"]
 transform = Transform( 3.09615, 0, 0, 0, 3.09616, 0, 0, 0, 3.09615, 251.15, 6.68158, -553.284 )
 visible = false
-material_override = SubResource( 38 )
+material_override = SubResource( 37 )
 mesh = ExtResource( 16 )
 skeleton = NodePath("../..")
 
@@ -366,5 +331,38 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.3841
 
 [node name="model" type="MeshInstance" parent="clock/hand/root"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.180205, 0 )
-mesh = SubResource( 39 )
+mesh = SubResource( 38 )
 skeleton = NodePath("../../..")
+
+[node name="bridge" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.00453, -9.53674e-07, -6.40234 )
+mesh = ExtResource( 3 )
+
+[node name="building" type="MeshInstance" parent="."]
+transform = Transform( 5.39701, 0, 0, 0, 5.39701, 0, 0, 0, 5.39701, 12.3217, -3.00221, -23.1996 )
+mesh = ExtResource( 7 )
+
+[node name="lamp" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7525, 0.125, -9.72365 )
+mesh = ExtResource( 15 )
+
+[node name="lamp2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.252, 0.125, -9.724 )
+mesh = ExtResource( 15 )
+
+[node name="lamp3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.24754, 0.125, -9.72365 )
+mesh = ExtResource( 15 )
+
+[node name="lamp4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.748, 0.125, -9.724 )
+mesh = ExtResource( 15 )
+
+[node name="blueberry" type="Sprite3D" parent="."]
+transform = Transform( -4.47787e-09, 1.08943e-09, -0.10543, 0.0249233, 0.102442, -3.99739e-16, 0.102442, -0.0249234, -4.60849e-09, 1.65249, 1.62221, -1.08227 )
+pixel_size = 0.012
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource( 12 )
