@@ -26,7 +26,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="pygodotgame"
+config/name="PSCP Python Project 2022"
 run/main_scene="res://scene/mainmenu.tscn"
 boot_splash/image="res://icon.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )

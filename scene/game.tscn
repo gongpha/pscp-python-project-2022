@@ -1,11 +1,12 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
 [ext_resource path="res://resource/texture/cursor.png" type="Texture" id=3]
-[ext_resource path="res://resource/texture/customer_prototype1.png" type="Texture" id=4]
+[ext_resource path="res://resource/spritesheet/customer.tres" type="SpriteFrames" id=4]
 [ext_resource path="res://resource/texture/ui1.png" type="Texture" id=5]
 [ext_resource path="res://resource/texture/key1.png" type="Texture" id=6]
+[ext_resource path="res://scene/pausemenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://resource/font/font_title.tres" type="DynamicFont" id=9]
 [ext_resource path="res://script_gd/input.gd" type="Script" id=10]
@@ -37,7 +38,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("customer:scale")
+tracks/2/path = NodePath("dialogue:anchor_top")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -46,10 +47,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ) ]
+"values": [ 0.83 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("dialogue:anchor_top")
+tracks/3/path = NodePath("dialogue:anchor_bottom")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -61,7 +62,7 @@ tracks/3/keys = {
 "values": [ 0.83 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("dialogue:anchor_bottom")
+tracks/4/path = NodePath("dialogue:rect_min_size")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -70,10 +71,10 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.83 ]
+"values": [ Vector2( 512, 64 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("dialogue:rect_min_size")
+tracks/5/path = NodePath("dialogue:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -82,10 +83,10 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 512, 64 ) ]
+"values": [ false ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("dialogue:visible")
+tracks/6/path = NodePath("motd:anchor_top")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -94,10 +95,10 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ 0.0 ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("motd:anchor_top")
+tracks/7/path = NodePath("motd:anchor_bottom")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -106,10 +107,10 @@ tracks/7/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ 1.0 ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("motd:anchor_bottom")
+tracks/8/path = NodePath("motd:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -118,10 +119,10 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 1.0 ]
+"values": [ false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("motd:visible")
+tracks/9/path = NodePath("dialogue/rich/advance:modulate")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -130,10 +131,10 @@ tracks/9/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("dialogue/rich/advance:modulate")
+tracks/10/path = NodePath("dialogue/rich/advance:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -142,10 +143,10 @@ tracks/10/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"values": [ true ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("dialogue/rich/advance:visible")
+tracks/11/path = NodePath("customer:translation")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -154,37 +155,110 @@ tracks/11/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ Vector3( -4, 1.2, -3 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("customer/customer:playing")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("customer/customer:animation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "right" ]
 }
 
 [sub_resource type="Animation" id=6]
 resource_name = "customer_enter"
+length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("customer:scale")
+tracks/0/path = NodePath("customer:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 1, 1, 1 ) ]
+"values": [ Vector3( -4, 1.2, -3 ), Vector3( 0.7, 1.2, -3 ), Vector3( 0.7, 1.2, -2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("customer/customer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("customer/customer:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ "right", "down", "down_reset" ]
 }
 
 [sub_resource type="Animation" id=13]
 resource_name = "customer_exit"
 tracks/0/type = "value"
-tracks/0/path = NodePath("customer:scale")
+tracks/0/path = NodePath("customer/customer:playing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("customer/customer:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "right" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("customer:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 1, 1, 1 ), Vector3( 0, 0, 0 ) ]
+"values": [ Vector3( 0.7, 1.2, -2 ), Vector3( 3, 1.2, -2 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -371,17 +445,6 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="CapsuleMesh" id=3]
-radius = 0.5
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="SphereMesh" id=5]
-material = SubResource( 4 )
-radius = 0.064
-height = 0.128
-
 [sub_resource type="StyleBoxTexture" id=9]
 texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 16, 16 )
@@ -431,27 +494,15 @@ texture = ExtResource( 3 )
 stretch_mode = 4
 
 [node name="customer" type="Spatial" parent="."]
-transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.634208, 0.000517964, 0.267385 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.2, -3 )
 
-[node name="mesh" type="MeshInstance" parent="customer"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.986392, -2.5575 )
-visible = false
-mesh = SubResource( 3 )
-
-[node name="eye" type="MeshInstance" parent="customer"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.273014, 1.49891, -2.07936 )
-visible = false
-mesh = SubResource( 5 )
-
-[node name="eye2" type="MeshInstance" parent="customer"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.273, 1.48894, -2.095 )
-visible = false
-mesh = SubResource( 5 )
-
-[node name="Sprite3D" type="Sprite3D" parent="customer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14152, -1.79993 )
+[node name="customer" type="AnimatedSprite3D" parent="customer"]
 pixel_size = 0.075
-texture = ExtResource( 4 )
+shaded = true
+double_sided = false
+alpha_cut = 2
+frames = ExtResource( 4 )
+animation = "right"
 
 [node name="dialogue" type="PanelContainer" parent="."]
 visible = false
@@ -510,7 +561,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="day" type="Label" parent="ui/vbox"]
-margin_right = 52.0
+margin_right = 252.0
 margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
@@ -519,12 +570,30 @@ text = "Day #"
 
 [node name="balance" type="Label" parent="ui/vbox"]
 margin_top = 26.0
-margin_right = 52.0
+margin_right = 252.0
 margin_bottom = 48.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "$0"
+
+[node name="customer_counter" type="Label" parent="ui/vbox"]
+margin_top = 52.0
+margin_right = 252.0
+margin_bottom = 74.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "Encountered 0 Customers"
+
+[node name="streak" type="Label" parent="ui/vbox"]
+margin_top = 78.0
+margin_right = 252.0
+margin_bottom = 100.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "0 STREAK"
 
 [node name="hint" type="VBoxContainer" parent="ui"]
 anchor_left = 1.0
@@ -614,7 +683,7 @@ texture = SubResource( 12 )
 stretch_mode = 4
 
 [node name="player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.150936, 1.76804, 0.0503787 )
+transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.603607, 1.76804, -0.119545 )
 __meta__ = {
 "_editor_description_": "A python pet"
 }
@@ -635,44 +704,111 @@ margin_right = 124.5
 margin_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
+rect_min_size = Vector2( 512, 0 )
 
 [node name="vbox" type="VBoxContainer" parent="endday/endday"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 242.0
-margin_bottom = 205.0
+margin_right = 505.0
+margin_bottom = 323.0
 
-[node name="title" type="Label" parent="endday/endday/vbox"]
-margin_right = 235.0
-margin_bottom = 22.0
+[node name="hbox" type="HBoxContainer" parent="endday/endday/vbox"]
+margin_left = 134.0
+margin_right = 364.0
+margin_bottom = 88.0
+size_flags_horizontal = 4
+
+[node name="title" type="Label" parent="endday/endday/vbox/hbox"]
+margin_top = 33.0
+margin_right = 178.0
+margin_bottom = 55.0
 text = "The end of the day"
 
-[node name="day" type="Label" parent="endday/endday/vbox"]
-margin_top = 26.0
-margin_right = 235.0
-margin_bottom = 114.0
+[node name="day" type="Label" parent="endday/endday/vbox/hbox"]
+margin_left = 182.0
+margin_right = 230.0
+margin_bottom = 88.0
 custom_fonts/font = ExtResource( 9 )
 text = "1"
 align = 1
 
-[node name="sold" type="Label" parent="endday/endday/vbox"]
+[node name="won" type="HBoxContainer" parent="endday/endday/vbox"]
+margin_top = 92.0
+margin_right = 498.0
+margin_bottom = 114.0
+
+[node name="a" type="Label" parent="endday/endday/vbox/won"]
+margin_right = 108.0
+margin_bottom = 22.0
+text = "Won : 15/15"
+
+[node name="b" type="Label" parent="endday/endday/vbox/won"]
+margin_left = 374.0
+margin_right = 498.0
+margin_bottom = 22.0
+size_flags_horizontal = 14
+text = "15 x 50 = 750"
+align = 1
+
+[node name="streak" type="HBoxContainer" parent="endday/endday/vbox"]
 margin_top = 118.0
-margin_right = 235.0
+margin_right = 498.0
 margin_bottom = 140.0
+
+[node name="a" type="Label" parent="endday/endday/vbox/streak"]
+margin_right = 186.0
+margin_bottom = 22.0
+text = "Longest Streak : 15"
+
+[node name="b" type="Label" parent="endday/endday/vbox/streak"]
+margin_left = 374.0
+margin_right = 498.0
+margin_bottom = 22.0
+size_flags_horizontal = 14
+text = "15 x 50 = 750"
+align = 1
+
+[node name="rank" type="HBoxContainer" parent="endday/endday/vbox"]
+margin_left = 186.0
+margin_top = 144.0
+margin_right = 312.0
+margin_bottom = 232.0
+size_flags_horizontal = 4
+custom_constants/separation = 32
+
+[node name="a" type="Label" parent="endday/endday/vbox/rank"]
+margin_top = 33.0
+margin_right = 46.0
+margin_bottom = 55.0
+text = "Rank"
+
+[node name="b" type="Label" parent="endday/endday/vbox/rank"]
+margin_left = 78.0
+margin_right = 126.0
+margin_bottom = 88.0
+size_flags_horizontal = 14
+custom_fonts/font = ExtResource( 9 )
+text = "A"
+align = 1
+
+[node name="sold" type="Label" parent="endday/endday/vbox"]
+margin_top = 236.0
+margin_right = 498.0
+margin_bottom = 258.0
 text = "[ . . . ]"
 align = 1
 
 [node name="add_bal" type="Label" parent="endday/endday/vbox"]
-margin_top = 144.0
-margin_right = 235.0
-margin_bottom = 166.0
+margin_top = 262.0
+margin_right = 498.0
+margin_bottom = 284.0
 text = "[ . . . ]"
 align = 1
 
 [node name="continue" type="Button" parent="endday/endday/vbox"]
-margin_top = 170.0
-margin_right = 235.0
-margin_bottom = 198.0
+margin_top = 288.0
+margin_right = 498.0
+margin_bottom = 316.0
 text = "Sleep"
 
 [node name="motd" type="ColorRect" parent="."]
@@ -694,3 +830,5 @@ align = 1
 
 [node name="input" type="Node" parent="."]
 script = ExtResource( 10 )
+
+[node name="pausemenu" parent="." instance=ExtResource( 7 )]
