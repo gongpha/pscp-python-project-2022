@@ -4,6 +4,7 @@
 [ext_resource path="res://scene/item/sachet3.tres" type="Material" id=2]
 
 [node name="sachet" instance=ExtResource( 1 )]
+item_name = "Green Crisps"
 
 [node name="mesh" parent="." index="0"]
 material/0 = ExtResource( 2 )

@@ -13,7 +13,7 @@ radius = 0.124368
 
 [node name="item" type="RigidBody"]
 script = ExtResource( 1 )
-item_name = "Soup"
+item_name = "Mushroom Soup"
 price = 40
 
 [node name="mesh" type="MeshInstance" parent="."]

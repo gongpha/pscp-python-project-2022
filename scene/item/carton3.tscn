@@ -11,7 +11,7 @@ albedo_texture = ExtResource( 3 )
 
 [node name="carton" type="RigidBody"]
 script = ExtResource( 1 )
-item_name = "Milk3"
+item_name = "Goat Milk"
 price = 30
 
 [node name="cube" type="MeshInstance" parent="."]
