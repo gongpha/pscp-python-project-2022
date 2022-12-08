@@ -7,6 +7,7 @@ from .player import Player
 from .utils import lerp
 
 import math
+import random
 
 # THE GAME LOGIC
 
@@ -254,16 +255,23 @@ class Game(Control):
             'status': "pending",
         }
 
-        # Randomize an item count
-        item_count = self.rng.randi_range(1, MAX_EACH_ITEM_COUNT)
-        for _ in range(item_count):
-            while True:
-                # Randomize an item
-                item: Node = items[self.rng.randi_range(0, len(items) - 1)]
-                ttt = order_item.get(item.filename, [item.item_name, 1])
-                ttt[1] += 1
-                order_item[item.filename] = ttt
-                break  # TODO : Fix this
+        available = {}
+
+        for item in items:
+            ttt = available.get(item.filename, [item.item_name, 0])
+            ttt[1] += 1
+            available[item.filename] = ttt
+
+        keyshuffled = list(available.keys())
+        random.shuffle(keyshuffled)
+        item_count = self.rng.randi_range(1, len(keyshuffled) // 2)
+        keyshuffled = keyshuffled[:item_count]
+        
+        for kkk in keyshuffled:
+            order_item[kkk] = [
+                available[kkk][0],
+                self.rng.randi_range(1, available[kkk][1])
+            ]
 
         # Prepare the texts
         order_dialogue = ["%s x%d" % (vvv[0], vvv[1])
