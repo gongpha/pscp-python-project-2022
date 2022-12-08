@@ -114,7 +114,7 @@ class Game(Control):
         self.pick = self.get_node("ui/hint/pick")
 
         self.player = self.get_node("player")
-        self.player.connect("look_front", self, "_on_player_look_front")
+        #self.player.connect("look_front", self, "_on_player_look_front")
         self.player.pause_mode = Node.PAUSE_MODE_STOP
 
         self.ani = self.get_node("ani")
@@ -449,6 +449,7 @@ class Game(Control):
             self.order["status"] = "completed"
             self.counting = False
             self.reset_clock()
+            self.prepare_items()
         self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
 
@@ -505,13 +506,14 @@ class Game(Control):
         self.dialogue_lines = dialogue.order_timeout.copy()
         self.show_dialogue()
 
-    def _on_player_look_front(self) :
-        """ when the player turns away from the shelf """
-        if self.player.get("is_look_front") :
-            return
-        items = self.get_all_item_objects()
-        if items.size() < 6 :
-            self.prepare_items()
+    # def _on_player_look_front(self) :
+    #     """ when the player turns away from the shelf """
+    #     return
+    #     if self.player.get("is_look_front") :
+    #         return
+    #     items = self.get_all_item_objects()
+    #     if items.size() < 6 :
+    #         self.prepare_items()
 
     def go_endday(self):
         """ Emit the end day screen """

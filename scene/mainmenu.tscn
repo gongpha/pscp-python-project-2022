@@ -76,7 +76,7 @@ render_target_update_mode = 3
 [node name="environment" parent="vc/v/worldspawn" index="4"]
 environment = null
 
-[node name="clock" parent="vc/v/worldspawn" index="16"]
+[node name="clock" parent="vc/v/worldspawn" index="11"]
 visible = false
 
 [node name="cam" type="Camera" parent="vc/v"]
