@@ -1,21 +1,14 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
 [ext_resource path="res://resource/mesh/bridge.mesh" type="ArrayMesh" id=3]
 [ext_resource path="res://script/worldspawn.py" type="Script" id=4]
-[ext_resource path="res://scene/sub/lamp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
 [ext_resource path="res://resource/mesh/building1.mesh" type="ArrayMesh" id=7]
-[ext_resource path="res://resource/mesh/nink_hanoi.mesh" type="ArrayMesh" id=8]
-[ext_resource path="res://resource/mesh/base2.mesh" type="ArrayMesh" id=9]
-[ext_resource path="res://resource/mesh/nink_domemesh1.mesh" type="ArrayMesh" id=10]
 [ext_resource path="res://resource/mesh/stool.mesh" type="ArrayMesh" id=11]
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
-[ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
 [ext_resource path="res://resource/mesh/lamp.mesh" type="ArrayMesh" id=15]
-[ext_resource path="res://resource/mesh/box1h3.mesh" type="ArrayMesh" id=16]
-[ext_resource path="res://resource/texture/3d/pop14.png" type="Texture" id=17]
 [ext_resource path="res://resource/mesh/clock.mesh" type="ArrayMesh" id=20]
 
 [sub_resource type="ConvexPolygonShape" id=39]
@@ -32,19 +25,6 @@ extents = Vector3( 1.37343, 1.15453, 0.585009 )
 
 [sub_resource type="SphereShape" id=34]
 radius = 0.320368
-
-[sub_resource type="BoxShape" id=25]
-extents = Vector3( 4.08889, 1.73512, 3.49327 )
-
-[sub_resource type="SpatialMaterial" id=27]
-metallic = 1.0
-roughness = 0.0
-
-[sub_resource type="PlaneMesh" id=28]
-size = Vector2( 2048, 2048 )
-
-[sub_resource type="SpatialMaterial" id=37]
-albedo_texture = ExtResource( 17 )
 
 [sub_resource type="CubeMesh" id=38]
 size = Vector3( 0.075, 0.4, 0.075 )
@@ -207,130 +187,6 @@ shape = SubResource( 34 )
 [node name="test" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
 stream = ExtResource( 2 )
-
-[node name="_unused" type="Spatial" parent="."]
-visible = false
-
-[node name="counter_bad" type="Area" parent="_unused"]
-collision_layer = 0
-collision_mask = 2
-monitorable = false
-__meta__ = {
-"_editor_description_": "Another area that also allowed to place items on. But wtf why aren't you placing them in the right place ???"
-}
-
-[node name="c" type="CollisionShape" parent="_unused/counter_bad"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56488, -5.06782 )
-shape = SubResource( 25 )
-
-[node name="lamps" type="Spatial" parent="_unused"]
-
-[node name="lamp" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 3.14153, 0, -11.8483 )
-
-[node name="lamp2" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -1.85847, 0, -11.8483 )
-
-[node name="lamp3" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -6.85847, 0, -11.8483 )
-
-[node name="lamp4" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -11.8585, 0, -11.8483 )
-
-[node name="lamp5" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 23.1415, 0, -11.8483 )
-
-[node name="lamp6" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 18.1415, 0, -11.8483 )
-
-[node name="lamp7" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 13.1415, 0, -11.8483 )
-
-[node name="lamp8" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, 8.14153, 0, -11.8483 )
-
-[node name="lamp9" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -16.8585, 0, -11.8483 )
-
-[node name="lamp10" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -21.8585, 0, -11.8483 )
-
-[node name="lamp11" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -26.8585, 0, -11.8483 )
-
-[node name="lamp12" parent="_unused/lamps" instance=ExtResource( 5 )]
-transform = Transform( 0.296229, 0, 0, 0, 0.296229, 0, 0, 0, 0.296229, -31.8585, 0, -11.8483 )
-
-[node name="building1" type="MeshInstance" parent="_unused"]
-transform = Transform( 97.3237, 0, 0, 0, 97.3237, 0, 0, 0, 97.3237, -214.233, 0.32589, -348.905 )
-mesh = ExtResource( 8 )
-skeleton = NodePath("../..")
-
-[node name="building2" type="MeshInstance" parent="_unused"]
-transform = Transform( 85.4486, 0, 46.5881, 0, 97.3237, 0, -46.5881, 0, 85.4486, 134.15, -89.3704, -348.905 )
-mesh = ExtResource( 14 )
-skeleton = NodePath("../..")
-
-[node name="OmniLight" type="OmniLight" parent="_unused/building2"]
-transform = Transform( 0.010275, 0, 0, 0, 0.010275, 0, 0, 0, 0.010275, 0, 1.91794, 0 )
-light_energy = 64.0
-omni_range = 95.0311
-
-[node name="fakesea" type="MeshInstance" parent="_unused"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.2917, 0 )
-material_override = SubResource( 27 )
-mesh = SubResource( 28 )
-skeleton = NodePath("../..")
-
-[node name="dome" type="MeshInstance" parent="_unused"]
-transform = Transform( 4.82671, 0, 0, 0, 4.82671, 0, 0, 0, 4.82671, -119.93, -6.17325, -189.305 )
-mesh = ExtResource( 10 )
-skeleton = NodePath("../..")
-
-[node name="dome2" type="MeshInstance" parent="_unused"]
-transform = Transform( 4.82671, 0, 0, 0, 4.82671, 0, 0, 0, 4.82671, 42.3479, -6.17325, -197.379 )
-mesh = ExtResource( 10 )
-skeleton = NodePath("../..")
-
-[node name="base" type="MeshInstance" parent="_unused"]
-transform = Transform( 1.13167, 0, 0, 0, 1.13167, 0, 0, 0, 1.13167, -101.793, -6.17325, -89.2001 )
-mesh = ExtResource( 9 )
-skeleton = NodePath("../..")
-
-[node name="base2" type="MeshInstance" parent="_unused"]
-transform = Transform( 1.12493, 0, 0.123359, 0, 1.13167, 0, -0.123359, 0, 1.12493, -26.3015, -6.17325, -116.91 )
-mesh = ExtResource( 9 )
-skeleton = NodePath("../..")
-
-[node name="base3" type="MeshInstance" parent="_unused"]
-transform = Transform( -1.09613, 0, 0.281398, 0, 1.13167, 0, -0.281398, 0, -1.09613, 58.0537, 6.68158, -112.712 )
-mesh = ExtResource( 9 )
-skeleton = NodePath("../..")
-
-[node name="box1" type="MeshInstance" parent="_unused"]
-transform = Transform( 1.72883, 0, 0, 0, 1.72883, 0, 0, 0, 1.72883, 13.9856, 6.68158, -553.284 )
-material_override = SubResource( 37 )
-mesh = ExtResource( 16 )
-skeleton = NodePath("../..")
-
-[node name="box2" type="MeshInstance" parent="_unused"]
-transform = Transform( 2.15431, 0, 0, 0, 2.15431, 0, 0, 0, 2.15431, -203.281, 6.68158, -553.284 )
-material_override = SubResource( 37 )
-mesh = ExtResource( 16 )
-skeleton = NodePath("../..")
-
-[node name="box3" type="MeshInstance" parent="_unused"]
-transform = Transform( 2.69547, 0, 0, 0, 3.78838, 0, 0, 0, 2.15431, -412.696, 6.68158, -553.284 )
-material_override = SubResource( 37 )
-mesh = ExtResource( 16 )
-skeleton = NodePath("../..")
-
-[node name="box4" type="MeshInstance" parent="_unused"]
-transform = Transform( 3.09615, 0, 0, 0, 3.09616, 0, 0, 0, 3.09615, 251.15, 6.68158, -553.284 )
-visible = false
-material_override = SubResource( 37 )
-mesh = ExtResource( 16 )
-skeleton = NodePath("../..")
 
 [node name="clock" type="MeshInstance" parent="."]
 transform = Transform( 0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1.63823, 2.60426, -0.917271 )
