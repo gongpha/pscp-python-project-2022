@@ -18,7 +18,7 @@ class Player(StaticBody):
     sens = 100 * 0.5  # Sensitivity of the mouse
 
     picking: RigidBody = None
-    #block_pick: bool = False
+    block_pick: bool = False
     old_rot_y: float = 1.0
 
     #look_front = signal()
