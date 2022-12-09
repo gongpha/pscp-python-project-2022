@@ -8,93 +8,59 @@ anchor_bottom = 1.0
 size_flags_vertical = 3
 custom_constants/separation = 16
 
-[node name="hbox" type="HBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 292.0
-size_flags_vertical = 3
+[node name="hbox" type="VBoxContainer" parent="."]
+margin_left = 302.0
+margin_top = 230.0
+margin_right = 722.0
+margin_bottom = 370.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
 
 [node name="hbox" parent="hbox" instance=ExtResource( 1 )]
-margin_top = 105.0
-margin_right = 510.0
-margin_bottom = 186.0
+margin_right = 420.0
 
 [node name="hbox2" parent="hbox" instance=ExtResource( 1 )]
-margin_left = 514.0
-margin_top = 105.0
-margin_right = 1024.0
-margin_bottom = 186.0
+margin_top = 36.0
+margin_right = 420.0
+margin_bottom = 68.0
 
-[node name="pic" parent="hbox/hbox2" index="0"]
-margin_right = 244.0
-
-[node name="vbox" parent="hbox/hbox2" index="1"]
-margin_right = 510.0
-margin_bottom = 81.0
-
-[node name="name" parent="hbox/hbox2/vbox" index="0"]
-margin_right = 510.0
-margin_bottom = 44.0
+[node name="name" parent="hbox/hbox2" index="0"]
+margin_right = 292.0
 text = "Kullapat Kematorn"
 
-[node name="id" parent="hbox/hbox2/vbox" index="1"]
-margin_top = 48.0
-margin_right = 510.0
-margin_bottom = 81.0
+[node name="id" parent="hbox/hbox2" index="1"]
+margin_left = 308.0
+margin_right = 420.0
 text = "65070024"
 
-[node name="hbox2" type="HBoxContainer" parent="."]
-margin_top = 308.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_vertical = 3
+[node name="hbox3" parent="hbox" instance=ExtResource( 1 )]
+margin_top = 72.0
+margin_right = 420.0
+margin_bottom = 104.0
 
-[node name="hbox3" parent="hbox2" instance=ExtResource( 1 )]
-margin_top = 105.0
-margin_right = 510.0
-margin_bottom = 186.0
-
-[node name="pic" parent="hbox2/hbox3" index="0"]
-margin_right = 244.0
-
-[node name="vbox" parent="hbox2/hbox3" index="1"]
-margin_right = 510.0
-margin_bottom = 81.0
-
-[node name="name" parent="hbox2/hbox3/vbox" index="0"]
-margin_right = 510.0
-margin_bottom = 44.0
+[node name="name" parent="hbox/hbox3" index="0"]
+margin_right = 229.0
 text = "Nakarin Tiprat"
 
-[node name="id" parent="hbox2/hbox3/vbox" index="1"]
-margin_top = 48.0
-margin_right = 510.0
-margin_bottom = 81.0
+[node name="id" parent="hbox/hbox3" index="1"]
+margin_left = 245.0
+margin_right = 347.0
 text = "65070110"
 
-[node name="hbox4" parent="hbox2" instance=ExtResource( 1 )]
-margin_left = 514.0
-margin_top = 105.0
-margin_right = 1024.0
-margin_bottom = 186.0
+[node name="hbox4" parent="hbox" instance=ExtResource( 1 )]
+margin_top = 108.0
+margin_right = 420.0
+margin_bottom = 140.0
 
-[node name="pic" parent="hbox2/hbox4" index="0"]
-margin_right = 244.0
-
-[node name="vbox" parent="hbox2/hbox4" index="1"]
-margin_right = 510.0
-margin_bottom = 81.0
-
-[node name="name" parent="hbox2/hbox4/vbox" index="0"]
-margin_right = 510.0
-margin_bottom = 44.0
+[node name="name" parent="hbox/hbox4" index="0"]
+margin_right = 262.0
 text = "Soraphon Natnan"
 
-[node name="id" parent="hbox2/hbox4/vbox" index="1"]
-margin_top = 48.0
-margin_right = 510.0
-margin_bottom = 81.0
+[node name="id" parent="hbox/hbox4" index="1"]
+margin_left = 278.0
+margin_right = 385.0
 text = "65070231"
 
 [editable path="hbox/hbox2"]
-[editable path="hbox2/hbox3"]
-[editable path="hbox2/hbox4"]
+[editable path="hbox/hbox3"]
+[editable path="hbox/hbox4"]
