@@ -34,5 +34,6 @@ class loading(Control):
             port : Node = GDPORT(self)
             port.set("preloaded_scene", self.ril.get_resource())
             port.call("load_ok")
+            self.set_process(False)
         elif poll == OK:
             self.bar.set_value(self.ril.get_stage() / self.ril.get_stage_count())
