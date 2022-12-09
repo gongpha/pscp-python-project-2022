@@ -64,17 +64,14 @@ class Game(Control):
     motd_day: Label  # The current day in MOTD (THE BIG TEXT)
 
     hint_day: Label  # Day text
-    balance_text: Label  # Balance Text (used $ as a placeholder)
     customer_counter: Label # Customer Label
 
     sold: Label
-    add_bal: Label
     streak_label: Label
 
     counting : bool = False
     #tscale: float = 0.04  # Time scale
     current_day: int = 1
-    balance: int = 1000
 
     ###########################
 
@@ -133,13 +130,11 @@ class Game(Control):
         self.rank = self.get_node("endday/endday/vbox/rank/b")
 
         self.sold = self.get_node("endday/endday/vbox/sold")
-        self.add_bal = self.get_node("endday/endday/vbox/add_bal")
         self.streak_label = self.get_node("ui/vbox/streak")
 
         self.motd_day = self.get_node("motd/day")
 
         self.hint_day = self.get_node("ui/vbox/day")
-        self.balance_text = self.get_node("ui/vbox/balance")
         self.customer_counter = self.get_node("ui/vbox/customer_counter")
 
         customer = self.get_node("customer")
@@ -317,29 +312,19 @@ class Game(Control):
         return True
 
     def prepare_items(self):
-        """
-            Place items on the shelf
-            Also charge the balance :/
-        """
+        """ Place items on the shelf """
         for area in self.worldspawn.get("itemspawnpoints"):
             # Check if there's an item on the area
             overlapping: Area = area.get_overlapping_bodies()
             if overlapping.size() > 0:
                 continue  # Okay, there's an item on the area. SKIP
 
-            # TODO : The items are completely random. Make it more balanced to the order
-
             path = ITEM_PATHS[self.rng.randi_range(0, len(ITEM_PATHS) - 1)]
             item_scene: PackedScene = ResourceLoader.load(path)
             item: RigidBody = item_scene.instance()
             self.add_child(item)  # Add the item to the world
-            self.update_balance(self.balance - item.price)
             item.global_translation = area.global_translation
             item.home_place = area.global_translation
-
-    def update_balance(self, new_b: int):
-        self.balance = int(new_b)
-        self.balance_text.text = "$" + str(self.balance)
 
     def update_customer_count(self, ccc : int):
         self.customer_count = ccc
@@ -448,7 +433,6 @@ class Game(Control):
         else:
             # YES
             for a in added:
-                self.update_balance(self.balance + (a.price * 1.2))
                 a.queue_free()
                 self.day_counter_item += 1
             self.update_streak_count(self.streak + 1)
@@ -544,18 +528,6 @@ class Game(Control):
         self.rank.text = '?'
         
         self.sold.text = "%d items sold" % self.day_counter_item
-        
-        diff = self.balance - self.day_start_balance
-        if diff > 0:
-            self.add_bal.text = "+$%d" % diff
-            self.add_bal.add_color_override("font_color", Color(0.5, 1, 0.5, 1))
-            self.add_bal.show()
-        elif diff < 0:
-            self.add_bal.text = "-$%d" % diff
-            self.add_bal.add_color_override("font_color", Color(1, 0.5, 0.5, 1))
-            self.add_bal.show()
-        else:
-            self.add_bal.hide()
 
         self.endday.show()
         self.set_process(False)
