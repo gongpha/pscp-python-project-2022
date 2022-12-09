@@ -4,6 +4,7 @@ class_name Item
 ## The item
 
 export var item_name : String
+export var item_conname : String = "<null>"
 export var price : int = 20
 
 var get_picking : Spatial

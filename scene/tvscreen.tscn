@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resource/font/font_screen.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resource/font/font_screen_con.tres" type="DynamicFont" id=2]
+
+[node name="tvscreen" type="ColorRect"]
+margin_right = 601.0
+margin_bottom = 334.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TITLE" type="Label" parent="."]
+anchor_right = 1.0
+margin_top = 24.0
+margin_bottom = 73.0
+custom_fonts/font = ExtResource( 1 )
+text = "TRANSLATOR"
+align = 1
+
+[node name="raw" type="Label" parent="."]
+margin_left = 33.0
+margin_top = 95.0
+margin_right = 117.0
+margin_bottom = 300.0
+custom_fonts/font = ExtResource( 2 )
+valign = 1
+
+[node name="arrow" type="Label" parent="."]
+margin_left = 264.0
+margin_top = 95.0
+margin_right = 297.0
+margin_bottom = 300.0
+custom_fonts/font = ExtResource( 1 )
+valign = 1
+
+[node name="translated" type="Label" parent="."]
+margin_left = 425.0
+margin_top = 95.0
+margin_right = 570.0
+margin_bottom = 300.0
+grow_horizontal = 0
+custom_fonts/font = ExtResource( 1 )
+align = 2
+valign = 1

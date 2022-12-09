@@ -33,11 +33,11 @@ CUSTOMER_SHEETS = [
     "res://resource/spritesheet/customer4.tres",
 ]
 
-MAX_EACH_ITEM_COUNT = 3
 MIN_CUSTOMERS = 10
 MAX_CUSTOMERS = 30
 CUSTOMER_TIMER = 15.0
 STREAK_BONUS = 20
+TRANSLATION_COUNT = 6
 
 @exposed
 class Game(Control):
@@ -86,6 +86,11 @@ class Game(Control):
     counting : bool = False
     #tscale: float = 0.04  # Time scale
     current_day: int = 1
+
+    tv_raw : Label
+    tv_arrow : Label
+    tv_translated : Label
+    tv_is_translated : bool = False
 
     ###########################
 
@@ -162,6 +167,10 @@ class Game(Control):
         self.pausemenu.hide()
         self.pausemenu.pause_mode = Node.PAUSE_MODE_PROCESS
 
+        self.tv_raw = self.worldspawn.get_node("tv/screen/tvcontent/tvscreen/raw")
+        self.tv_arrow = self.worldspawn.get_node("tv/screen/tvcontent/tvscreen/arrow")
+        self.tv_translated = self.worldspawn.get_node("tv/screen/tvcontent/tvscreen/translated")
+
         input_node: Node = self.get_node("input")
         input_node.connect("input", self, "_input_proxy",
                            Array(), Object.CONNECT_DEFERRED)
@@ -234,6 +243,7 @@ class Game(Control):
                     self.dialogue_repeat = []
                 else :
                     self.counting = True
+                    self.tv_show_translation()
         elif ani_name == "customer_exit":
             # NEXT
             self.update_customer_count(self.customer_count + 1)
@@ -251,6 +261,7 @@ class Game(Control):
         ])
         
         self.ani.play("customer_enter")
+        self.tv_clear()
 
     def get_all_item_objects(self) -> list:
         """ Get all item objects """
@@ -274,19 +285,20 @@ class Game(Control):
         available = {}
 
         for item in items:
-            ttt = available.get(item.filename, [item.item_name, 0])
+            ttt = available.get(item.filename, [item.item_name, 0, item.item_conname])
             ttt[1] += 1
             available[item.filename] = ttt
 
         keyshuffled = list(available.keys())
         random.shuffle(keyshuffled)
-        item_count = self.rng.randi_range(1, len(keyshuffled) // 2)
+        item_count = self.rng.randi_range(1, 3)
         keyshuffled = keyshuffled[:item_count]
         
         for kkk in keyshuffled:
             order_item[kkk] = [
                 available[kkk][0],
-                self.rng.randi_range(1, available[kkk][1])
+                self.rng.randi_range(1, available[kkk][1]),
+                available[kkk][2],
             ]
 
         # Prepare the texts
@@ -446,8 +458,7 @@ class Game(Control):
         if item_on_counter > total:
             self.dialogue_lines = dialogue.order_too_many_items
             self.update_streak_count(0)
-
-        if clone_list:
+        elif clone_list:
             # not completed
             self.dialogue_lines = dialogue.order_not_complete
             self.update_streak_count(0)
@@ -567,3 +578,39 @@ class Game(Control):
         self.current_day += 1
         self.ani.play("RESET")
         self.get_tree().create_timer(0.001).connect("timeout", self, "newday")
+
+    def tv_clear(self):
+        """ Clear the text """
+        self.tv_raw.text = '\n'.join(['...'] * TRANSLATION_COUNT)
+        self.tv_arrow.text = '\n'.join(['->'] * TRANSLATION_COUNT)
+        self.tv_translated.text = self.tv_raw.text
+        self.tv_is_translated = False
+
+    def tv_show_translation(self):
+        """ Show the translation """
+
+        if self.tv_is_translated : return
+
+        other = ITEM_PATHS.copy()
+        random.shuffle(other)
+
+        texts = []
+        
+        for _, vvv in self.order["items"].items():
+            texts.append((str(vvv[2]), str(vvv[0])))
+        while len(texts) < TRANSLATION_COUNT:
+            item_scene: PackedScene = ResourceLoader.load(other[0])
+            item: RigidBody = item_scene.instance()
+            tup = (
+                str(item.item_conname),
+                str(item.item_name)
+            )
+            if tup not in texts:
+                texts.append(tup)
+            item.free()
+            other.pop(0)
+        
+        random.shuffle(texts)
+        self.tv_raw.text = '\n'.join([t for t, _ in texts])
+        self.tv_translated.text = '\n'.join([t for _, t in texts])
+        self.tv_is_translated = True
