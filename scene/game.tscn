@@ -724,17 +724,21 @@ custom_fonts/font = ExtResource( 9 )
 text = "1"
 align = 1
 
-[node name="won" type="HBoxContainer" parent="endday/endday/vbox"]
+[node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
 margin_top = 68.0
 margin_right = 498.0
-margin_bottom = 85.0
+margin_bottom = 174.0
 
-[node name="a" type="Label" parent="endday/endday/vbox/won"]
+[node name="won" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
+margin_right = 498.0
+margin_bottom = 17.0
+
+[node name="a" type="Label" parent="endday/endday/vbox/vbox/won"]
 margin_right = 79.0
 margin_bottom = 17.0
 text = "Won : 15/15"
 
-[node name="b" type="Label" parent="endday/endday/vbox/won"]
+[node name="b" type="Label" parent="endday/endday/vbox/vbox/won"]
 margin_left = 406.0
 margin_right = 498.0
 margin_bottom = 17.0
@@ -742,17 +746,17 @@ size_flags_horizontal = 14
 text = "15 x 50 = 750"
 align = 1
 
-[node name="streak" type="HBoxContainer" parent="endday/endday/vbox"]
-margin_top = 89.0
+[node name="streak" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
+margin_top = 21.0
 margin_right = 498.0
-margin_bottom = 106.0
+margin_bottom = 38.0
 
-[node name="a" type="Label" parent="endday/endday/vbox/streak"]
+[node name="a" type="Label" parent="endday/endday/vbox/vbox/streak"]
 margin_right = 149.0
 margin_bottom = 17.0
 text = "Longest Streak : 15"
 
-[node name="b" type="Label" parent="endday/endday/vbox/streak"]
+[node name="b" type="Label" parent="endday/endday/vbox/vbox/streak"]
 margin_left = 406.0
 margin_right = 498.0
 margin_bottom = 17.0
@@ -760,21 +764,21 @@ size_flags_horizontal = 14
 text = "15 x 50 = 750"
 align = 1
 
-[node name="rank" type="HBoxContainer" parent="endday/endday/vbox"]
+[node name="rank" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
 margin_left = 195.0
-margin_top = 110.0
+margin_top = 42.0
 margin_right = 302.0
-margin_bottom = 174.0
+margin_bottom = 106.0
 size_flags_horizontal = 4
 custom_constants/separation = 32
 
-[node name="a" type="Label" parent="endday/endday/vbox/rank"]
+[node name="a" type="Label" parent="endday/endday/vbox/vbox/rank"]
 margin_top = 23.0
 margin_right = 39.0
 margin_bottom = 40.0
 text = "Rank"
 
-[node name="b" type="Label" parent="endday/endday/vbox/rank"]
+[node name="b" type="Label" parent="endday/endday/vbox/vbox/rank"]
 margin_left = 71.0
 margin_right = 107.0
 margin_bottom = 64.0
@@ -817,3 +821,4 @@ align = 1
 script = ExtResource( 10 )
 
 [node name="pausemenu" parent="." instance=ExtResource( 7 )]
+visible = false
