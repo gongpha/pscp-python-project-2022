@@ -27,8 +27,8 @@ _global_script_class_icons={
 [application]
 
 config/name="PSCP Python Project 2022"
-run/main_scene="res://scene/mainmenu.tscn"
-boot_splash/image="res://icon.png"
+run/main_scene="res://scene/loading.tscn"
+boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
@@ -36,6 +36,10 @@ config/icon="res://icon.png"
 
 GDPORT="*res://script_gd/PORT.gd"
 PYPORT="*res://script/PORT.py"
+
+[debug]
+
+settings/stdout/verbose_stdout=true
 
 [display]
 

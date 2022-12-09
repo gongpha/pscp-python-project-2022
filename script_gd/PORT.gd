@@ -1,18 +1,20 @@
 extends Node
 
-const MNMU_SCENE := preload("res://scene/mainmenu.tscn")
-const GAME_SCENE := preload("res://scene/game.tscn")
+var preloaded_scene : PackedScene
+var mnmu_scene : PackedScene
+var game_scene : PackedScene
+
+func load_ok() :
+	var preloaded : ResourcePreloader = preloaded_scene.instance()
+	mnmu_scene = preloaded.get_resource("mainmenu")
+	game_scene = preloaded.get_resource("game")
+	preloaded.free()
+	call_deferred("go_to_mainmenu")
 
 func go_to_mainmenu() :
-	get_tree().change_scene_to(MNMU_SCENE)
+	#warning-ignore:return_value_discarded
+	get_tree().change_scene_to(mnmu_scene)
 
 func go_to_game() :
-	get_tree().change_scene_to(GAME_SCENE)
-
-func inte(i : RigidBody, state : PhysicsDirectBodyState) :
-	# physics thing
-	# ask gongpha for the questions
-	if !i.has_meta("get_picking") :
-		return
-	var vel = i.get_meta("get_picking").get("global_translation") - i.get("global_translation")
-	state.set_linear_velocity(vel * 20)
+	#warning-ignore:return_value_discarded
+	get_tree().change_scene_to(game_scene)
