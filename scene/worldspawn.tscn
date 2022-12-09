@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
@@ -10,12 +10,16 @@
 [ext_resource path="res://resource/mesh/nink_hanoi.mesh" type="ArrayMesh" id=8]
 [ext_resource path="res://resource/mesh/base2.mesh" type="ArrayMesh" id=9]
 [ext_resource path="res://resource/mesh/nink_domemesh1.mesh" type="ArrayMesh" id=10]
+[ext_resource path="res://resource/mesh/stool.mesh" type="ArrayMesh" id=11]
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
 [ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
 [ext_resource path="res://resource/mesh/lamp.mesh" type="ArrayMesh" id=15]
 [ext_resource path="res://resource/mesh/box1h3.mesh" type="ArrayMesh" id=16]
 [ext_resource path="res://resource/texture/3d/pop14.png" type="Texture" id=17]
 [ext_resource path="res://resource/mesh/clock.mesh" type="ArrayMesh" id=20]
+
+[sub_resource type="ConvexPolygonShape" id=39]
+points = PoolVector3Array( -0.23813, 0.677948, -0.2375, 0.253207, 1.27835, 0.410858, -0.2563, 1.2757, 0.409385, -0.182281, 0.0836699, 0.1875, 0.1875, 0.0845333, -0.182162, 0.243115, 0.8125, -0.236981, 0.1875, 0.0845333, 0.187346, -0.251131, 1.30776, 0.263391, -0.185679, 0.0723743, -0.1875, 0.257103, 1.30776, 0.263391, -0.237745, 0.8125, -0.236981, -0.252759, 0.7563, 0.139331, 0.243516, 0.677948, -0.2375, 0.240132, 0.744466, 0.270379, -0.252759, 0.7563, -0.234081, -0.244365, 0.744466, 0.270379, -0.2563, 1.29562, 0.339571, 0.25273, 1.29721, 0.340245, 0.235288, 0.6688, 0.229346, -0.2563, 1.28566, 0.379372, -0.239522, 0.6688, 0.229346 )
 
 [sub_resource type="BoxShape" id=20]
 extents = Vector3( 2, 1, 0.5 )
@@ -47,6 +51,16 @@ size = Vector3( 0.075, 0.4, 0.075 )
 
 [node name="worldspawn" type="Spatial"]
 script = ExtResource( 4 )
+
+[node name="stool" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0, 0 )
+
+[node name="stool" type="MeshInstance" parent="stool"]
+mesh = ExtResource( 11 )
+skeleton = NodePath("../..")
+
+[node name="stoolcol" type="CollisionShape" parent="stool"]
+shape = SubResource( 39 )
 
 [node name="stall" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0302835, 0.112267, 0.0306592 )
@@ -83,7 +97,7 @@ shadow_enabled = true
 omni_range = 3.88977
 
 [node name="sun" type="DirectionalLight" parent="."]
-transform = Transform( -0.585724, 0.468941, -0.661076, 0.1752, 0.869599, 0.46163, 0.791349, 0.154567, -0.591503, -0.900552, 10.1645, -9.90939 )
+transform = Transform( -0.585724, 0.468941, -0.661076, 0.1752, 0.869599, 0.46163, 0.791349, 0.154567, -0.591504, -0.900552, 10.1645, -9.90939 )
 light_color = Color( 0.937255, 0.909804, 0.854902, 1 )
 light_energy = 0.75
 light_indirect_energy = 1.2
@@ -320,7 +334,7 @@ mesh = ExtResource( 16 )
 skeleton = NodePath("../..")
 
 [node name="clock" type="MeshInstance" parent="."]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.63823, 2.42411, -0.17387 )
+transform = Transform( 0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1.63823, 2.60426, -0.917271 )
 mesh = ExtResource( 20 )
 
 [node name="hand" type="Spatial" parent="clock"]
@@ -340,6 +354,10 @@ mesh = ExtResource( 3 )
 
 [node name="building" type="MeshInstance" parent="."]
 transform = Transform( 5.39701, 0, 0, 0, 5.39701, 0, 0, 0, 5.39701, 12.3217, -3.00221, -23.1996 )
+mesh = ExtResource( 7 )
+
+[node name="building2" type="MeshInstance" parent="."]
+transform = Transform( -2.35911e-07, 0, -5.39701, 0, 5.39701, 0, 5.39701, 0, -2.35911e-07, -13.3307, -3.00221, -26.4885 )
 mesh = ExtResource( 7 )
 
 [node name="lamp" type="MeshInstance" parent="."]

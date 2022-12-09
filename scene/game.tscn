@@ -184,7 +184,7 @@ tracks/13/keys = {
 
 [sub_resource type="Animation" id=6]
 resource_name = "customer_enter"
-length = 4.0
+length = 3.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("customer:translation")
 tracks/0/interp = 1

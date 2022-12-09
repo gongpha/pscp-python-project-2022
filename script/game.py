@@ -26,6 +26,13 @@ ITEM_PATHS = [
     "res://scene/item/sachet3.tscn"
 ]
 
+CUSTOMER_SHEETS = [
+    "res://resource/spritesheet/customer1.tres",
+    "res://resource/spritesheet/customer2.tres",
+    "res://resource/spritesheet/customer3.tres",
+    "res://resource/spritesheet/customer4.tres",
+]
+
 MAX_EACH_ITEM_COUNT = 3
 MIN_CUSTOMERS = 10
 MAX_CUSTOMERS = 30
@@ -70,6 +77,8 @@ class Game(Control):
 
     hint_day: Label  # Day text
     customer_counter: Label # Customer Label
+
+    customer_sprite3d: AnimatedSprite3D
 
     sold: Label
     streak_label: Label
@@ -145,6 +154,8 @@ class Game(Control):
 
         customer = self.get_node("customer")
         customer.pause_mode = Node.PAUSE_MODE_STOP
+
+        self.customer_sprite3d = self.get_node("customer/customer")
 
         self.pausemenu = self.get_node("pausemenu")
         self.pausemenu.connect("on_resume", self, "toggle_pausemenu")
@@ -232,9 +243,13 @@ class Game(Control):
                 self.feed_customer() # NEXT !
 
     def feed_customer(self):
-        """ Summon thee customer """
+        """ Summon the customer """
 
-        # TODO : Add a various customer here
+        # Randomize the customer's sprite
+        self.customer_sprite3d.frames = ResourceLoader.load(CUSTOMER_SHEETS[
+            self.rng.randi_range(0, len(CUSTOMER_SHEETS) - 1)
+        ])
+        
         self.ani.play("customer_enter")
 
     def get_all_item_objects(self) -> list:
@@ -389,7 +404,6 @@ class Game(Control):
             #self.go_endday()
         else :
             if self.counting :
-                print(DAY_TIME[self.current_day])
                 add = (delta / DAY_TIME[self.current_day])
                 #self.sun.rotate_x(delta * inv)
                 self.clock_hand_root.rotate_z(-add * 2 * math.pi)
