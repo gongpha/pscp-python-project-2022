@@ -6,6 +6,9 @@ from . import dialogue
 from .player import Player
 from .utils import lerp
 
+from .rank_table import get_rank_by_score, DAY_TIME, DAY_CUSTOMER, RANK_COLOR
+from .utils import GDPORT
+
 import math
 import random
 
@@ -27,6 +30,7 @@ MAX_EACH_ITEM_COUNT = 3
 MIN_CUSTOMERS = 10
 MAX_CUSTOMERS = 30
 CUSTOMER_TIMER = 15.0
+STREAK_BONUS = 20
 
 @exposed
 class Game(Control):
@@ -40,6 +44,7 @@ class Game(Control):
     confirmorder: Control
     confirmorder_hbox: HBoxContainer
     pick: Control
+    endday_final : VBoxContainer
 
     sun : DirectionalLight
     clock_hand_root : Spatial
@@ -64,17 +69,14 @@ class Game(Control):
     motd_day: Label  # The current day in MOTD (THE BIG TEXT)
 
     hint_day: Label  # Day text
-    balance_text: Label  # Balance Text (used $ as a placeholder)
     customer_counter: Label # Customer Label
 
     sold: Label
-    add_bal: Label
     streak_label: Label
 
     counting : bool = False
     #tscale: float = 0.04  # Time scale
     current_day: int = 1
-    balance: int = 1000
 
     ###########################
 
@@ -125,21 +127,20 @@ class Game(Control):
         self.motd = self.get_node("motd")
         self.endday = self.get_node("endday")
 
+        self.endday_final = self.get_node("endday/endday/vbox/vbox")
         self.endday_day = self.get_node("endday/endday/vbox/hbox/day")
-        self.won_left = self.get_node("endday/endday/vbox/won/a")
-        self.won_right = self.get_node("endday/endday/vbox/won/b")
-        self.streak_left = self.get_node("endday/endday/vbox/streak/a")
-        self.streak_right = self.get_node("endday/endday/vbox/streak/b")
-        self.rank = self.get_node("endday/endday/vbox/rank/b")
+        self.won_left = self.get_node("endday/endday/vbox/vbox/won/a")
+        self.won_right = self.get_node("endday/endday/vbox/vbox/won/b")
+        self.streak_left = self.get_node("endday/endday/vbox/vbox/streak/a")
+        self.streak_right = self.get_node("endday/endday/vbox/vbox/streak/b")
+        self.rank = self.get_node("endday/endday/vbox/vbox/rank/b")
 
         self.sold = self.get_node("endday/endday/vbox/sold")
-        self.add_bal = self.get_node("endday/endday/vbox/add_bal")
         self.streak_label = self.get_node("ui/vbox/streak")
 
         self.motd_day = self.get_node("motd/day")
 
         self.hint_day = self.get_node("ui/vbox/day")
-        self.balance_text = self.get_node("ui/vbox/balance")
         self.customer_counter = self.get_node("ui/vbox/customer_counter")
 
         customer = self.get_node("customer")
@@ -190,7 +191,7 @@ class Game(Control):
 
         self.update_customer_count(0)
         self.update_streak_count(0)
-        self.won = 0
+        self.day_counter_item = 0
 
         # Show MOTD screen
         self.motd_day.text = "Day %d" % self.current_day
@@ -225,8 +226,8 @@ class Game(Control):
         elif ani_name == "customer_exit":
             # NEXT
             self.update_customer_count(self.customer_count + 1)
-            if self.customer_count >= MAX_CUSTOMERS:
-                self.go_endday() # end
+            if self.customer_count >= DAY_CUSTOMER[self.current_day]:
+                self.go_endday(self.current_day == 7) # end
             else :
                 self.feed_customer() # NEXT !
 
@@ -317,29 +318,19 @@ class Game(Control):
         return True
 
     def prepare_items(self):
-        """
-            Place items on the shelf
-            Also charge the balance :/
-        """
+        """ Place items on the shelf """
         for area in self.worldspawn.get("itemspawnpoints"):
             # Check if there's an item on the area
             overlapping: Area = area.get_overlapping_bodies()
             if overlapping.size() > 0:
                 continue  # Okay, there's an item on the area. SKIP
 
-            # TODO : The items are completely random. Make it more balanced to the order
-
             path = ITEM_PATHS[self.rng.randi_range(0, len(ITEM_PATHS) - 1)]
             item_scene: PackedScene = ResourceLoader.load(path)
             item: RigidBody = item_scene.instance()
             self.add_child(item)  # Add the item to the world
-            self.update_balance(self.balance - item.price)
             item.global_translation = area.global_translation
             item.home_place = area.global_translation
-
-    def update_balance(self, new_b: int):
-        self.balance = int(new_b)
-        self.balance_text.text = "$" + str(self.balance)
 
     def update_customer_count(self, ccc : int):
         self.customer_count = ccc
@@ -398,7 +389,8 @@ class Game(Control):
             #self.go_endday()
         else :
             if self.counting :
-                add = (delta / CUSTOMER_TIMER)
+                print(DAY_TIME[self.current_day])
+                add = (delta / DAY_TIME[self.current_day])
                 #self.sun.rotate_x(delta * inv)
                 self.clock_hand_root.rotate_z(-add * 2 * math.pi)
 
@@ -438,8 +430,9 @@ class Game(Control):
                 added.append(item)
             item_on_counter += 1
 
-        if item_on_counter > total + 2:
+        if item_on_counter > total:
             self.dialogue_lines = dialogue.order_too_many_items
+            self.update_streak_count(0)
 
         if clone_list:
             # not completed
@@ -448,7 +441,6 @@ class Game(Control):
         else:
             # YES
             for a in added:
-                self.update_balance(self.balance + (a.price * 1.2))
                 a.queue_free()
                 self.day_counter_item += 1
             self.update_streak_count(self.streak + 1)
@@ -523,45 +515,42 @@ class Game(Control):
     #     if items.size() < 6 :
     #         self.prepare_items()
 
-    def go_endday(self):
+    def go_endday(self, real_end : bool):
         """ Emit the end day screen """
-        self.endday_day.text = str(self.current_day)
-        Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+        self.endday_final.visible = real_end
 
-        self.endday_day.text = str(self.current_day)
-        self.won_left.text = "Won : %d/%d" % (
-            self.won, self.customer_count
-        )
-        self.won_right.text = "%d x 50 = %d" % (
-            self.won, self.won * 50
-        )
-        self.streak_left.text = "Longest Streak : %d" % (
-            self.streak
-        )
-        self.streak_right.text = "%d x 50 = %d" % (
-            self.streak, self.streak * 50
-        )
-        self.rank.text = '?'
-        
+        if real_end:
+            self.endday_day.text = str(self.current_day)
+            Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+            self.endday_day.text = str(self.current_day)
+            self.won_left.text = "Won : %d/%d" % (
+                self.won, self.customer_count
+            )
+            self.won_right.text = "%d x 50 = %d" % (
+                self.won, self.won * 50
+            )
+            self.streak_left.text = "Current Streak : %d" % (
+                self.streak
+            )
+            self.streak_right.text = "%d x 50 = %d" % (
+                self.streak, self.streak * 50
+            )
+            final = self.won + (self.streak * STREAK_BONUS)
+            self.rank.text = get_rank_by_score(final)
+            self.rank.add_color_override("font_color", RANK_COLOR[self.rank.text])
+            self.next_button.text = "Back to the mainmenu"
+    
         self.sold.text = "%d items sold" % self.day_counter_item
-        
-        diff = self.balance - self.day_start_balance
-        if diff > 0:
-            self.add_bal.text = "+$%d" % diff
-            self.add_bal.add_color_override("font_color", Color(0.5, 1, 0.5, 1))
-            self.add_bal.show()
-        elif diff < 0:
-            self.add_bal.text = "-$%d" % diff
-            self.add_bal.add_color_override("font_color", Color(1, 0.5, 0.5, 1))
-            self.add_bal.show()
-        else:
-            self.add_bal.hide()
-
         self.endday.show()
         self.set_process(False)
 
     def _on_next_button_pressed(self):
         """ Go to the next day """
+        if self.current_day == 7:
+            self.get_tree().paused = False
+            GDPORT(self).call("go_to_mainmenu")
+            return
         self.current_day += 1
         self.ani.play("RESET")
         self.get_tree().create_timer(0.001).connect("timeout", self, "newday")
