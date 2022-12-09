@@ -21,7 +21,7 @@ class PauseMenu(MainMenu):
                 'description': "Change the game settings",
                 'callback': self.option_settings
             },
-            "Back to the mainmenu": {
+            "Exit to title": {
                 'description': "Back to the mainmenu",
                 'callback': self.option_back
             },

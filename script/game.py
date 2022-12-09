@@ -255,6 +255,8 @@ class Game(Control):
     def feed_customer(self):
         """ Summon the customer """
 
+        self.reset_clock()
+
         # Randomize the customer's sprite
         self.customer_sprite3d.frames = ResourceLoader.load(CUSTOMER_SHEETS[
             self.rng.randi_range(0, len(CUSTOMER_SHEETS) - 1)
@@ -280,6 +282,7 @@ class Game(Control):
         self.order = {
             'items': order_item,
             'status': "pending",
+            'repeat': 0,
         }
 
         available = {}
@@ -308,8 +311,8 @@ class Game(Control):
             'itemname' : vvv[2]
         })for vvv in order_item.values()]
 
-        self.dialogue_repeat = [dialogue.order.format(', '.join(order_dialogue))]
-        self.dialogue_lines = [dialogue.greeting] + self.dialogue_repeat
+        self.dialogue_repeat = ', '.join(order_dialogue)
+        self.dialogue_lines = [dialogue.greeting] + [dialogue.order.format(self.dialogue_repeat)]
 
         self.show_dialogue()
 
@@ -475,7 +478,6 @@ class Game(Control):
             self.dialogue_lines = [dialogue.order_ok]
             self.order["status"] = "completed"
             self.counting = False
-            self.reset_clock()
             self.prepare_items()
         self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
@@ -504,7 +506,6 @@ class Game(Control):
         elif event.is_action_pressed("repeat"):
             # repeat the dialogue
             self.repeat_dialogue()
-            # >:(
 
         if event.is_action_released("ui_select"):
             self.confirmorder.modulate = Color(1, 1, 1, 1)
@@ -519,9 +520,18 @@ class Game(Control):
 
     def repeat_dialogue(self):
         """ Repeat the dialogue """
-        if self.dialogue_panel.visible:
+        if self.dialogue_panel.visible or not self.order:
             return
-        self.dialogue_lines = self.dialogue_repeat.copy()
+
+        self.dialogue_lines = [self.dialogue_repeat]
+        self.order["repeat"] += 1
+        if self.order["repeat"] > 6:
+            self.dialogue_lines = [dialogue.repeat_too_much_final]
+            self.order["status"] = "failed"
+            self.update_streak_count(0)
+            self.counting = False
+        elif self.order["repeat"] == 3:
+            self.dialogue_lines += [dialogue.repeat_too_much]
         self.show_dialogue()
 
     def force_timeout(self):
