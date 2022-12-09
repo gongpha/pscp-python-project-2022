@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
@@ -12,27 +12,11 @@
 [ext_resource path="res://resource/mesh/nink_domemesh1.mesh" type="ArrayMesh" id=10]
 [ext_resource path="res://resource/mesh/stool.mesh" type="ArrayMesh" id=11]
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
-[ext_resource path="res://scene/tvscreen.tscn" type="PackedScene" id=13]
 [ext_resource path="res://resource/mesh/nink_lukpad1.mesh" type="ArrayMesh" id=14]
 [ext_resource path="res://resource/mesh/lamp.mesh" type="ArrayMesh" id=15]
 [ext_resource path="res://resource/mesh/box1h3.mesh" type="ArrayMesh" id=16]
 [ext_resource path="res://resource/texture/3d/pop14.png" type="Texture" id=17]
-[ext_resource path="res://resource/mesh/monitor.mesh" type="ArrayMesh" id=18]
 [ext_resource path="res://resource/mesh/clock.mesh" type="ArrayMesh" id=20]
-
-[sub_resource type="ConvexPolygonShape" id=45]
-points = PoolVector3Array( 1.1875, 0.776161, -1.14401, 1.15275, 0.167228, -0.792429, 1.1875, 0.126579, -0.76899, 1.1875, 0.744909, -1.19812, -0.0625, 0.776161, -1.14401, -0.0278729, 0.167228, -0.792429, 1.1875, 0.0953925, -0.823135, -0.0625, 0.126579, -0.76899, -0.0625, 0.744909, -1.19812, -0.0625, 0.0953925, -0.823135 )
-
-[sub_resource type="QuadMesh" id=41]
-size = Vector2( 1.202, 0.668 )
-
-[sub_resource type="ViewportTexture" id=44]
-viewport_path = NodePath("tv/screen/tvcontent")
-
-[sub_resource type="SpatialMaterial" id=43]
-resource_local_to_scene = true
-albedo_color = Color( 2, 2, 2, 1 )
-albedo_texture = SubResource( 44 )
 
 [sub_resource type="ConvexPolygonShape" id=39]
 points = PoolVector3Array( -0.23813, 0.677948, -0.2375, 0.253207, 1.27835, 0.410858, -0.2563, 1.2757, 0.409385, -0.182281, 0.0836699, 0.1875, 0.1875, 0.0845333, -0.182162, 0.243115, 0.8125, -0.236981, 0.1875, 0.0845333, 0.187346, -0.251131, 1.30776, 0.263391, -0.185679, 0.0723743, -0.1875, 0.257103, 1.30776, 0.263391, -0.237745, 0.8125, -0.236981, -0.252759, 0.7563, 0.139331, 0.243516, 0.677948, -0.2375, 0.240132, 0.744466, 0.270379, -0.252759, 0.7563, -0.234081, -0.244365, 0.744466, 0.270379, -0.2563, 1.29562, 0.339571, 0.25273, 1.29721, 0.340245, 0.235288, 0.6688, 0.229346, -0.2563, 1.28566, 0.379372, -0.239522, 0.6688, 0.229346 )
@@ -67,29 +51,6 @@ size = Vector3( 0.075, 0.4, 0.075 )
 
 [node name="worldspawn" type="Spatial"]
 script = ExtResource( 4 )
-
-[node name="tv" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0556158 )
-
-[node name="monitor" type="MeshInstance" parent="tv"]
-mesh = ExtResource( 18 )
-skeleton = NodePath("../..")
-
-[node name="moncol" type="CollisionShape" parent="tv"]
-shape = SubResource( 45 )
-
-[node name="screen" type="MeshInstance" parent="tv"]
-transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0.564608, 0.447475, -0.968716 )
-mesh = SubResource( 41 )
-skeleton = NodePath("../..")
-material/0 = SubResource( 43 )
-
-[node name="tvcontent" type="Viewport" parent="tv/screen"]
-size = Vector2( 601, 334 )
-usage = 0
-render_target_v_flip = true
-
-[node name="tvscreen" parent="tv/screen/tvcontent" instance=ExtResource( 13 )]
 
 [node name="stool" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0, 0 )
@@ -438,5 +399,3 @@ shaded = true
 double_sided = false
 alpha_cut = 1
 texture = ExtResource( 12 )
-
-[editable path="tv/screen/tvcontent/tvscreen"]

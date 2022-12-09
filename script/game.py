@@ -167,9 +167,9 @@ class Game(Control):
         self.pausemenu.hide()
         self.pausemenu.pause_mode = Node.PAUSE_MODE_PROCESS
 
-        self.tv_raw = self.worldspawn.get_node("tv/screen/tvcontent/tvscreen/raw")
-        self.tv_arrow = self.worldspawn.get_node("tv/screen/tvcontent/tvscreen/arrow")
-        self.tv_translated = self.worldspawn.get_node("tv/screen/tvcontent/tvscreen/translated")
+        self.tv_raw = self.get_node("tv/screen/tvcontent/tvscreen/raw")
+        self.tv_arrow = self.get_node("tv/screen/tvcontent/tvscreen/arrow")
+        self.tv_translated = self.get_node("tv/screen/tvcontent/tvscreen/translated")
 
         input_node: Node = self.get_node("input")
         input_node.connect("input", self, "_input_proxy",
