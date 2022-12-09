@@ -21,7 +21,7 @@ extents = Vector3( 2, 1, 0.5 )
 extents = Vector3( 32, 1, 32 )
 
 [sub_resource type="BoxShape" id=24]
-extents = Vector3( 1.37343, 1.15453, 0.585009 )
+extents = Vector3( 1.02826, 0.654568, 0.362766 )
 
 [sub_resource type="SphereShape" id=34]
 radius = 0.320368
@@ -49,11 +49,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0302835, 0.112267, 0.0306592
 autoplay = true
 bus = "Music"
 
-[node name="clockbarrier" type="StaticBody" parent="."]
+[node name="block" type="StaticBody" parent="."]
 collision_layer = 0
 collision_mask = 6
 
-[node name="col" type="CollisionShape" parent="clockbarrier"]
+[node name="col" type="CollisionShape" parent="block"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2 )
 shape = SubResource( 20 )
 
@@ -98,7 +98,7 @@ __meta__ = {
 }
 
 [node name="c" type="CollisionShape" parent="counter_good"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.02961, -1.35308 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0281665, 1.70743, -1.29842 )
 shape = SubResource( 24 )
 
 [node name="itemspawner" type="Spatial" parent="."]
