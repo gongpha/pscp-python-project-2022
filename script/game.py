@@ -302,11 +302,14 @@ class Game(Control):
             ]
 
         # Prepare the texts
-        order_dialogue = ["%s x%d" % (vvv[0], vvv[1])
-                          for vvv in order_item.values()]
+        order_dialogue = [dialogue.order_item.format(**{
+            'translated' : vvv[0],
+            'count' : vvv[1],
+            'itemname' : vvv[2]
+        })for vvv in order_item.values()]
 
-        self.dialogue_repeat = [', '.join(order_dialogue)]
-        self.dialogue_lines = dialogue.greeting + self.dialogue_repeat
+        self.dialogue_repeat = [dialogue.order.format(', '.join(order_dialogue))]
+        self.dialogue_lines = [dialogue.greeting] + self.dialogue_repeat
 
         self.show_dialogue()
 
@@ -456,11 +459,11 @@ class Game(Control):
             item_on_counter += 1
 
         if item_on_counter > total:
-            self.dialogue_lines = dialogue.order_too_many_items
+            self.dialogue_lines = [dialogue.order_too_many_items]
             self.update_streak_count(0)
         elif clone_list:
             # not completed
-            self.dialogue_lines = dialogue.order_not_complete
+            self.dialogue_lines = [dialogue.order_not_complete]
             self.update_streak_count(0)
         else:
             # YES
@@ -469,7 +472,7 @@ class Game(Control):
                 self.day_counter_item += 1
             self.update_streak_count(self.streak + 1)
             self.won += 1
-            self.dialogue_lines = dialogue.order_ok
+            self.dialogue_lines = [dialogue.order_ok]
             self.order["status"] = "completed"
             self.counting = False
             self.reset_clock()
@@ -527,7 +530,7 @@ class Game(Control):
         if self.order:
             self.order["status"] = "failed"
             self.update_streak_count(0)
-        self.dialogue_lines = dialogue.order_timeout.copy()
+        self.dialogue_lines = [dialogue.order_timeout]
         self.show_dialogue()
 
     # def _on_player_look_front(self) :
