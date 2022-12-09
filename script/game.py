@@ -92,7 +92,7 @@ class Game(Control):
 
     customer_count : int = 0
 
-    who : int = 0
+    won : int = 0
     streak : int = 0
 
     pausemenu : Control
@@ -399,8 +399,7 @@ class Game(Control):
         clone = {}
         iii = self.order["items"]
         for kkk in iii:
-            eee = iii[kkk]
-            clone[kkk] = eee.copy()
+            clone[kkk] = iii[kkk].copy()
         return clone
 
     def check_items(self):
@@ -419,7 +418,7 @@ class Game(Control):
             in_good = self.worldspawn.get("counter_good").overlaps_body(item)
 
             if not in_good:
-                # the item still around in the shop bruh
+                # the item isn't placed on the counter
                 continue
 
             # if it's in the list. mark them
