@@ -5,6 +5,7 @@
 
 [node name="sachet" instance=ExtResource( 1 )]
 item_name = "Blue Crisps"
+item_conname = "CHIPS2"
 
 [node name="mesh" parent="." index="0"]
 material/0 = ExtResource( 2 )

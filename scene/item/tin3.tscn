@@ -14,6 +14,7 @@ radius = 0.124368
 [node name="item" type="RigidBody"]
 script = ExtResource( 1 )
 item_name = "Red Soup"
+item_conname = "CAN3"
 price = 40
 
 [node name="mesh" type="MeshInstance" parent="."]

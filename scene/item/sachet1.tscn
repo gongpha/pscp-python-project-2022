@@ -10,6 +10,7 @@ points = PoolVector3Array( -0.3125, 0.36875, 0, -0.250037, 0.532132, -0.125, 0.3
 [node name="sachet" type="RigidBody"]
 script = ExtResource( 1 )
 item_name = "Purple Crisps"
+item_conname = "CHIPS1"
 price = 15
 
 [node name="mesh" type="MeshInstance" parent="."]
