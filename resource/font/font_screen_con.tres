@@ -2,7 +2,7 @@
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
-font_path = "res://resource/font/bin/JLX_Pixel.ttf"
+font_path = "res://resource/font/bin/JLX_Pixel_PTH.ttf"
 
 [resource]
 size = 36
