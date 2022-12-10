@@ -1,10 +1,9 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
 [ext_resource path="res://resource/texture/cursor.png" type="Texture" id=3]
 [ext_resource path="res://resource/spritesheet/customer.tres" type="SpriteFrames" id=4]
-[ext_resource path="res://resource/texture/ui1.png" type="Texture" id=5]
 [ext_resource path="res://resource/texture/key1.png" type="Texture" id=6]
 [ext_resource path="res://scene/pausemenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=8]
@@ -266,7 +265,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=7]
 resource_name = "dialogue_enter"
-length = 0.4
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("dialogue:anchor_top")
 tracks/0/interp = 1
@@ -274,7 +273,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 1 ),
 "update": 0,
 "values": [ 1.5, 0.83 ]
@@ -286,7 +285,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 1 ),
 "update": 0,
 "values": [ 1.5, 0.83 ]
@@ -298,7 +297,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.8, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 64 ), Vector2( 512, 64 ) ]
@@ -330,7 +329,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=8]
 resource_name = "dialogue_exit"
-length = 0.4
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("dialogue:anchor_top")
 tracks/0/interp = 1
@@ -338,7 +337,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 0.4 ),
 "update": 0,
 "values": [ 0.83, 1.5 ]
@@ -350,7 +349,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 0.4 ),
 "update": 0,
 "values": [ 0.83, 1.5 ]
@@ -362,7 +361,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 0.8 ),
 "update": 0,
 "values": [ Vector2( 512, 64 ), Vector2( 0, 64 ) ]
@@ -374,7 +373,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -447,14 +446,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [ true, false ]
 }
-
-[sub_resource type="StyleBoxTexture" id=9]
-texture = ExtResource( 5 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 8.0
-margin_right = 8.0
-margin_top = 8.0
-margin_bottom = 8.0
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 6 )
@@ -531,13 +522,12 @@ anchor_bottom = 0.83
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 512, 64 )
-custom_styles/panel = SubResource( 9 )
 
 [node name="rich" type="RichTextLabel" parent="dialogue"]
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 504.0
-margin_bottom = 56.0
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 500.0
+margin_bottom = 52.0
 rect_clip_content = false
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 bbcode_enabled = true
@@ -580,26 +570,26 @@ margin_bottom = 40.0
 custom_constants/separation = 16
 
 [node name="day" type="Label" parent="ui/vbox"]
-margin_right = 201.0
-margin_bottom = 17.0
+margin_right = 268.0
+margin_bottom = 23.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Day #"
 
 [node name="customer_counter" type="Label" parent="ui/vbox"]
-margin_top = 33.0
-margin_right = 201.0
-margin_bottom = 50.0
+margin_top = 39.0
+margin_right = 268.0
+margin_bottom = 62.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Encountered 0 Customers"
 
 [node name="streak" type="Label" parent="ui/vbox"]
-margin_top = 66.0
-margin_right = 201.0
-margin_bottom = 83.0
+margin_top = 78.0
+margin_right = 268.0
+margin_bottom = 101.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
@@ -626,24 +616,24 @@ rect_pivot_offset = Vector2( 131, 14 )
 custom_constants/separation = 16
 
 [node name="text" type="Label" parent="ui/hint/confirmorder/hbox"]
-margin_top = 7.0
-margin_right = 111.0
-margin_bottom = 24.0
+margin_top = 4.0
+margin_right = 147.0
+margin_bottom = 27.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Confirm Order"
 
 [node name="icon" type="TextureRect" parent="ui/hint/confirmorder/hbox"]
-margin_left = 127.0
-margin_right = 255.0
+margin_left = 163.0
+margin_right = 291.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 texture = SubResource( 10 )
 stretch_mode = 4
 
 [node name="repeat" type="HBoxContainer" parent="ui/hint"]
-margin_left = 103.0
+margin_left = 86.0
 margin_top = 45.0
 margin_right = 300.0
 margin_bottom = 77.0
@@ -651,24 +641,24 @@ size_flags_horizontal = 8
 custom_constants/separation = 16
 
 [node name="text" type="Label" parent="ui/hint/repeat"]
-margin_top = 7.0
-margin_right = 53.0
-margin_bottom = 24.0
+margin_top = 4.0
+margin_right = 70.0
+margin_bottom = 27.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Repeat"
 
 [node name="icon" type="TextureRect" parent="ui/hint/repeat"]
-margin_left = 69.0
-margin_right = 197.0
+margin_left = 86.0
+margin_right = 214.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 texture = SubResource( 11 )
 stretch_mode = 4
 
 [node name="pick" type="HBoxContainer" parent="ui/hint"]
-margin_left = 124.0
+margin_left = 114.0
 margin_top = 93.0
 margin_right = 300.0
 margin_bottom = 125.0
@@ -676,17 +666,17 @@ size_flags_horizontal = 8
 custom_constants/separation = 16
 
 [node name="text" type="Label" parent="ui/hint/pick"]
-margin_top = 7.0
-margin_right = 32.0
-margin_bottom = 24.0
+margin_top = 4.0
+margin_right = 42.0
+margin_bottom = 27.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Pick"
 
 [node name="icon" type="TextureRect" parent="ui/hint/pick"]
-margin_left = 48.0
-margin_right = 176.0
+margin_left = 58.0
+margin_right = 186.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 texture = SubResource( 12 )
@@ -717,105 +707,116 @@ grow_vertical = 2
 rect_min_size = Vector2( 512, 0 )
 
 [node name="vbox" type="VBoxContainer" parent="endday/endday"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 505.0
-margin_bottom = 229.0
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 500.0
+margin_bottom = 284.0
 
 [node name="hbox" type="HBoxContainer" parent="endday/endday/vbox"]
-margin_left = 160.0
-margin_right = 338.0
+margin_left = 119.0
+margin_right = 369.0
 margin_bottom = 64.0
 size_flags_horizontal = 4
+custom_constants/separation = 24
 
 [node name="title" type="Label" parent="endday/endday/vbox/hbox"]
-margin_top = 23.0
-margin_right = 150.0
-margin_bottom = 40.0
+margin_top = 20.0
+margin_right = 202.0
+margin_bottom = 43.0
 text = "The end of the day"
 
 [node name="day" type="Label" parent="endday/endday/vbox/hbox"]
-margin_left = 154.0
-margin_right = 178.0
+margin_left = 226.0
+margin_right = 250.0
 margin_bottom = 64.0
 custom_fonts/font = ExtResource( 9 )
 text = "1"
 align = 1
 
-[node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
+[node name="sep" type="HSeparator" parent="endday/endday/vbox"]
 margin_top = 68.0
-margin_right = 498.0
-margin_bottom = 174.0
+margin_right = 488.0
+margin_bottom = 72.0
+
+[node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
+margin_top = 76.0
+margin_right = 488.0
+margin_bottom = 194.0
 
 [node name="won" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
-margin_right = 498.0
-margin_bottom = 17.0
+margin_right = 488.0
+margin_bottom = 23.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/won"]
-margin_right = 80.0
-margin_bottom = 17.0
+margin_right = 108.0
+margin_bottom = 23.0
 text = "Won : 15/15"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/won"]
-margin_left = 399.0
-margin_right = 498.0
-margin_bottom = 17.0
+margin_left = 352.0
+margin_right = 488.0
+margin_bottom = 23.0
 size_flags_horizontal = 14
 text = "15 x 50 = 750"
 align = 1
 
 [node name="streak" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
-margin_top = 21.0
-margin_right = 498.0
-margin_bottom = 38.0
+margin_top = 27.0
+margin_right = 488.0
+margin_bottom = 50.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/streak"]
-margin_right = 151.0
-margin_bottom = 17.0
+margin_right = 203.0
+margin_bottom = 23.0
 text = "Longest Streak : 15"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/streak"]
-margin_left = 399.0
-margin_right = 498.0
-margin_bottom = 17.0
+margin_left = 352.0
+margin_right = 488.0
+margin_bottom = 23.0
 size_flags_horizontal = 14
 text = "15 x 50 = 750"
 align = 1
 
 [node name="rank" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
-margin_left = 197.0
-margin_top = 42.0
-margin_right = 301.0
-margin_bottom = 106.0
+margin_left = 186.0
+margin_top = 54.0
+margin_right = 302.0
+margin_bottom = 118.0
 size_flags_horizontal = 4
 custom_constants/separation = 32
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/rank"]
-margin_top = 23.0
-margin_right = 36.0
-margin_bottom = 40.0
+margin_top = 20.0
+margin_right = 48.0
+margin_bottom = 43.0
 text = "Rank"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/rank"]
-margin_left = 68.0
-margin_right = 104.0
+margin_left = 80.0
+margin_right = 116.0
 margin_bottom = 64.0
 size_flags_horizontal = 14
 custom_fonts/font = ExtResource( 9 )
 text = "A"
 align = 1
 
+[node name="sep2" type="HSeparator" parent="endday/endday/vbox"]
+margin_top = 198.0
+margin_right = 488.0
+margin_bottom = 202.0
+
 [node name="sold" type="Label" parent="endday/endday/vbox"]
-margin_top = 178.0
-margin_right = 498.0
-margin_bottom = 195.0
+margin_top = 206.0
+margin_right = 488.0
+margin_bottom = 229.0
 text = "[ . . . ]"
 align = 1
 
 [node name="continue" type="Button" parent="endday/endday/vbox"]
-margin_top = 199.0
-margin_right = 498.0
-margin_bottom = 222.0
+margin_top = 233.0
+margin_right = 488.0
+margin_bottom = 272.0
 text = "Sleep"
 
 [node name="motd" type="ColorRect" parent="."]
