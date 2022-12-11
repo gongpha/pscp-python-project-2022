@@ -121,6 +121,7 @@ class Game(Control):
     anicheat : AnimationPlayer
 
     confirm_fx : AudioStreamPlayer
+    dialogue_fx : AudioStreamPlayer3D
 
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
@@ -195,6 +196,7 @@ class Game(Control):
         self.anicheat = self.get_node("anicheat")
 
         self.confirm_fx = self.worldspawn.get_node("confirm")
+        self.dialogue_fx = self.get_node("customer/dialogue_fx")
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
@@ -428,8 +430,13 @@ class Game(Control):
         )
 
         if self.dialogue_animating_chars:
+            old_visible = self.dialogue_richtext.visible_characters
             self.dialogue_richtext.percent_visible += 0.25 / \
                 max(0.1, self.dialogue_richtext.bbcode_text.length())
+            if self.dialogue_richtext.visible_characters != old_visible:
+                # play sound
+                print("FFF")
+                self.dialogue_fx.play()
             if self.dialogue_richtext.percent_visible == 1.0:
                 # STOP
                 self.dialogue_animating_chars = False

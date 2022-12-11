@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://resource/maintheme.tres" type="Theme" id=13]
 [ext_resource path="res://resource/audio/footstep_1.wav" type="AudioStream" id=14]
 [ext_resource path="res://resource/audio/footstep_2.wav" type="AudioStream" id=15]
+[ext_resource path="res://resource/audio/npc_vo.wav" type="AudioStream" id=16]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -656,8 +657,10 @@ frames = ExtResource( 4 )
 animation = "right"
 frame = 1
 
+[node name="dialogue_fx" type="AudioStreamPlayer3D" parent="customer"]
+stream = ExtResource( 16 )
+
 [node name="footstep" type="AudioStreamPlayer3D" parent="customer"]
-stream = ExtResource( 14 )
 
 [node name="dialogue" type="PanelContainer" parent="."]
 visible = false
