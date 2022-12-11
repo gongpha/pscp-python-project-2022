@@ -924,7 +924,7 @@ script = ExtResource( 10 )
 visible = false
 
 [node name="tv" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0556158 )
+transform = Transform( 1, 0, 0, 0, 0.950489, 0.310759, 0, -0.310759, 0.950489, -5.96046e-08, 0.516874, 0.389198 )
 
 [node name="monitor" type="MeshInstance" parent="tv"]
 mesh = ExtResource( 12 )
