@@ -5,7 +5,7 @@ class_name Item
 
 export var item_name : String
 export var item_conname : String = "<null>"
-export var price : int = 20
+export var fridge : bool = false
 
 var get_picking : Spatial
 var picking_rot_input : Vector3

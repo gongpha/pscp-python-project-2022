@@ -373,12 +373,20 @@ class Game(Control):
             if overlapping.size() > 0:
                 continue  # Okay, there's an item on the area. SKIP
 
-            path = ITEM_PATHS[self.rng.randi_range(0, len(ITEM_PATHS) - 1)]
-            item_scene: PackedScene = ResourceLoader.load(path)
-            item: RigidBody = item_scene.instance()
-            self.add_child(item)  # Add the item to the world
-            item.global_translation = area.global_translation
-            item.home_place = area.global_translation
+            is_in_fridge = str(area.name).startswith("f")
+
+            while True:
+                path = ITEM_PATHS[self.rng.randi_range(0, len(ITEM_PATHS) - 1)]
+                item_scene: PackedScene = ResourceLoader.load(path)
+                item: RigidBody = item_scene.instance()
+                if item.get("fridge") != is_in_fridge:
+                    # not match the area. retry
+                    item.free()
+                    continue
+                self.add_child(item)  # Add the item to the world
+                item.global_translation = area.global_translation
+                item.home_place = area.global_translation
+                break
 
     def update_customer_count(self, ccc : int):
         self.customer_count = ccc

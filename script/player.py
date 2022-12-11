@@ -86,8 +86,8 @@ class Player(KinematicBody):
                     that_thing = self.ray.get_collider()
                     self.picking = that_thing
                     if that_thing:
+                        self.picking.sleeping = False
                         self.picking.set('get_picking', self.itemfront)
-                        self.picking.set('sleeping', False)
             else:
                 if self.picking:
                     self.picking.set('get_picking', Reference())

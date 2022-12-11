@@ -20,5 +20,15 @@ shape = ExtResource( 2 )
 [node name="fridge" type="MeshInstance" parent="."]
 mesh = ExtResource( 4 )
 
+[node name="l" type="OmniLight" parent="fridge"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19001, 1.84702, 0.459967 )
+light_color = Color( 1, 0.992157, 0.611765, 1 )
+omni_range = 1.077
+
+[node name="l2" type="OmniLight" parent="fridge"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19001, 1.02734, 0.459967 )
+light_color = Color( 1, 0.992157, 0.611765, 1 )
+omni_range = 1.077
+
 [node name="fridgecol" type="CollisionShape" parent="."]
 shape = ExtResource( 3 )
