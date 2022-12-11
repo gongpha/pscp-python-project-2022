@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://script/mainmenu_row.py" type="Script" id=1]
+[ext_resource path="res://resource/audio/menu_pointing.wav" type="AudioStream" id=2]
+[ext_resource path="res://resource/audio/menu_clicking.wav" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -17,9 +19,27 @@ tracks/0/keys = {
 "values": [ Color( 1, 0.75, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=4]
+resource_name = "click"
+length = 0.1
+tracks/0/type = "audio"
+tracks/0/path = NodePath("fx")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.03,
+"stream": ExtResource( 3 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
 [sub_resource type="Animation" id=2]
 resource_name = "glow_end"
-length = 0.5
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("text:custom_colors/font_color")
 tracks/0/interp = 1
@@ -27,7 +47,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 3, 2.25, 0, 1 ), Color( 1, 0.75, 0, 1 ) ]
@@ -36,6 +56,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "glow_start"
 length = 0.1
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("text:custom_colors/font_color")
 tracks/0/interp = 1
@@ -43,10 +64,24 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
+"times": PoolRealArray( 0, 0.05 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 0.75, 0, 1 ), Color( 3, 2.25, 0, 1 ) ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("fx")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.06,
+"stream": ExtResource( 2 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [node name="row" type="HBoxContainer"]
@@ -77,5 +112,9 @@ valign = 1
 
 [node name="ani" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 1 )
+anims/click = SubResource( 4 )
 anims/glow_end = SubResource( 2 )
 anims/glow_start = SubResource( 3 )
+
+[node name="fx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
