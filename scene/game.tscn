@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
@@ -474,6 +474,62 @@ resource_local_to_scene = true
 albedo_color = Color( 2, 2, 2, 1 )
 albedo_texture = SubResource( 44 )
 
+[sub_resource type="Animation" id=48]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/cheat:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ui/cheat:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "!!!" ]
+}
+
+[sub_resource type="Animation" id=49]
+resource_name = "show"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/cheat:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.45, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 3, 3 ), Vector2( 3, 3 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ui/cheat:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "!!!" ]
+}
+
 [node name="game" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -570,6 +626,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -23.0
 margin_right = 12.0
+rect_pivot_offset = Vector2( 0, 23 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
@@ -886,5 +943,9 @@ usage = 0
 render_target_v_flip = true
 
 [node name="tvscreen" parent="tv/screen/tvcontent" instance=ExtResource( 11 )]
+
+[node name="anicheat" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 48 )
+anims/show = SubResource( 49 )
 
 [editable path="tv/screen/tvcontent/tvscreen"]

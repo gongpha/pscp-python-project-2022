@@ -118,6 +118,7 @@ class Game(Control):
     cheat_label : Label
     cheatfx : AudioStreamPlayer
     clock_freezing : bool = False
+    anicheat : AnimationPlayer
 
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
@@ -189,6 +190,7 @@ class Game(Control):
         self.cheat_label = self.get_node("ui/cheat")
         self.cheat_label.hide()
         self.cheatfx = self.get_node("ui/cheatfx")
+        self.anicheat = self.get_node("anicheat")
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
@@ -676,26 +678,47 @@ class Game(Control):
         self.cheat_mode = True
         self.cheat_label.show()
         self.cheatfx.play()
+        self.cheat_label.text = "!!! Cheat Mode Activated"
+        self.anicheat.stop()
+        self.anicheat.play("show")
 
     def cheat_input(self, event : InputEvent):
         """ CHEAT INPUT """
         if event.is_action_pressed("cheat_freeze_clock"):
             self.cheatfx.play()
             self.clock_freezing = not self.clock_freezing
-        elif event.is_action_pressed("cheat_force_complete_order"):
+            self.cheat_label.text = "!!! Clock Freezing : %s" % str(self.clock_freezing)
+            self.anicheat.stop()
+            self.anicheat.play("show")
+        elif event.is_action_pressed("cheat_force_complete_order") and self.order:
             self.cheatfx.play()
             self.check_items(True)
-        elif event.is_action_pressed("cheat_repeat_ignore_counting"):
+            self.cheat_label.text = "!!! Order Completed"
+            self.anicheat.stop()
+            self.anicheat.play("show")
+        elif event.is_action_pressed("cheat_repeat_ignore_counting") and self.order:
             self.cheatfx.play()
             self.repeat_dialogue()
+            self.cheat_label.text = "!!! Dialogue Repeated without counting"
+            self.anicheat.stop()
+            self.anicheat.play("show")
         elif event.is_action_pressed("cheat_noclip"):
             self.cheatfx.play()
             self.player.set("noclip", not self.player.get("noclip"))
+            self.cheat_label.text = "!!! Noclip : %s" % str(self.player.get("noclip"))
+            self.anicheat.stop()
+            self.anicheat.play("show")
         elif event.is_action_pressed("cheat_force_endday_god"):
             self.cheatfx.play()
             self.day_counter_item += 99999
+            self.cheat_label.text = "!!! Day Completed (HAXXXXX)"
             self.won += DAY_CUSTOMER[self.current_day]
             self.go_endday(self.current_day == 7)
+            self.anicheat.stop()
+            self.anicheat.play("show")
         elif event.is_action_pressed("cheat_force_endday"):
             self.cheatfx.play()
             self.go_endday(self.current_day == 7)
+            self.cheat_label.text = "!!! Day Completed"
+            self.anicheat.stop()
+            self.anicheat.play("show")
