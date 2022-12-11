@@ -223,6 +223,8 @@ class Game(Control):
         # Prepare items on the shelf
         self.prepare_items()
 
+        self.counting = False
+
         self.update_customer_count(0)
         self.customer_count_total += DAY_CUSTOMER[self.current_day]
         self.update_streak_count(0)

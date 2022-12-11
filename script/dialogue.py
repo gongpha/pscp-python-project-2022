@@ -9,7 +9,7 @@
 
 greeting = "HOWDY"
 order = "CAN I HAVE {}, PLEASE?"
-order_item = "{count}x {itemname}" # use {translated} for translated item name
+order_item = "{count}x [code]{itemname}[/code]" # use {translated} for translated item name
 order_ok = "THANKS!"
 order_not_complete = "THE ORDER IS NOT COMPLETE!"
 order_too_many_items = "PERHAPS YOU SHOULD CLEAN YOUR COUNTER."
