@@ -14,7 +14,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 0.75, 0, 1 ) ]
+"values": [ Color( 0, 0.501961, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -30,7 +30,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 3, 2.25, 0, 1 ), Color( 1, 0.75, 0, 1 ) ]
+"values": [ Color( 0, 2.25, 3, 1 ), Color( 0, 0.501961, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -46,7 +46,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 0.75, 0, 1 ), Color( 3, 2.25, 0, 1 ) ]
+"values": [ Color( 0, 0.501961, 1, 1 ), Color( 0, 2, 3, 1 ) ]
 }
 
 [node name="row" type="HBoxContainer"]
@@ -61,7 +61,7 @@ rect_min_size = Vector2( 200, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 size_flags_vertical = 7
-custom_colors/font_color = Color( 1, 0.75, 0, 1 )
+custom_colors/font_color = Color( 0, 0.501961, 1, 1 )
 text = "Name"
 valign = 1
 
