@@ -105,9 +105,11 @@ class Game(Control):
     day_counter_item : int = 0
 
     customer_count : int = 0
+    customer_count_total : int = 0
 
     won : int = 0
     streak : int = 0
+    next_button : Button
 
     pausemenu : Control
 
@@ -155,7 +157,7 @@ class Game(Control):
         self.streak_right = self.get_node("endday/endday/vbox/vbox/streak/b")
         self.rank = self.get_node("endday/endday/vbox/vbox/rank/b")
 
-        self.sold = self.get_node("endday/endday/vbox/sold")
+        self.daystat = self.get_node("endday/endday/vbox/daystat")
         self.streak_label = self.get_node("ui/vbox/streak")
 
         self.motd_day = self.get_node("motd/day")
@@ -181,8 +183,8 @@ class Game(Control):
         input_node.connect("input", self, "_input_proxy",
                            Array(), Object.CONNECT_DEFERRED)
 
-        next_button = self.get_node("endday/endday/vbox/continue")
-        next_button.connect("pressed", self, "_on_next_button_pressed")
+        self.next_button = self.get_node("endday/endday/vbox/continue")
+        self.next_button.connect("pressed", self, "_on_next_button_pressed")
 
         self.cheat_label = self.get_node("ui/cheat")
         self.cheat_label.hide()
@@ -220,6 +222,7 @@ class Game(Control):
         self.prepare_items()
 
         self.update_customer_count(0)
+        self.customer_count_total += DAY_CUSTOMER[self.current_day]
         self.update_streak_count(0)
         self.day_counter_item = 0
 
@@ -422,6 +425,8 @@ class Game(Control):
             self.cheat_attempt += delta
             if self.cheat_attempt >= 2.0:
                 self.activate_cheat_mode()
+        else:
+            self.cheat_attempt = 0.0
 
     def reset_clock(self):
         self.clock_hand_root.rotation = Vector3()
@@ -587,13 +592,21 @@ class Game(Control):
         """ Emit the end day screen """
         self.endday_final.visible = real_end
         Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+        self.endday_day.text = str(self.current_day)
+        self.daystat.text = "%s\n%s" % (
+            ("%d items sold" % self.day_counter_item) if self.day_counter_item > 0 else (
+                "No items sold" # POSSBILE ?
+            ),
+            (
+                "%d completed customers" % self.customer_count
+            ) if self.customer_count > 0 else (
+                "No completed customers"
+            )
+        )
 
         if real_end:
-            self.endday_day.text = str(self.current_day)
-
-            self.endday_day.text = str(self.current_day)
             self.won_left.text = "Won : %d/%d" % (
-                self.won, self.customer_count
+                self.won, self.customer_count_total
             )
             self.won_right.text = "%d x 50 = %d" % (
                 self.won, self.won * 50
@@ -606,10 +619,8 @@ class Game(Control):
             )
             final = self.won + (self.streak * STREAK_BONUS)
             self.rank.text = get_rank_by_score(final)
-            self.rank.add_color_override("font_color", RANK_COLOR[self.rank.text])
+            self.rank.add_color_override("font_color", RANK_COLOR[str(self.rank.text)])
             self.next_button.text = "Back to the mainmenu"
-    
-        self.sold.text = "%d items sold" % self.day_counter_item
         self.endday.show()
         self.set_process(False)
 
@@ -680,6 +691,11 @@ class Game(Control):
         elif event.is_action_pressed("cheat_noclip"):
             self.cheatfx.play()
             self.player.set("noclip", not self.player.get("noclip"))
+        elif event.is_action_pressed("cheat_force_endday_god"):
+            self.cheatfx.play()
+            self.day_counter_item += 99999
+            self.won += DAY_CUSTOMER[self.current_day]
+            self.go_endday(self.current_day == 7)
         elif event.is_action_pressed("cheat_force_endday"):
             self.cheatfx.play()
             self.go_endday(self.current_day == 7)
