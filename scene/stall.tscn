@@ -2,10 +2,8 @@
 
 [ext_resource path="res://resource/mesh/stall.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://scene/stall_shape.shape" type="Shape" id=2]
+[ext_resource path="res://scene/fridge_shape.shape" type="Shape" id=3]
 [ext_resource path="res://resource/mesh/fridge.mesh" type="ArrayMesh" id=4]
-
-[sub_resource type="ConvexPolygonShape" id=3]
-points = PoolVector3Array( -0.640269, 2.21648, 1.125, -0.5688, 2.15489, 1.0605, -1.5, 2.22698, -0.181105, -1.49541, 0.0272214, 1.125, -0.632958, 0.00595228, -0.1875, -1.5, 0.0167235, -0.181105, -0.632958, 2.23775, -0.1875, -1.49541, 2.21648, 1.125, -0.640269, 0.0272214, 1.125, -0.515107, 1.69488, 0.904822, -0.5688, 0.501983, -0.110376, -0.5688, 2.15489, -0.110376, -0.5688, 0.501983, 1.0605, -0.54609, 1.65947, 1.0125 )
 
 [node name="stall" type="StaticBody"]
 
@@ -22,5 +20,5 @@ shape = ExtResource( 2 )
 [node name="fridge" type="MeshInstance" parent="."]
 mesh = ExtResource( 4 )
 
-[node name="fridgecol - NEED CHANGES" type="CollisionShape" parent="."]
-shape = SubResource( 3 )
+[node name="fridgecol" type="CollisionShape" parent="."]
+shape = ExtResource( 3 )
