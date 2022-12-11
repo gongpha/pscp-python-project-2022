@@ -435,7 +435,6 @@ class Game(Control):
                 max(0.1, self.dialogue_richtext.bbcode_text.length())
             if self.dialogue_richtext.visible_characters != old_visible:
                 # play sound
-                print("FFF")
                 self.dialogue_fx.play()
             if self.dialogue_richtext.percent_visible == 1.0:
                 # STOP
