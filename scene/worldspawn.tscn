@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
+[ext_resource path="res://resource/audio/confirm_order.wav" type="AudioStream" id=2]
 [ext_resource path="res://resource/mesh/bridge.mesh" type="ArrayMesh" id=3]
 [ext_resource path="res://script/worldspawn.py" type="Script" id=4]
 [ext_resource path="res://resource/audio/ambience/city.ogg" type="AudioStream" id=5]
@@ -32,6 +33,9 @@ size = Vector3( 0.075, 0.4, 0.075 )
 
 [node name="worldspawn" type="Spatial"]
 script = ExtResource( 4 )
+
+[node name="confirm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
 
 [node name="behind" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.70526, -1.7706, 4.96699 )

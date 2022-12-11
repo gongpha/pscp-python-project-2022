@@ -120,6 +120,8 @@ class Game(Control):
     clock_freezing : bool = False
     anicheat : AnimationPlayer
 
+    confirm_fx : AudioStreamPlayer
+
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
 
@@ -191,6 +193,8 @@ class Game(Control):
         self.cheat_label.hide()
         self.cheatfx = self.get_node("ui/cheatfx")
         self.anicheat = self.get_node("anicheat")
+
+        self.confirm_fx = self.worldspawn.get_node("confirm")
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
@@ -363,6 +367,7 @@ class Game(Control):
         self.dialogue_richtext.percent_visible = 0.0
         self.dialogue_animating_chars = True
         self.holding_confirm = False
+        self.confirm_fx.stop()
         return True
 
     def prepare_items(self):
@@ -408,6 +413,7 @@ class Game(Control):
                 # CONFIRMED !
                 self.check_items()
                 self.holding_confirm = False
+                self.confirm_fx.stop()
         else:
             if self.confirm_order_value > 0:
                 self.confirm_order_value -= 800 * delta
@@ -530,6 +536,7 @@ class Game(Control):
             self.toggle_pausemenu()
             self.confirmorder.modulate = Color(1, 1, 1, 1)
             self.holding_confirm = False
+            self.confirm_fx.stop()
 
         if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
             return
@@ -544,7 +551,9 @@ class Game(Control):
             else:
                 if self.feed_dialogue():
                     return
-                self.holding_confirm = self.order != None
+                if self.order != None:
+                    self.holding_confirm = True
+                    self.confirm_fx.play()
         elif event.is_action_pressed("repeat"):
             # repeat the dialogue
             self.repeat_dialogue()
@@ -552,6 +561,7 @@ class Game(Control):
         if event.is_action_released("ui_select"):
             self.confirmorder.modulate = Color(1, 1, 1, 1)
             self.holding_confirm = False
+            self.confirm_fx.stop()
 
         if Input.is_mouse_button_pressed(BUTTON_LEFT):
             self.pick.modulate = Color(1, 1, 0, 1)
