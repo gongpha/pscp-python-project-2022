@@ -5,10 +5,7 @@ from .utils import GDPORT
 
 @exposed
 class loading(Control):
-
-    # member variables here, example:
-    a = export(int)
-    b = export(str, default='foo')
+    """ Loading scene """
 
     ril : ResourceInteractiveLoader = None
     delay : int = 0
