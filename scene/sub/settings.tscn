@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://script/settings.py" type="Script" id=1]
+[ext_resource path="res://resource/audio/ambience/nokoctave_pscp.ogg" type="AudioStream" id=2]
+[ext_resource path="res://resource/audio/ambience/chin200fest.ogg" type="AudioStream" id=3]
 
 [node name="SETTINGS" type="HBoxContainer"]
 anchor_right = 1.0
@@ -33,7 +35,7 @@ margin_top = 22.0
 margin_right = 256.0
 margin_bottom = 38.0
 max_value = 1.0
-step = 0.1
+step = 0.01
 
 [node name="music_label" type="Label" parent="vbox"]
 margin_top = 46.0
@@ -50,7 +52,7 @@ margin_top = 68.0
 margin_right = 256.0
 margin_bottom = 84.0
 max_value = 1.0
-step = 0.1
+step = 0.01
 
 [node name="fullscreen" type="CheckBox" parent="vbox"]
 margin_top = 92.0
@@ -67,3 +69,11 @@ margin_bottom = 148.0
 text = "V-Sync"
 flat = true
 align = 1
+
+[node name="testmaster" type="AudioStreamPlayer" parent="vbox"]
+stream = ExtResource( 3 )
+bus = "AMB1"
+
+[node name="testmusic" type="AudioStreamPlayer" parent="vbox"]
+stream = ExtResource( 2 )
+bus = "Music"
