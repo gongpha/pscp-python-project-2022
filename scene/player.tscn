@@ -6,7 +6,7 @@
 radius = 0.5
 height = 2.0
 
-[node name="player" type="StaticBody"]
+[node name="player" type="KinematicBody"]
 script = ExtResource( 1 )
 
 [node name="camera" type="Camera" parent="."]

@@ -111,6 +111,12 @@ class Game(Control):
 
     pausemenu : Control
 
+    cheat_attempt : float = 0.0
+    cheat_mode : bool = False
+    cheat_label : Label
+    cheatfx : AudioStreamPlayer
+    clock_freezing : bool = False
+
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
 
@@ -177,6 +183,10 @@ class Game(Control):
 
         next_button = self.get_node("endday/endday/vbox/continue")
         next_button.connect("pressed", self, "_on_next_button_pressed")
+
+        self.cheat_label = self.get_node("ui/cheat")
+        self.cheat_label.hide()
+        self.cheatfx = self.get_node("ui/cheatfx")
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
@@ -408,11 +418,19 @@ class Game(Control):
 
         self.update_clock(delta)
 
+        if Input.is_action_pressed("cheat_mode"):
+            self.cheat_attempt += delta
+            if self.cheat_attempt >= 2.0:
+                self.activate_cheat_mode()
+
     def reset_clock(self):
         self.clock_hand_root.rotation = Vector3()
 
     def update_clock(self, delta: float):
         """ clock """
+        if self.clock_freezing:
+            return
+
         if 0.001 < self.clock_hand_root.rotation.z < 0.01 :
             # when the clock hand is about to reach the 12 o'clock
             # TIMEOUT !!!
@@ -434,32 +452,41 @@ class Game(Control):
             clone[kkk] = iii[kkk].copy()
         return clone
 
-    def check_items(self):
+    def check_items(self, force_complete: bool = False):
         """ Check items on the counter """
-        items = self.get_all_item_objects()
-        clone_list = self.copy_order_items()
-        added : list = []
-        total: int = 0
+        if self.order is None:
+            return
+            
+        clone_list = {}
+        item_on_counter = 0
+        added = []
+        total = 0
 
-        for c in clone_list:
-            total += clone_list[c][1]
+        if not force_complete:
+            items = self.get_all_item_objects()
+            clone_list = self.copy_order_items()
+            
+            
 
-        item_on_counter: int = 0
+            for c in clone_list:
+                total += clone_list[c][1]
 
-        for item in items:
-            in_good = self.worldspawn.get("counter_good").overlaps_body(item)
+            
 
-            if not in_good:
-                # the item isn't placed on the counter
-                continue
+            for item in items:
+                in_good = self.worldspawn.get("counter_good").overlaps_body(item)
 
-            # if it's in the list. mark them
-            if item.filename in clone_list:
-                clone_list[item.filename][1] -= 1
-                if clone_list[item.filename][1] == 0:
-                    del clone_list[item.filename]  # no more...
-                added.append(item)
-            item_on_counter += 1
+                if not in_good:
+                    # the item isn't placed on the counter
+                    continue
+
+                # if it's in the list. mark them
+                if item.filename in clone_list:
+                    clone_list[item.filename][1] -= 1
+                    if clone_list[item.filename][1] == 0:
+                        del clone_list[item.filename]  # no more...
+                    added.append(item)
+                item_on_counter += 1
 
         if item_on_counter > total:
             self.dialogue_lines = [dialogue.order_too_many_items]
@@ -482,7 +509,7 @@ class Game(Control):
         self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
 
-    def _input_proxy(self, event):
+    def _input_proxy(self, event : InputEvent):
         """ Proxy for the input event """
         if event.is_action_released("ui_cancel"):
             self.toggle_pausemenu()
@@ -516,15 +543,19 @@ class Game(Control):
         else:
             self.pick.modulate = Color(1, 1, 1, 1)
 
+        if self.cheat_mode :
+            self.cheat_input(event)
+
         self.player._input_proxy(event)
 
-    def repeat_dialogue(self):
+    def repeat_dialogue(self, ignore_counting : bool = False):
         """ Repeat the dialogue """
         if self.dialogue_panel.visible or not self.order:
             return
 
         self.dialogue_lines = [self.dialogue_repeat]
-        self.order["repeat"] += 1
+        if ignore_counting:
+            self.order["repeat"] += 1
         if self.order["repeat"] > 6:
             self.dialogue_lines = [dialogue.repeat_too_much_final]
             self.order["status"] = "failed"
@@ -555,10 +586,10 @@ class Game(Control):
     def go_endday(self, real_end : bool):
         """ Emit the end day screen """
         self.endday_final.visible = real_end
+        Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
         if real_end:
             self.endday_day.text = str(self.current_day)
-            Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
             self.endday_day.text = str(self.current_day)
             self.won_left.text = "Won : %d/%d" % (
@@ -627,3 +658,28 @@ class Game(Control):
         self.tv_raw.text = '\n'.join([t for t, _ in texts])
         self.tv_translated.text = '\n'.join([t for _, t in texts])
         self.tv_is_translated = True
+
+    def activate_cheat_mode(self):
+        """ Activate the cheat mode """
+        if self.cheat_mode : return
+        self.cheat_mode = True
+        self.cheat_label.show()
+        self.cheatfx.play()
+
+    def cheat_input(self, event : InputEvent):
+        """ CHEAT INPUT """
+        if event.is_action_pressed("cheat_freeze_clock"):
+            self.cheatfx.play()
+            self.clock_freezing = not self.clock_freezing
+        elif event.is_action_pressed("cheat_force_complete_order"):
+            self.cheatfx.play()
+            self.check_items(True)
+        elif event.is_action_pressed("cheat_repeat_ignore_counting"):
+            self.cheatfx.play()
+            self.repeat_dialogue()
+        elif event.is_action_pressed("cheat_noclip"):
+            self.cheatfx.play()
+            self.player.set("noclip", not self.player.get("noclip"))
+        elif event.is_action_pressed("cheat_force_endday"):
+            self.cheatfx.play()
+            self.go_endday(self.current_day == 7)

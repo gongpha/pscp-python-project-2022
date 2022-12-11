@@ -1,4 +1,4 @@
-from godot import exposed, Vector3, Array
+from godot import exposed, Vector3, Array, Vector2
 from godot import *
 import math
 
@@ -9,7 +9,7 @@ from .utils import clamp
 
 
 @exposed
-class Player(StaticBody):
+class Player(KinematicBody):
     # nodes
     camera: Camera
     ray: RayCast
@@ -21,6 +21,8 @@ class Player(StaticBody):
     block_pick: bool = False
     old_rot_y: float = 1.0
 
+    noclip: bool = False
+
     #look_front = signal()
 
     def _init(self):
@@ -31,6 +33,27 @@ class Player(StaticBody):
         self.camera = self.get_node("camera")
         self.ray = self.get_node("camera/ray")
         self.itemfront = self.get_node("camera/itemfront")
+
+    def _physics_process(self, delta : float):
+        if not self.noclip : return
+
+        move_axis = Vector2(
+            Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+            Input.get_action_strength("move_forward") - Input.get_action_strength("move_back"),
+        )
+
+        aim = self.camera.get_global_transform().basis
+        direction = Vector3()
+        if move_axis.x >= 0.5 :
+            direction += aim.x
+        if move_axis.x <= -0.5 :
+            direction -= aim.x
+        if move_axis.y <= -0.5 :
+            direction += aim.z
+        if move_axis.y >= 0.5 :
+            direction -= aim.z
+        direction = direction.normalized()
+        self.translation += (direction * 10 * delta)
 
     def _input_proxy(self, event):
         if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
