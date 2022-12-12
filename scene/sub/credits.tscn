@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scene/sub/people.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/font/bin/cooper.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://resource/audio/pscp_project_grouppe.ogg" type="AudioStream" id=3]
-[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://scene/sub/pscp_project_grouppe2.gd" type="Script" id=4]
+[ext_resource path="res://resource/texture/pscp_project_grouppe.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -101,7 +102,7 @@ margin_left = 146.0
 margin_right = 274.0
 margin_bottom = 128.0
 rect_min_size = Vector2( 128, 128 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 expand = true
 
 [node name="vbox" type="VBoxContainer" parent="hbox3"]
@@ -129,7 +130,9 @@ fit_content_height = true
 
 [node name="pscp_project_grouppe2" type="AudioStreamPlayer" parent="hbox3"]
 stream = ExtResource( 3 )
+volume_db = -10.0
 autoplay = true
+script = ExtResource( 4 )
 
 [editable path="hbox/hbox2"]
 [editable path="hbox2/hbox3"]

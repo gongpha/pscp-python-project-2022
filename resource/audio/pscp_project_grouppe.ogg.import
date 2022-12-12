@@ -11,5 +11,5 @@ dest_files=[ "res://.import/pscp_project_grouppe.ogg-ad0a3b89a304d8c0d4c0ec7e693
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
