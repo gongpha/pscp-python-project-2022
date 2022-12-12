@@ -286,6 +286,10 @@ class Game(Control):
         """ Get all item objects """
         return self.get_tree().get_nodes_in_group("item")
 
+    def dialogue_pick(self, lll : list) -> str:
+        """ Pick a random dialogue from a list """
+        return lll[self.rng.randi_range(0, len(lll) - 1)]
+
     def fetch_order(self):
         """ Fetch the order from the customer """
 
@@ -322,14 +326,17 @@ class Game(Control):
             ]
 
         # Prepare the texts
-        order_dialogue = [dialogue.order_item.format(**{
+        order_dialogue = [self.dialogue_pick(dialogue.order_item).format(**{
             'translated' : vvv[0],
             'count' : vvv[1],
             'itemname' : vvv[2]
         })for vvv in order_item.values()]
 
         self.dialogue_repeat = ', '.join(order_dialogue)
-        self.dialogue_lines = [dialogue.greeting] + [dialogue.order.format(self.dialogue_repeat)]
+        self.dialogue_lines = [
+            self.dialogue_pick(dialogue.greeting),
+            self.dialogue_pick(dialogue.order).format(self.dialogue_repeat)
+        ]
 
         self.show_dialogue()
 
@@ -506,11 +513,11 @@ class Game(Control):
                 item_on_counter += 1
 
         if item_on_counter > total:
-            self.dialogue_lines = [dialogue.order_too_many_items]
+            self.dialogue_lines = [self.dialogue_pick(dialogue.order_too_many_items)]
             self.update_streak_count(0)
         elif clone_list:
             # not completed
-            self.dialogue_lines = [dialogue.order_not_complete]
+            self.dialogue_lines = [self.dialogue_pick(dialogue.order_not_complete)]
             self.update_streak_count(0)
         else:
             # YES
@@ -519,7 +526,7 @@ class Game(Control):
                 self.day_counter_item += 1
             self.update_streak_count(self.streak + 1)
             self.won += 1
-            self.dialogue_lines = [dialogue.order_ok]
+            self.dialogue_lines = [self.dialogue_pick(dialogue.order_ok)]
             self.order["status"] = "completed"
             self.counting = False
             self.prepare_items()
@@ -574,12 +581,12 @@ class Game(Control):
         if ignore_counting:
             self.order["repeat"] += 1
         if self.order["repeat"] > 6:
-            self.dialogue_lines = [dialogue.repeat_too_much_final]
+            self.dialogue_lines = [self.dialogue_pick(dialogue.repeat_too_much_final)]
             self.order["status"] = "failed"
             self.update_streak_count(0)
             self.counting = False
         elif self.order["repeat"] == 3:
-            self.dialogue_lines += [dialogue.repeat_too_much]
+            self.dialogue_lines += [self.dialogue_pick(dialogue.repeat_too_much)]
         self.show_dialogue()
 
     def force_timeout(self):
@@ -588,7 +595,7 @@ class Game(Control):
         if self.order:
             self.order["status"] = "failed"
             self.update_streak_count(0)
-        self.dialogue_lines = [dialogue.order_timeout]
+        self.dialogue_lines = [self.dialogue_pick(dialogue.order_timeout)]
         self.show_dialogue()
 
     # def _on_player_look_front(self) :
