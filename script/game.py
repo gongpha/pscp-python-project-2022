@@ -228,6 +228,8 @@ class Game(Control):
     def newday(self):
         """ Called when a game day starts """
 
+        self.rng.randomize()  # Randomize the seed
+
         # Reset these
         #self.sun.rotation = Vector3()
         self.reset_clock()
@@ -260,7 +262,9 @@ class Game(Control):
             # MOTD is finished, let's start the day
             Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
             self.set_process(True)  # Start the game loop
-            self.rng.randomize()  # Randomize the seed
+
+            # Now, items are can emit impact sounds
+            self.get_tree().set_group("item", "block_impacting", False)
 
             # Summon the customer
             self.feed_customer()
