@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=3 format=2]
+[gd_resource type="AudioBusLayout" load_steps=7 format=2]
 
 [sub_resource type="AudioEffectEQ10" id=2]
 resource_name = "EQ10"
@@ -18,6 +18,23 @@ resource_name = "Reverb"
 room_size = 0.44
 damping = 0.62
 
+[sub_resource type="AudioEffectReverb" id=3]
+resource_name = "Reverb"
+room_size = 0.32
+damping = 0.21
+dry = 0.21
+wet = 0.19
+
+[sub_resource type="AudioEffectPitchShift" id=5]
+resource_name = "PitchShift"
+pitch_scale = 0.95
+
+[sub_resource type="AudioEffectHighPassFilter" id=8]
+resource_name = "HighPassFilter"
+
+[sub_resource type="AudioEffectLowPassFilter" id=7]
+resource_name = "LowPassFilter"
+
 [resource]
 bus/1/name = "Music"
 bus/1/solo = false
@@ -35,3 +52,23 @@ bus/2/effect/0/effect = SubResource( 2 )
 bus/2/effect/0/enabled = true
 bus/2/effect/1/effect = SubResource( 1 )
 bus/2/effect/1/enabled = true
+bus/3/name = "Mainmenu"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = "Music"
+bus/3/effect/0/effect = SubResource( 3 )
+bus/3/effect/0/enabled = true
+bus/4/name = "Intro"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.0
+bus/4/send = "Master"
+bus/4/effect/0/effect = SubResource( 5 )
+bus/4/effect/0/enabled = true
+bus/4/effect/1/effect = SubResource( 8 )
+bus/4/effect/1/enabled = true
+bus/4/effect/2/effect = SubResource( 7 )
+bus/4/effect/2/enabled = true

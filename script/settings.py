@@ -30,10 +30,6 @@ class Settings(Node):
         self.master_slider.connect("drag_started", self, "_mt_start")
         self.master_slider.connect("drag_ended", self, "_mt_end")
 
-        self.music_slider.connect("drag_started", self, "_m_start")
-        self.music_slider.connect("drag_ended", self, "_m_end")
-
-        self.testmusic = self.get_node("vbox/testmusic")
         self.testmaster = self.get_node("vbox/testmaster")
 
         self.update_settings()
@@ -43,12 +39,6 @@ class Settings(Node):
 
     def _mt_end(self, _) :
         self.testmaster.stop()
-
-    def _m_start(self) :
-        self.testmusic.play()
-
-    def _m_end(self, _) :
-        self.testmusic.stop()
 
     def update_settings(self) :
         """ Update the settings from the files """
