@@ -220,6 +220,11 @@ class Game(Control):
             Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
             self.get_tree().paused = True
 
+    def remove_all_items(self):
+        """ Remove all items in the world"""
+        for item in self.get_all_item_objects():
+            item.free()
+
     def newday(self):
         """ Called when a game day starts """
 
@@ -231,6 +236,7 @@ class Game(Control):
         self.rng.randomize()
 
         # Prepare items on the shelf
+        self.remove_all_items()
         self.prepare_items()
 
         self.counting = False
