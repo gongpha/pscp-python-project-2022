@@ -123,6 +123,8 @@ class Game(Control):
     confirm_fx : AudioStreamPlayer
     dialogue_fx : AudioStreamPlayer3D
 
+    win_music : AudioStreamPlayer
+
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
 
@@ -197,6 +199,8 @@ class Game(Control):
 
         self.confirm_fx = self.worldspawn.get_node("confirm")
         self.dialogue_fx = self.get_node("customer/dialogue_fx")
+        
+        self.win_music = self.get_node("endday/endday/endday")
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
@@ -629,6 +633,8 @@ class Game(Control):
                 "No completed customers"
             )
         )
+
+        self.win_music.play()
 
         if real_end:
             self.won_left.text = "Won : %d/%d" % (

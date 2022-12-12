@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://resource/audio/footstep_1.wav" type="AudioStream" id=14]
 [ext_resource path="res://resource/audio/footstep_2.wav" type="AudioStream" id=15]
 [ext_resource path="res://resource/audio/npc_vo.wav" type="AudioStream" id=16]
+[ext_resource path="res://resource/audio/pscp_win.ogg" type="AudioStream" id=17]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -989,6 +990,9 @@ margin_top = 260.0
 margin_right = 488.0
 margin_bottom = 299.0
 text = "Sleep"
+
+[node name="endday" type="AudioStreamPlayer" parent="endday/endday"]
+stream = ExtResource( 17 )
 
 [node name="motd" type="ColorRect" parent="."]
 visible = false
