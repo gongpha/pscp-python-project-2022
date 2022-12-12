@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
 [ext_resource path="res://resource/texture/cursor.png" type="Texture" id=3]
 [ext_resource path="res://resource/spritesheet/customer.tres" type="SpriteFrames" id=4]
+[ext_resource path="res://resource/audio/cheat.wav" type="AudioStream" id=5]
 [ext_resource path="res://resource/texture/key1.png" type="Texture" id=6]
 [ext_resource path="res://scene/pausemenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=8]
@@ -12,6 +13,7 @@
 [ext_resource path="res://scene/tvscreen.tscn" type="PackedScene" id=11]
 [ext_resource path="res://resource/mesh/monitor.mesh" type="ArrayMesh" id=12]
 [ext_resource path="res://resource/maintheme.tres" type="Theme" id=13]
+[ext_resource path="res://resource/font/font_regular_con.tres" type="DynamicFont" id=14]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -473,6 +475,62 @@ resource_local_to_scene = true
 albedo_color = Color( 2, 2, 2, 1 )
 albedo_texture = SubResource( 44 )
 
+[sub_resource type="Animation" id=48]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/cheat:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ui/cheat:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "!!!" ]
+}
+
+[sub_resource type="Animation" id=49]
+resource_name = "show"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/cheat:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.45, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 3, 3 ), Vector2( 3, 3 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ui/cheat:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "!!!" ]
+}
+
 [node name="game" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -530,6 +588,7 @@ margin_right = 500.0
 margin_bottom = 52.0
 rect_clip_content = false
 custom_colors/default_color = Color( 1, 1, 1, 1 )
+custom_fonts/mono_font = ExtResource( 14 )
 bbcode_enabled = true
 fit_content_height = true
 
@@ -550,7 +609,7 @@ stretch_mode = 4
 
 [node name="text" type="Label" parent="dialogue/rich/advance"]
 margin_left = 144.0
-margin_top = 21.0
+margin_top = 20.0
 margin_right = 228.0
 margin_bottom = 43.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -564,13 +623,28 @@ anchor_top = 0.05
 anchor_right = 0.95
 anchor_bottom = 0.95
 
+[node name="cheat" type="Label" parent="ui"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -23.0
+margin_right = 12.0
+rect_pivot_offset = Vector2( 0, 23 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "!!!"
+
+[node name="cheatfx" type="AudioStreamPlayer" parent="ui"]
+stream = ExtResource( 5 )
+
 [node name="vbox" type="VBoxContainer" parent="ui"]
 margin_right = 40.0
 margin_bottom = 40.0
 custom_constants/separation = 16
 
 [node name="day" type="Label" parent="ui/vbox"]
-margin_right = 268.0
+margin_right = 270.0
 margin_bottom = 23.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
@@ -579,7 +653,7 @@ text = "Day #"
 
 [node name="customer_counter" type="Label" parent="ui/vbox"]
 margin_top = 39.0
-margin_right = 268.0
+margin_right = 270.0
 margin_bottom = 62.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
@@ -588,7 +662,7 @@ text = "Encountered 0 Customers"
 
 [node name="streak" type="Label" parent="ui/vbox"]
 margin_top = 78.0
-margin_right = 268.0
+margin_right = 270.0
 margin_bottom = 101.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
@@ -617,7 +691,7 @@ custom_constants/separation = 16
 
 [node name="text" type="Label" parent="ui/hint/confirmorder/hbox"]
 margin_top = 4.0
-margin_right = 147.0
+margin_right = 148.0
 margin_bottom = 27.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
@@ -625,8 +699,8 @@ custom_constants/shadow_offset_y = 2
 text = "Confirm Order"
 
 [node name="icon" type="TextureRect" parent="ui/hint/confirmorder/hbox"]
-margin_left = 163.0
-margin_right = 291.0
+margin_left = 164.0
+margin_right = 292.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 texture = SubResource( 10 )
@@ -683,7 +757,7 @@ texture = SubResource( 12 )
 stretch_mode = 4
 
 [node name="player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.603607, 1.76804, -0.119545 )
+transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.604, 1.768, -0.12 )
 __meta__ = {
 "_editor_description_": "A python pet"
 }
@@ -710,24 +784,24 @@ rect_min_size = Vector2( 512, 0 )
 margin_left = 12.0
 margin_top = 12.0
 margin_right = 500.0
-margin_bottom = 284.0
+margin_bottom = 311.0
 
 [node name="hbox" type="HBoxContainer" parent="endday/endday/vbox"]
-margin_left = 119.0
-margin_right = 369.0
+margin_left = 117.0
+margin_right = 371.0
 margin_bottom = 64.0
 size_flags_horizontal = 4
 custom_constants/separation = 24
 
 [node name="title" type="Label" parent="endday/endday/vbox/hbox"]
 margin_top = 20.0
-margin_right = 202.0
+margin_right = 206.0
 margin_bottom = 43.0
 text = "The end of the day"
 
 [node name="day" type="Label" parent="endday/endday/vbox/hbox"]
-margin_left = 226.0
-margin_right = 250.0
+margin_left = 230.0
+margin_right = 254.0
 margin_bottom = 64.0
 custom_fonts/font = ExtResource( 9 )
 text = "1"
@@ -741,19 +815,19 @@ margin_bottom = 72.0
 [node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
 margin_top = 76.0
 margin_right = 488.0
-margin_bottom = 194.0
+margin_bottom = 229.0
 
 [node name="won" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
 margin_right = 488.0
 margin_bottom = 23.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/won"]
-margin_right = 108.0
+margin_right = 110.0
 margin_bottom = 23.0
 text = "Won : 15/15"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/won"]
-margin_left = 352.0
+margin_left = 348.0
 margin_right = 488.0
 margin_bottom = 23.0
 size_flags_horizontal = 14
@@ -766,12 +840,12 @@ margin_right = 488.0
 margin_bottom = 50.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/streak"]
-margin_right = 203.0
+margin_right = 206.0
 margin_bottom = 23.0
 text = "Longest Streak : 15"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/streak"]
-margin_left = 352.0
+margin_left = 348.0
 margin_right = 488.0
 margin_bottom = 23.0
 size_flags_horizontal = 14
@@ -801,22 +875,29 @@ custom_fonts/font = ExtResource( 9 )
 text = "A"
 align = 1
 
-[node name="sep2" type="HSeparator" parent="endday/endday/vbox"]
-margin_top = 198.0
+[node name="thx" type="Label" parent="endday/endday/vbox/vbox"]
+margin_top = 122.0
 margin_right = 488.0
-margin_bottom = 202.0
+margin_bottom = 145.0
+text = "Thanks for playing :)"
+align = 1
 
-[node name="sold" type="Label" parent="endday/endday/vbox"]
-margin_top = 206.0
+[node name="sep2" type="HSeparator" parent="endday/endday/vbox/vbox"]
+margin_top = 149.0
 margin_right = 488.0
-margin_bottom = 229.0
+margin_bottom = 153.0
+
+[node name="daystat" type="Label" parent="endday/endday/vbox"]
+margin_top = 233.0
+margin_right = 488.0
+margin_bottom = 256.0
 text = "[ . . . ]"
 align = 1
 
 [node name="continue" type="Button" parent="endday/endday/vbox"]
-margin_top = 233.0
+margin_top = 260.0
 margin_right = 488.0
-margin_bottom = 272.0
+margin_bottom = 299.0
 text = "Sleep"
 
 [node name="motd" type="ColorRect" parent="."]
@@ -843,7 +924,7 @@ script = ExtResource( 10 )
 visible = false
 
 [node name="tv" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0556158 )
+transform = Transform( 1, 0, 0, 0, 0.950489, 0.310759, 0, -0.310759, 0.950489, -5.96046e-08, 0.516874, 0.389198 )
 
 [node name="monitor" type="MeshInstance" parent="tv"]
 mesh = ExtResource( 12 )
@@ -864,5 +945,9 @@ usage = 0
 render_target_v_flip = true
 
 [node name="tvscreen" parent="tv/screen/tvcontent" instance=ExtResource( 11 )]
+
+[node name="anicheat" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 48 )
+anims/show = SubResource( 49 )
 
 [editable path="tv/screen/tvcontent/tvscreen"]

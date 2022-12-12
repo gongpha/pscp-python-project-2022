@@ -184,6 +184,46 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.229907, 0 )
 shape = SubResource( 34 )
 
+[node name="f8" type="Area" parent="itemspawner"]
+transform = Transform( 0.162207, 0, -0.986757, 0, 1, 0, 0.986757, 0, 0.162207, -1.32942, 2.5177, 1.04614 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/f8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0912979, 0 )
+shape = SubResource( 34 )
+
+[node name="f9" type="Area" parent="itemspawner"]
+transform = Transform( 0.162207, 0, -0.986757, 0, 1, 0, 0.986757, 0, 0.162207, -1.32942, 1.90798, 1.04614 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/f9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0912979, 0 )
+shape = SubResource( 34 )
+
+[node name="f10" type="Area" parent="itemspawner"]
+transform = Transform( 0.162207, 0, -0.986757, 0, 1, 0, 0.986757, 0, 0.162207, -1.32942, 2.5177, 0.422795 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/f10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0912979, 0 )
+shape = SubResource( 34 )
+
+[node name="f11" type="Area" parent="itemspawner"]
+transform = Transform( 0.162207, 0, -0.986757, 0, 1, 0, 0.986757, 0, 0.162207, -1.32942, 1.90798, 0.422795 )
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="c" type="CollisionShape" parent="itemspawner/f11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0912979, 0 )
+shape = SubResource( 34 )
+
 [node name="test" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
 stream = ExtResource( 2 )

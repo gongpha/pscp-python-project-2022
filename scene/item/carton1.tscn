@@ -13,14 +13,14 @@ albedo_texture = ExtResource( 4 )
 script = ExtResource( 1 )
 item_name = "Milk"
 item_conname = "mjo."
-price = 30
+fridge = true
 
 [node name="cube" type="MeshInstance" parent="."]
-transform = Transform( 0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, -0.291141, 0 )
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.291141, 0 )
 mesh = ExtResource( 2 )
 skeleton = NodePath("")
 material/0 = SubResource( 1 )
 
 [node name="col" type="CollisionShape" parent="."]
-transform = Transform( 0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, -0.291141, 0 )
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.291141, 0 )
 shape = ExtResource( 3 )
