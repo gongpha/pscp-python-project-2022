@@ -1,18 +1,49 @@
 """dialogue storage"""
 
-# (gongpha) : The uppercase strings are represented as the untranslated strings.
-#               พิมพ์ใหญ่ คือ ข้อความที่ไม่ได้แปล เป็นภาษาไรไม่รู้
-#             And Vice versa, the lowercase strings are represented as the translated strings.
-#               พิมพ์เล็ก คือ ข้อความที่แปลแล้ว เป็นภาษาอังกฤษปกติ
-#             Edit them as you want.
-#               แก้ไขเองเบย
+# (gongpha) :
+#     REMEMBER TO USE [code] AND [/code] TO MAKE THE SUBSTRING DISPLAYED IN CONLANG FONT
 
-greeting = "HOWDY"
-order = "CAN I HAVE {}, PLEASE?"
-order_item = "{count}x {itemname}" # use {translated} for translated item name
-order_ok = "THANKS!"
-order_not_complete = "THE ORDER IS NOT COMPLETE!"
-order_too_many_items = "PERHAPS YOU SHOULD CLEAN YOUR COUNTER."
-repeat_too_much = "WHY ARE YOU KEEPING ME REPEATING?"
-repeat_too_much_final = "STOP KEEPING ME REPEATING! I'M TIRED!"
-order_timeout = "I DON'T HAVE TIME FOR THIS!"
+greeting = [
+    "[code]djep:o.[/code]",
+    "[code]ax, ali.k ali.k raNi![/code]",
+    "[code]tam jo di ali.k raNi, apr![/code]"
+]
+order = [
+    "[code]aj, ja. a.laN [/code]{}[code], pi.vaN:ila[/code]",
+    "[code]di raNi, ja. a.laN [/code]{}",
+    "[code]o, ja a.laN di [/code]{}"
+]
+order_item = [
+    "{count} [code]{itemname}[/code]"
+] # use {translated} for translated item name
+order_ok = [
+    "[code]grama.t:a![/code] ^^",
+    "[code]aN:ka.ratl![/code] ^^",
+    "[code]sa.p:asi.ba![/code] ^^",
+    "[code]apr ali.k ali.k![/code] ^^",
+    "[code]a, Tut al:e ja. Pjetl, sa.p:asi.ba apr![/code] ^^"
+]
+order_not_complete = [
+    "[code]xm, jo a.laN ko al:e ja. fa'i![/code] :(",
+    "[code]di Pjetl ko Tut![/code] :(",
+    "[code]ja Pjetl ko. Tut apr[/code] :("
+]
+order_too_many_items = [
+    "[code]jo ka.plo a.frag a.frag[/code] U-U",
+    "[code]e.tr jom Pjetl i.la jo ka.plo?[/code] U-U",
+    "[code]ja. ko. fa'i xa. Pjetl[/code] :/",
+    "[code]Ka.t:a fa'i xa. di? ko. ja.[/code] :/"
+]
+repeat_too_much = [
+    "[code]e.tr jo a.laN j.a jom fa'i!?[/code] >:/",
+    "[code]ja. ko. aN:ka.ratl[/code] >:/",
+    "[code]jo fa.i fa.i ja., apr[/code] >:/"
+]
+repeat_too_much_final = [
+    "[code]ko. ja. fa'i, apr[/code] >:(",
+    "[code]di jasil, ko. al:e fa'i[/code] >:("
+]
+order_timeout = [
+    "[code]ja. ko. a.laN raNi. xa. Pjetl![/code] Y^Y",
+    "[code]raNi jasil, apr[/code] >:<"
+]

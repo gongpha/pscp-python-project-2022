@@ -17,6 +17,7 @@
 [ext_resource path="res://resource/audio/footstep_2.wav" type="AudioStream" id=15]
 [ext_resource path="res://resource/audio/npc_vo.wav" type="AudioStream" id=16]
 [ext_resource path="res://resource/audio/pscp_win.ogg" type="AudioStream" id=17]
+[ext_resource path="res://resource/font/font_regular_con.tres" type="DynamicFont" id=99]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -680,6 +681,7 @@ margin_right = 500.0
 margin_bottom = 52.0
 rect_clip_content = false
 custom_colors/default_color = Color( 1, 1, 1, 1 )
+custom_fonts/mono_font = ExtResource( 99 )
 bbcode_enabled = true
 fit_content_height = true
 
@@ -700,7 +702,7 @@ stretch_mode = 4
 
 [node name="text" type="Label" parent="dialogue/rich/advance"]
 margin_left = 144.0
-margin_top = 21.0
+margin_top = 20.0
 margin_right = 228.0
 margin_bottom = 43.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -1018,7 +1020,7 @@ script = ExtResource( 10 )
 visible = false
 
 [node name="tv" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0556158 )
+transform = Transform( 1, 0, 0, 0, 0.950489, 0.310759, 0, -0.310759, 0.950489, -5.96046e-08, 0.516874, 0.389198 )
 
 [node name="monitor" type="MeshInstance" parent="tv"]
 mesh = ExtResource( 12 )
