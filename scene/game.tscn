@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
@@ -905,14 +905,26 @@ margin_top = 68.0
 margin_right = 488.0
 margin_bottom = 72.0
 
-[node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
+[node name="daystat" type="Label" parent="endday/endday/vbox"]
 margin_top = 76.0
 margin_right = 488.0
-margin_bottom = 229.0
+margin_bottom = 99.0
+text = "[ . . . ]"
+align = 1
+
+[node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
+margin_top = 103.0
+margin_right = 488.0
+margin_bottom = 256.0
+
+[node name="sep" type="HSeparator" parent="endday/endday/vbox/vbox"]
+margin_right = 488.0
+margin_bottom = 4.0
 
 [node name="won" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
+margin_top = 8.0
 margin_right = 488.0
-margin_bottom = 23.0
+margin_bottom = 31.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/won"]
 margin_right = 110.0
@@ -928,9 +940,9 @@ text = "15 x 50 = 750"
 align = 1
 
 [node name="streak" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
-margin_top = 27.0
+margin_top = 35.0
 margin_right = 488.0
-margin_bottom = 50.0
+margin_bottom = 58.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/streak"]
 margin_right = 206.0
@@ -947,9 +959,9 @@ align = 1
 
 [node name="rank" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
 margin_left = 186.0
-margin_top = 54.0
+margin_top = 62.0
 margin_right = 302.0
-margin_bottom = 118.0
+margin_bottom = 126.0
 size_flags_horizontal = 4
 custom_constants/separation = 32
 
@@ -969,22 +981,10 @@ text = "A"
 align = 1
 
 [node name="thx" type="Label" parent="endday/endday/vbox/vbox"]
-margin_top = 122.0
-margin_right = 488.0
-margin_bottom = 145.0
-text = "Thanks for playing :)"
-align = 1
-
-[node name="sep2" type="HSeparator" parent="endday/endday/vbox/vbox"]
-margin_top = 149.0
+margin_top = 130.0
 margin_right = 488.0
 margin_bottom = 153.0
-
-[node name="daystat" type="Label" parent="endday/endday/vbox"]
-margin_top = 233.0
-margin_right = 488.0
-margin_bottom = 256.0
-text = "[ . . . ]"
+text = "Thanks for playing :)"
 align = 1
 
 [node name="continue" type="Button" parent="endday/endday/vbox"]
@@ -995,6 +995,7 @@ text = "Sleep"
 
 [node name="endday" type="AudioStreamPlayer" parent="endday/endday"]
 stream = ExtResource( 17 )
+bus = "Music"
 
 [node name="motd" type="ColorRect" parent="."]
 visible = false
