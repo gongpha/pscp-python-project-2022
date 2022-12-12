@@ -11,6 +11,7 @@ class Settings(Node):
     vsync_box : CheckBox
     pyport : Node
     settings_dict : dict
+    testmusic : AudioStreamPlayer
 
     def _ready(self) :
         self.master_slider = self.get_node("vbox/master")
@@ -26,7 +27,18 @@ class Settings(Node):
         self.pyport = PYPORT(self)
         self.settings_dict = self.pyport.get("settings")
 
+        self.master_slider.connect("drag_started", self, "_mt_start")
+        self.master_slider.connect("drag_ended", self, "_mt_end")
+
+        self.testmaster = self.get_node("vbox/testmaster")
+
         self.update_settings()
+
+    def _mt_start(self) :
+        self.testmaster.play()
+
+    def _mt_end(self, _) :
+        self.testmaster.stop()
 
     def update_settings(self) :
         """ Update the settings from the files """

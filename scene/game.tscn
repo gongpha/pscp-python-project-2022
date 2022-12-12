@@ -1,15 +1,23 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://scene/worldspawn.tscn" type="PackedScene" id=1]
 [ext_resource path="res://script/game.py" type="Script" id=2]
 [ext_resource path="res://resource/texture/cursor.png" type="Texture" id=3]
 [ext_resource path="res://resource/spritesheet/customer.tres" type="SpriteFrames" id=4]
-[ext_resource path="res://resource/texture/ui1.png" type="Texture" id=5]
+[ext_resource path="res://resource/audio/cheat.wav" type="AudioStream" id=5]
 [ext_resource path="res://resource/texture/key1.png" type="Texture" id=6]
 [ext_resource path="res://scene/pausemenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://resource/font/font_title.tres" type="DynamicFont" id=9]
 [ext_resource path="res://script_gd/input.gd" type="Script" id=10]
+[ext_resource path="res://scene/tvscreen.tscn" type="PackedScene" id=11]
+[ext_resource path="res://resource/mesh/monitor.mesh" type="ArrayMesh" id=12]
+[ext_resource path="res://resource/maintheme.tres" type="Theme" id=13]
+[ext_resource path="res://resource/audio/footstep_1.wav" type="AudioStream" id=14]
+[ext_resource path="res://resource/audio/footstep_2.wav" type="AudioStream" id=15]
+[ext_resource path="res://resource/audio/npc_vo.wav" type="AudioStream" id=16]
+[ext_resource path="res://resource/audio/pscp_win.ogg" type="AudioStream" id=17]
+[ext_resource path="res://resource/font/font_regular_con.tres" type="DynamicFont" id=99]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -184,7 +192,8 @@ tracks/13/keys = {
 
 [sub_resource type="Animation" id=6]
 resource_name = "customer_enter"
-length = 4.0
+length = 3.25
+step = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("customer:translation")
 tracks/0/interp = 1
@@ -221,9 +230,53 @@ tracks/2/keys = {
 "update": 1,
 "values": [ "right", "down", "down_reset" ]
 }
+tracks/3/type = "audio"
+tracks/3/path = NodePath("customer/footstep")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+} ],
+"times": PoolRealArray( 0, 0.4, 0.8, 1.2, 1.6, 2, 2.4, 2.8 )
+}
 
 [sub_resource type="Animation" id=13]
 resource_name = "customer_exit"
+length = 2.5
+step = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("customer/customer:playing")
 tracks/0/interp = 1
@@ -260,10 +313,48 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Vector3( 0.7, 1.2, -2 ), Vector3( 3, 1.2, -2 ) ]
 }
+tracks/3/type = "audio"
+tracks/3/path = NodePath("customer/footstep")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+} ],
+"times": PoolRealArray( 0, 0.4, 0.8, 1.2, 1.6, 2, 2.4 )
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "dialogue_enter"
-length = 0.4
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("dialogue:anchor_top")
 tracks/0/interp = 1
@@ -271,7 +362,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 1 ),
 "update": 0,
 "values": [ 1.5, 0.83 ]
@@ -283,7 +374,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 1 ),
 "update": 0,
 "values": [ 1.5, 0.83 ]
@@ -295,7 +386,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.8, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 64 ), Vector2( 512, 64 ) ]
@@ -327,7 +418,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=8]
 resource_name = "dialogue_exit"
-length = 0.4
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("dialogue:anchor_top")
 tracks/0/interp = 1
@@ -335,7 +426,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 0.4 ),
 "update": 0,
 "values": [ 0.83, 1.5 ]
@@ -347,7 +438,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 0.4 ),
 "update": 0,
 "values": [ 0.83, 1.5 ]
@@ -359,7 +450,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 0.4, 0.8 ),
 "update": 0,
 "values": [ Vector2( 512, 64 ), Vector2( 0, 64 ) ]
@@ -371,7 +462,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -445,14 +536,6 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="StyleBoxTexture" id=9]
-texture = ExtResource( 5 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 8.0
-margin_right = 8.0
-margin_top = 8.0
-margin_bottom = 8.0
-
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 128, 32 )
@@ -465,9 +548,80 @@ region = Rect2( 0, 32, 32, 32 )
 atlas = ExtResource( 6 )
 region = Rect2( 32, 32, 32, 32 )
 
+[sub_resource type="ConvexPolygonShape" id=45]
+points = PoolVector3Array( 1.1875, 0.776161, -1.14401, 1.15275, 0.167228, -0.792429, 1.1875, 0.126579, -0.76899, 1.1875, 0.744909, -1.19812, -0.0625, 0.776161, -1.14401, -0.0278729, 0.167228, -0.792429, 1.1875, 0.0953925, -0.823135, -0.0625, 0.126579, -0.76899, -0.0625, 0.744909, -1.19812, -0.0625, 0.0953925, -0.823135 )
+
+[sub_resource type="QuadMesh" id=46]
+size = Vector2( 1.202, 0.668 )
+
+[sub_resource type="ViewportTexture" id=44]
+viewport_path = NodePath("tv/screen/tvcontent")
+
+[sub_resource type="SpatialMaterial" id=47]
+resource_local_to_scene = true
+albedo_color = Color( 2, 2, 2, 1 )
+albedo_texture = SubResource( 44 )
+
+[sub_resource type="Animation" id=48]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/cheat:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ui/cheat:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "!!!" ]
+}
+
+[sub_resource type="Animation" id=49]
+resource_name = "show"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/cheat:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.45, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 3, 3 ), Vector2( 3, 3 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ui/cheat:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "!!!" ]
+}
+
 [node name="game" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 13 )
 script = ExtResource( 2 )
 
 [node name="worldspawn" parent="." instance=ExtResource( 1 )]
@@ -503,6 +657,12 @@ double_sided = false
 alpha_cut = 2
 frames = ExtResource( 4 )
 animation = "right"
+frame = 1
+
+[node name="dialogue_fx" type="AudioStreamPlayer3D" parent="customer"]
+stream = ExtResource( 16 )
+
+[node name="footstep" type="AudioStreamPlayer3D" parent="customer"]
 
 [node name="dialogue" type="PanelContainer" parent="."]
 visible = false
@@ -513,15 +673,15 @@ anchor_bottom = 0.83
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 512, 64 )
-custom_styles/panel = SubResource( 9 )
 
 [node name="rich" type="RichTextLabel" parent="dialogue"]
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 504.0
-margin_bottom = 56.0
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 500.0
+margin_bottom = 52.0
 rect_clip_content = false
 custom_colors/default_color = Color( 1, 1, 1, 1 )
+custom_fonts/mono_font = ExtResource( 99 )
 bbcode_enabled = true
 fit_content_height = true
 
@@ -542,7 +702,7 @@ stretch_mode = 4
 
 [node name="text" type="Label" parent="dialogue/rich/advance"]
 margin_left = 144.0
-margin_top = 21.0
+margin_top = 20.0
 margin_right = 228.0
 margin_bottom = 43.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -556,32 +716,47 @@ anchor_top = 0.05
 anchor_right = 0.95
 anchor_bottom = 0.95
 
+[node name="cheat" type="Label" parent="ui"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -23.0
+margin_right = 12.0
+rect_pivot_offset = Vector2( 0, 23 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "!!!"
+
+[node name="cheatfx" type="AudioStreamPlayer" parent="ui"]
+stream = ExtResource( 5 )
+
 [node name="vbox" type="VBoxContainer" parent="ui"]
 margin_right = 40.0
 margin_bottom = 40.0
 custom_constants/separation = 16
 
 [node name="day" type="Label" parent="ui/vbox"]
-margin_right = 206.0
-margin_bottom = 17.0
+margin_right = 270.0
+margin_bottom = 23.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Day #"
 
 [node name="customer_counter" type="Label" parent="ui/vbox"]
-margin_top = 33.0
-margin_right = 206.0
-margin_bottom = 50.0
+margin_top = 39.0
+margin_right = 270.0
+margin_bottom = 62.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Encountered 0 Customers"
 
 [node name="streak" type="Label" parent="ui/vbox"]
-margin_top = 66.0
-margin_right = 206.0
-margin_bottom = 83.0
+margin_top = 78.0
+margin_right = 270.0
+margin_bottom = 101.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
@@ -608,24 +783,24 @@ rect_pivot_offset = Vector2( 131, 14 )
 custom_constants/separation = 16
 
 [node name="text" type="Label" parent="ui/hint/confirmorder/hbox"]
-margin_top = 7.0
-margin_right = 111.0
-margin_bottom = 24.0
+margin_top = 4.0
+margin_right = 148.0
+margin_bottom = 27.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Confirm Order"
 
 [node name="icon" type="TextureRect" parent="ui/hint/confirmorder/hbox"]
-margin_left = 127.0
-margin_right = 255.0
+margin_left = 164.0
+margin_right = 292.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 texture = SubResource( 10 )
 stretch_mode = 4
 
 [node name="repeat" type="HBoxContainer" parent="ui/hint"]
-margin_left = 99.0
+margin_left = 86.0
 margin_top = 45.0
 margin_right = 300.0
 margin_bottom = 77.0
@@ -633,24 +808,24 @@ size_flags_horizontal = 8
 custom_constants/separation = 16
 
 [node name="text" type="Label" parent="ui/hint/repeat"]
-margin_top = 7.0
-margin_right = 57.0
-margin_bottom = 24.0
+margin_top = 4.0
+margin_right = 70.0
+margin_bottom = 27.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Repeat"
 
 [node name="icon" type="TextureRect" parent="ui/hint/repeat"]
-margin_left = 73.0
-margin_right = 201.0
+margin_left = 86.0
+margin_right = 214.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 texture = SubResource( 11 )
 stretch_mode = 4
 
 [node name="pick" type="HBoxContainer" parent="ui/hint"]
-margin_left = 123.0
+margin_left = 114.0
 margin_top = 93.0
 margin_right = 300.0
 margin_bottom = 125.0
@@ -658,24 +833,24 @@ size_flags_horizontal = 8
 custom_constants/separation = 16
 
 [node name="text" type="Label" parent="ui/hint/pick"]
-margin_top = 7.0
-margin_right = 33.0
-margin_bottom = 24.0
+margin_top = 4.0
+margin_right = 42.0
+margin_bottom = 27.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "Pick"
 
 [node name="icon" type="TextureRect" parent="ui/hint/pick"]
-margin_left = 49.0
-margin_right = 177.0
+margin_left = 58.0
+margin_right = 186.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 texture = SubResource( 12 )
 stretch_mode = 4
 
 [node name="player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.603607, 1.76804, -0.119545 )
+transform = Transform( 0.959952, 0, -0.280164, 0, 1, 0, 0.280164, 0, 0.959952, 0.604, 1.768, -0.12 )
 __meta__ = {
 "_editor_description_": "A python pet"
 }
@@ -699,106 +874,128 @@ grow_vertical = 2
 rect_min_size = Vector2( 512, 0 )
 
 [node name="vbox" type="VBoxContainer" parent="endday/endday"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 505.0
-margin_bottom = 229.0
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 500.0
+margin_bottom = 311.0
 
 [node name="hbox" type="HBoxContainer" parent="endday/endday/vbox"]
-margin_left = 162.0
-margin_right = 335.0
+margin_left = 117.0
+margin_right = 371.0
 margin_bottom = 64.0
 size_flags_horizontal = 4
+custom_constants/separation = 24
 
 [node name="title" type="Label" parent="endday/endday/vbox/hbox"]
-margin_top = 23.0
-margin_right = 145.0
-margin_bottom = 40.0
+margin_top = 20.0
+margin_right = 206.0
+margin_bottom = 43.0
 text = "The end of the day"
 
 [node name="day" type="Label" parent="endday/endday/vbox/hbox"]
-margin_left = 149.0
-margin_right = 173.0
+margin_left = 230.0
+margin_right = 254.0
 margin_bottom = 64.0
 custom_fonts/font = ExtResource( 9 )
 text = "1"
 align = 1
 
-[node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
+[node name="sep" type="HSeparator" parent="endday/endday/vbox"]
 margin_top = 68.0
-margin_right = 498.0
-margin_bottom = 174.0
+margin_right = 488.0
+margin_bottom = 72.0
+
+[node name="daystat" type="Label" parent="endday/endday/vbox"]
+margin_top = 76.0
+margin_right = 488.0
+margin_bottom = 99.0
+text = "[ . . . ]"
+align = 1
+
+[node name="vbox" type="VBoxContainer" parent="endday/endday/vbox"]
+margin_top = 103.0
+margin_right = 488.0
+margin_bottom = 256.0
+
+[node name="sep" type="HSeparator" parent="endday/endday/vbox/vbox"]
+margin_right = 488.0
+margin_bottom = 4.0
 
 [node name="won" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
-margin_right = 498.0
-margin_bottom = 17.0
+margin_top = 8.0
+margin_right = 488.0
+margin_bottom = 31.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/won"]
-margin_right = 79.0
-margin_bottom = 17.0
+margin_right = 110.0
+margin_bottom = 23.0
 text = "Won : 15/15"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/won"]
-margin_left = 406.0
-margin_right = 498.0
-margin_bottom = 17.0
+margin_left = 348.0
+margin_right = 488.0
+margin_bottom = 23.0
 size_flags_horizontal = 14
 text = "15 x 50 = 750"
 align = 1
 
 [node name="streak" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
-margin_top = 21.0
-margin_right = 498.0
-margin_bottom = 38.0
+margin_top = 35.0
+margin_right = 488.0
+margin_bottom = 58.0
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/streak"]
-margin_right = 149.0
-margin_bottom = 17.0
+margin_right = 206.0
+margin_bottom = 23.0
 text = "Longest Streak : 15"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/streak"]
-margin_left = 406.0
-margin_right = 498.0
-margin_bottom = 17.0
+margin_left = 348.0
+margin_right = 488.0
+margin_bottom = 23.0
 size_flags_horizontal = 14
 text = "15 x 50 = 750"
 align = 1
 
 [node name="rank" type="HBoxContainer" parent="endday/endday/vbox/vbox"]
-margin_left = 195.0
-margin_top = 42.0
+margin_left = 186.0
+margin_top = 62.0
 margin_right = 302.0
-margin_bottom = 106.0
+margin_bottom = 126.0
 size_flags_horizontal = 4
 custom_constants/separation = 32
 
 [node name="a" type="Label" parent="endday/endday/vbox/vbox/rank"]
-margin_top = 23.0
-margin_right = 39.0
-margin_bottom = 40.0
+margin_top = 20.0
+margin_right = 48.0
+margin_bottom = 43.0
 text = "Rank"
 
 [node name="b" type="Label" parent="endday/endday/vbox/vbox/rank"]
-margin_left = 71.0
-margin_right = 107.0
+margin_left = 80.0
+margin_right = 116.0
 margin_bottom = 64.0
 size_flags_horizontal = 14
 custom_fonts/font = ExtResource( 9 )
 text = "A"
 align = 1
 
-[node name="sold" type="Label" parent="endday/endday/vbox"]
-margin_top = 178.0
-margin_right = 498.0
-margin_bottom = 195.0
-text = "[ . . . ]"
+[node name="thx" type="Label" parent="endday/endday/vbox/vbox"]
+margin_top = 130.0
+margin_right = 488.0
+margin_bottom = 153.0
+text = "Thanks for playing :)"
 align = 1
 
 [node name="continue" type="Button" parent="endday/endday/vbox"]
-margin_top = 199.0
-margin_right = 498.0
-margin_bottom = 222.0
+margin_top = 260.0
+margin_right = 488.0
+margin_bottom = 299.0
 text = "Sleep"
+
+[node name="endday" type="AudioStreamPlayer" parent="endday/endday"]
+stream = ExtResource( 17 )
+bus = "Music"
 
 [node name="motd" type="ColorRect" parent="."]
 visible = false
@@ -822,3 +1019,32 @@ script = ExtResource( 10 )
 
 [node name="pausemenu" parent="." instance=ExtResource( 7 )]
 visible = false
+
+[node name="tv" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.950489, 0.310759, 0, -0.310759, 0.950489, -5.96046e-08, 0.516874, 0.389198 )
+
+[node name="monitor" type="MeshInstance" parent="tv"]
+mesh = ExtResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="moncol" type="CollisionShape" parent="tv"]
+shape = SubResource( 45 )
+
+[node name="screen" type="MeshInstance" parent="tv"]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0.564608, 0.447475, -0.968716 )
+mesh = SubResource( 46 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 47 )
+
+[node name="tvcontent" type="Viewport" parent="tv/screen"]
+size = Vector2( 601, 334 )
+usage = 0
+render_target_v_flip = true
+
+[node name="tvscreen" parent="tv/screen/tvcontent" instance=ExtResource( 11 )]
+
+[node name="anicheat" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 48 )
+anims/show = SubResource( 49 )
+
+[editable path="tv/screen/tvcontent/tvscreen"]

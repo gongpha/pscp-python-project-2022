@@ -1,19 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resource/mesh/stall.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://scene/stall_shape.shape" type="Shape" id=2]
-[ext_resource path="res://resource/mesh/monitor.mesh" type="ArrayMesh" id=3]
+[ext_resource path="res://scene/fridge_shape.shape" type="Shape" id=3]
 [ext_resource path="res://resource/mesh/fridge.mesh" type="ArrayMesh" id=4]
-[ext_resource path="res://resource/mesh/stool.mesh" type="ArrayMesh" id=5]
-
-[sub_resource type="ConvexPolygonShape" id=2]
-points = PoolVector3Array( -0.23813, 0.677948, -0.2375, 0.253207, 1.27835, 0.410858, -0.2563, 1.2757, 0.409385, -0.182281, 0.0836699, 0.1875, 0.1875, 0.0845333, -0.182162, 0.243115, 0.8125, -0.236981, 0.1875, 0.0845333, 0.187346, -0.251131, 1.30776, 0.263391, -0.185679, 0.0723743, -0.1875, 0.257103, 1.30776, 0.263391, -0.237745, 0.8125, -0.236981, -0.252759, 0.7563, 0.139331, 0.243516, 0.677948, -0.2375, 0.240132, 0.744466, 0.270379, -0.252759, 0.7563, -0.234081, -0.244365, 0.744466, 0.270379, -0.2563, 1.29562, 0.339571, 0.25273, 1.29721, 0.340245, 0.235288, 0.6688, 0.229346, -0.2563, 1.28566, 0.379372, -0.239522, 0.6688, 0.229346 )
-
-[sub_resource type="ConvexPolygonShape" id=3]
-points = PoolVector3Array( -0.640269, 2.21648, 1.125, -0.5688, 2.15489, 1.0605, -1.5, 2.22698, -0.181105, -1.49541, 0.0272214, 1.125, -0.632958, 0.00595228, -0.1875, -1.5, 0.0167235, -0.181105, -0.632958, 2.23775, -0.1875, -1.49541, 2.21648, 1.125, -0.640269, 0.0272214, 1.125, -0.515107, 1.69488, 0.904822, -0.5688, 0.501983, -0.110376, -0.5688, 2.15489, -0.110376, -0.5688, 0.501983, 1.0605, -0.54609, 1.65947, 1.0125 )
-
-[sub_resource type="ConvexPolygonShape" id=4]
-points = PoolVector3Array( 1.1875, 0.776161, -1.14401, 1.15275, 0.167228, -0.792429, 1.1875, 0.126579, -0.76899, 1.1875, 0.744909, -1.19812, -0.0625, 0.776161, -1.14401, -0.0278729, 0.167228, -0.792429, 1.1875, 0.0953925, -0.823135, -0.0625, 0.126579, -0.76899, -0.0625, 0.744909, -1.19812, -0.0625, 0.0953925, -0.823135 )
 
 [node name="stall" type="StaticBody"]
 
@@ -27,21 +17,18 @@ skeleton = NodePath("../..")
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
 shape = ExtResource( 2 )
 
-[node name="stool" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0, 0 )
-mesh = ExtResource( 5 )
-
-[node name="stoolcol" type="CollisionShape" parent="stool"]
-shape = SubResource( 2 )
-
 [node name="fridge" type="MeshInstance" parent="."]
 mesh = ExtResource( 4 )
 
-[node name="fridgecol - NEED CHANGES" type="CollisionShape" parent="."]
-shape = SubResource( 3 )
+[node name="l" type="OmniLight" parent="fridge"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19001, 1.84702, 0.459967 )
+light_color = Color( 1, 0.992157, 0.611765, 1 )
+omni_range = 1.077
 
-[node name="monitor" type="MeshInstance" parent="."]
-mesh = ExtResource( 3 )
+[node name="l2" type="OmniLight" parent="fridge"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19001, 1.02734, 0.459967 )
+light_color = Color( 1, 0.992157, 0.611765, 1 )
+omni_range = 1.077
 
-[node name="moncol" type="CollisionShape" parent="."]
-shape = SubResource( 4 )
+[node name="fridgecol" type="CollisionShape" parent="."]
+shape = ExtResource( 3 )

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/what_thefhd.ogg-5e2f5d7639040ed2118ede38c7b2c1f8.oggstr"
+
+[deps]
+
+source_file="res://resource/audio/what_thefhd.ogg"
+dest_files=[ "res://.import/what_thefhd.ogg-5e2f5d7639040ed2118ede38c7b2c1f8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

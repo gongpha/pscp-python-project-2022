@@ -28,6 +28,7 @@ class MainMenuRow(HBoxContainer):
             if event.button_index == BUTTON_LEFT: # CLICKING ON A LEFT BUTTON ???
                 if not event.pressed: # Is the button released ? (not pressed)
                     # I was clicked !
+                    self.animation.play("click")
                     self.call("emit_signal", "on_clicked")
 
     def _on_text_mouse_entered(self):

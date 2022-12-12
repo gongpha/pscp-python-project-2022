@@ -218,4 +218,4 @@ class MainMenu(Control):
 
     def start(self, _):
         """ LET'S GOOOOOOOOOO """
-        GDPORT(self).call("go_to_game")
+        GDPORT(self).call("go_to_intro")
