@@ -1,11 +1,13 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
-[ext_resource path="res://resource/audio/toyland_festival1.mp3" type="AudioStream" id=2]
+[ext_resource path="res://resource/audio/confirm_order.wav" type="AudioStream" id=2]
 [ext_resource path="res://resource/mesh/bridge.mesh" type="ArrayMesh" id=3]
 [ext_resource path="res://script/worldspawn.py" type="Script" id=4]
+[ext_resource path="res://resource/audio/ambience/city.ogg" type="AudioStream" id=5]
 [ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
 [ext_resource path="res://resource/mesh/building1.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://resource/audio/ambience/chin200fest.ogg" type="AudioStream" id=8]
 [ext_resource path="res://resource/mesh/stool.mesh" type="ArrayMesh" id=11]
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
 [ext_resource path="res://resource/mesh/lamp.mesh" type="ArrayMesh" id=15]
@@ -32,6 +34,22 @@ size = Vector3( 0.075, 0.4, 0.075 )
 [node name="worldspawn" type="Spatial"]
 script = ExtResource( 4 )
 
+[node name="confirm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="behind" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.70526, -1.7706, 4.96699 )
+stream = ExtResource( 8 )
+autoplay = true
+bus = "AMB1"
+
+[node name="city" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.597401, 5.24977, 0.0104117 )
+stream = ExtResource( 5 )
+unit_db = -34.934
+unit_size = 100.0
+autoplay = true
+
 [node name="stool" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0, 0 )
 
@@ -44,10 +62,6 @@ shape = SubResource( 39 )
 
 [node name="stall" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0302835, 0.112267, 0.0306592 )
-
-[node name="PUT YOUR MUSIC HERE" type="AudioStreamPlayer" parent="."]
-autoplay = true
-bus = "Music"
 
 [node name="block" type="StaticBody" parent="."]
 collision_layer = 0
@@ -223,10 +237,6 @@ monitorable = false
 [node name="c" type="CollisionShape" parent="itemspawner/f11"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0912979, 0 )
 shape = SubResource( 34 )
-
-[node name="test" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07364, 0 )
-stream = ExtResource( 2 )
 
 [node name="clock" type="MeshInstance" parent="."]
 transform = Transform( 0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1.63823, 2.60426, -0.917271 )

@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scene/item/sachet1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene/item/sachet2.tres" type="Material" id=2]
+[ext_resource path="res://resource/audio/bag_collision.wav" type="AudioStream" id=3]
 
 [node name="sachet" instance=ExtResource( 1 )]
 item_name = "Blue Crisps"
 item_conname = "jasil fri.t:"
+impact = ExtResource( 3 )
 
 [node name="mesh" parent="." index="0"]
 material/0 = ExtResource( 2 )

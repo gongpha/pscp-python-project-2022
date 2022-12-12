@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/toyland_festival2.ogg-2caa6557557622e282c7181bb49ca840.oggstr"
+
+[deps]
+
+source_file="res://resource/audio/ambience/toyland_festival2.ogg"
+dest_files=[ "res://.import/toyland_festival2.ogg-2caa6557557622e282c7181bb49ca840.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

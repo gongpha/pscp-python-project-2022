@@ -120,6 +120,11 @@ class Game(Control):
     clock_freezing : bool = False
     anicheat : AnimationPlayer
 
+    confirm_fx : AudioStreamPlayer
+    dialogue_fx : AudioStreamPlayer3D
+
+    win_music : AudioStreamPlayer
+
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
 
@@ -191,6 +196,11 @@ class Game(Control):
         self.cheat_label.hide()
         self.cheatfx = self.get_node("ui/cheatfx")
         self.anicheat = self.get_node("anicheat")
+
+        self.confirm_fx = self.worldspawn.get_node("confirm")
+        self.dialogue_fx = self.get_node("customer/dialogue_fx")
+        
+        self.win_music = self.get_node("endday/endday/endday")
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
@@ -372,6 +382,7 @@ class Game(Control):
         self.dialogue_richtext.percent_visible = 0.0
         self.dialogue_animating_chars = True
         self.holding_confirm = False
+        self.confirm_fx.stop()
         return True
 
     def prepare_items(self):
@@ -417,6 +428,7 @@ class Game(Control):
                 # CONFIRMED !
                 self.check_items()
                 self.holding_confirm = False
+                self.confirm_fx.stop()
         else:
             if self.confirm_order_value > 0:
                 self.confirm_order_value -= 800 * delta
@@ -431,8 +443,12 @@ class Game(Control):
         )
 
         if self.dialogue_animating_chars:
+            old_visible = self.dialogue_richtext.visible_characters
             self.dialogue_richtext.percent_visible += 0.25 / \
                 max(0.1, self.dialogue_richtext.bbcode_text.length())
+            if self.dialogue_richtext.visible_characters != old_visible:
+                # play sound
+                self.dialogue_fx.play()
             if self.dialogue_richtext.percent_visible == 1.0:
                 # STOP
                 self.dialogue_animating_chars = False
@@ -539,6 +555,7 @@ class Game(Control):
             self.toggle_pausemenu()
             self.confirmorder.modulate = Color(1, 1, 1, 1)
             self.holding_confirm = False
+            self.confirm_fx.stop()
 
         if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
             return
@@ -553,7 +570,9 @@ class Game(Control):
             else:
                 if self.feed_dialogue():
                     return
-                self.holding_confirm = self.order != None
+                if self.order != None:
+                    self.holding_confirm = True
+                    self.confirm_fx.play()
         elif event.is_action_pressed("repeat"):
             # repeat the dialogue
             self.repeat_dialogue()
@@ -561,6 +580,7 @@ class Game(Control):
         if event.is_action_released("ui_select"):
             self.confirmorder.modulate = Color(1, 1, 1, 1)
             self.holding_confirm = False
+            self.confirm_fx.stop()
 
         if Input.is_mouse_button_pressed(BUTTON_LEFT):
             self.pick.modulate = Color(1, 1, 0, 1)
@@ -622,6 +642,8 @@ class Game(Control):
                 "No completed customers"
             )
         )
+
+        self.win_music.play()
 
         if real_end:
             self.won_left.text = "Won : %d/%d" % (
