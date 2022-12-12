@@ -14,7 +14,7 @@ class loading(Control):
 
     def _ready(self):
         self.ril = ResourceLoader.load_interactive("res://scene/preload.tscn")
-        self.bar = self.get_node("bar")
+        self.bar = self.get_node("vbox/bar")
 
     def _process(self, delta : float):
         if self.delay < 0.04:
