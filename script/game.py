@@ -130,6 +130,8 @@ class Game(Control):
 
     win_music : AudioStreamPlayer
 
+    tv_ani : AnimationPlayer
+
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
 
@@ -210,6 +212,8 @@ class Game(Control):
 
         # Then, let's initialize the random number generator
         self.rng = RandomNumberGenerator()
+
+        self.tv_ani = self.get_node("tv/screen/ani")
 
         # Now, LET'S GOOOOOOOOOOOOOOOOO
         self.newday()
@@ -484,13 +488,18 @@ class Game(Control):
 
     def reset_clock(self):
         self.clock_hand_root.rotation = Vector3()
+        self.tv_ani.stop()
 
     def update_clock(self, delta: float):
         """ clock """
         if self.clock_freezing:
             return
 
-        if 0.001 < self.clock_hand_root.rotation.z < 0.01 :
+        def check_hand(after : float) :
+            sss = (2 * math.pi / after) if after != 0.0 else 0.0
+            return sss + 0.001 < self.clock_hand_root.rotation.z < 0.01 + sss
+
+        if check_hand(0.0) :
             # when the clock hand is about to reach the 12 o'clock
             # TIMEOUT !!!
             self.counting = False
@@ -499,6 +508,8 @@ class Game(Control):
             #self.go_endday()
         else :
             if self.counting :
+                if check_hand(5.0) and not self.tv_ani.is_playing():
+                    self.tv_ani.play("warning")
                 add = (delta / DAY_TIME[self.current_day])
                 #self.sun.rotate_x(delta * inv)
                 self.clock_hand_root.rotate_z(-add * 2 * math.pi)
