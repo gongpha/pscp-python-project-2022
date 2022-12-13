@@ -1,8 +1,5 @@
 # PSCP Project 2022
 
-## Working branches
-- [`aesthetic-overhaul`](https://github.com/gongpha/pscp-python-project-2022/tree/aesthetic-overhaul)
-
 ## Contributors
 - [gongpha (Kongfa Waroros, 65070013)](https://github.com/gongpha)
 - [jolluxx (Kullapat Kematorn, 65070024)](https://github.com/jolluxx)
