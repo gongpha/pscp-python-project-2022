@@ -15,6 +15,8 @@ class MainMenu(Control):
 
     item_scene : PackedScene
 
+    title : Label
+
     def _ready(self):
         """ Ready ! """
         self.item_scene = ResourceLoader.load("res://scene/mainmenu_row.tscn")
@@ -67,7 +69,9 @@ class MainMenu(Control):
         self.title.text = self.title_original
         self.ani.play("re_glow_title")
         self.title.margin_top = 0.0
-        self.title.margin_left = 0.0
+        self.title.margin_left = 0.5
+        self.title.set_anchors_and_margins_preset(Control.LayoutPreset.PRESET_CENTER_TOP)
+        self.title.anchor_top = 0.1
         self.title.rect_scale = Vector2(1.0, 1.0)
         # And the item too
         target_item.get_node("text").modulate = Color(1, 1, 1, 1)
@@ -89,9 +93,17 @@ class MainMenu(Control):
                 self.title.rect_global_position = current_item.rect_global_position
                 self.title.rect_scale = self.def_item_scale
                 self.tween.interpolate_property(
-                    self.title, "margin_left", self.title.margin_left, 0.0, duration, trans, ease)
+                    self.title, "margin_left", self.title.margin_left, 0.5, duration, trans, ease)
+                self.tween.interpolate_property(
+                    self.title, "margin_right", self.title.margin_right, 0.0, duration, trans, ease)
                 self.tween.interpolate_property(
                     self.title, "margin_top", self.title.margin_top, 0.0, duration, trans, ease)
+
+                self.tween.interpolate_property(
+                    self.title, "anchor_left", self.title.anchor_left, 0.5, duration, trans, ease)
+                self.tween.interpolate_property(
+                    self.title, "anchor_top", self.title.anchor_top, 0.1, duration, trans, ease)
+
                 self.tween.interpolate_property(
                     self.title, "rect_scale", self.title.rect_scale, Vector2(1.0, 1.0), duration, trans, ease)
                 self.tween.start()
