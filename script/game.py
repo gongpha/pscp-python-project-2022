@@ -6,7 +6,7 @@ from . import dialogue
 from .player import Player
 from .utils import lerp
 
-from .rank_table import get_rank_by_score, DAY_TIME, DAY_CUSTOMER, RANK_COLOR, DAY_DELAY
+from .rank_table import get_rank_by_score, DAY_TIME, DAY_CUSTOMER, RANK_COLOR, DAY_DELAY, get_rank_by_score_day
 from .utils import GDPORT
 
 import math
@@ -113,6 +113,7 @@ class Game(Control):
     customer_count_total : int = 0
 
     won : int = 0
+    won_total : int = 0
     streak : int = 0
     next_button : Button
 
@@ -131,6 +132,7 @@ class Game(Control):
     win_music : AudioStreamPlayer
 
     tv_ani : AnimationPlayer
+    thx : Label
 
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
@@ -214,6 +216,7 @@ class Game(Control):
         self.rng = RandomNumberGenerator()
 
         self.tv_ani = self.get_node("tv/screen/ani")
+        self.thx = self.get_node("endday/endday/vbox/vbox/thx")
 
         # Now, LET'S GOOOOOOOOOOOOOOOOO
         self.newday()
@@ -250,6 +253,8 @@ class Game(Control):
         # Prepare items on the shelf
         self.remove_all_items()
         self.prepare_items()
+
+        self.won = 0
 
         self.counting = False
 
@@ -574,6 +579,7 @@ class Game(Control):
                 self.day_counter_item += 1
             self.update_streak_count(self.streak + 1)
             self.won += 1
+            self.won_total += 1
             self.dialogue_lines = [self.dialogue_pick(dialogue.order_ok)]
             self.tv_set_description(dialogue.translator_ok)
             self.order["status"] = "completed"
@@ -665,7 +671,8 @@ class Game(Control):
 
     def go_endday(self, real_end : bool):
         """ Emit the end day screen """
-        self.endday_final.visible = real_end
+        self.endday_final.show()
+        self.thx.hide()
         Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
         self.endday_day.text = str(self.current_day)
         self.daystat.text = "%s\n%s" % (
@@ -683,7 +690,25 @@ class Game(Control):
 
         if real_end:
             self.won_left.text = "Won : %d/%d" % (
-                self.won, self.customer_count_total
+                self.won_total, self.customer_count_total
+            )
+            self.won_right.text = "%d x 50 = %d" % (
+                self.won_total, self.won_total * 50
+            )
+            self.streak_left.text = "Current Streak : %d" % (
+                self.streak
+            )
+            self.streak_right.text = "%d x 50 = %d" % (
+                self.streak, self.streak * 50
+            )
+            final = self.won_total + (self.streak * STREAK_BONUS)
+            self.rank.text = get_rank_by_score(final)
+            self.rank.add_color_override("font_color", RANK_COLOR[str(self.rank.text)])
+            self.thx.show()
+            self.next_button.text = "Back to the mainmenu"
+        else :
+            self.won_left.text = "Won : %d/%d" % (
+                self.won, DAY_CUSTOMER[self.current_day]
             )
             self.won_right.text = "%d x 50 = %d" % (
                 self.won, self.won * 50
@@ -695,9 +720,9 @@ class Game(Control):
                 self.streak, self.streak * 50
             )
             final = self.won + (self.streak * STREAK_BONUS)
-            self.rank.text = get_rank_by_score(final)
+            self.rank.text = get_rank_by_score_day(final, DAY_CUSTOMER[self.current_day])
             self.rank.add_color_override("font_color", RANK_COLOR[str(self.rank.text)])
-            self.next_button.text = "Back to the mainmenu"
+            
         self.endday.show()
         self.set_process(False)
 
@@ -821,6 +846,7 @@ class Game(Control):
             self.day_counter_item += 99999
             self.cheat_label.text = "!!! Day Completed (HAXXXXX)"
             self.won += DAY_CUSTOMER[self.current_day]
+            self.won_total += DAY_CUSTOMER[self.current_day]
             self.go_endday(self.current_day == 7)
             self.anicheat.stop()
             self.anicheat.play("show")

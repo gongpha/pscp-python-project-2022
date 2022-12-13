@@ -25,6 +25,13 @@ def get_rank_by_score(score: int):
         return 'A'
     return 'P'
 
+import math
+
+def get_rank_by_score_day(score: int, smax: int):
+    """ Get rank by score """
+    percent = math.floor((score / smax) * 6)
+    return ['E', 'D', 'C', 'B', 'A', 'P'][max(0, min(5, percent))]
+
 
 DAY_TIME = {
     1: 30, # 14
