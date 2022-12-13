@@ -13,7 +13,7 @@ albedo_texture = ExtResource( 4 )
 [node name="carton" type="RigidBody"]
 script = ExtResource( 1 )
 item_name = "Milk"
-item_conname = "mjo."
+item_conname = "mjo"
 fridge = true
 impact = ExtResource( 5 )
 
