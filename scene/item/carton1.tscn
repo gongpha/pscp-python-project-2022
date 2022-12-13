@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://script_gd/item.gd" type="Script" id=1]
+[ext_resource path="res://scene/item/carton.mesh" type="ArrayMesh" id=2]
+[ext_resource path="res://scene/item/carton_shape.tres" type="Shape" id=3]
+[ext_resource path="res://scene/item/carton1.png" type="Texture" id=4]
+[ext_resource path="res://resource/audio/box_collision.wav" type="AudioStream" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+params_cull_mode = 2
+albedo_texture = ExtResource( 4 )
+
+[node name="carton" type="RigidBody"]
+script = ExtResource( 1 )
+item_name = "Milk"
+item_conname = "mjo"
+fridge = true
+impact = ExtResource( 5 )
+color = "#3d4fde"
+
+[node name="cube" type="MeshInstance" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.291141, 0 )
+mesh = ExtResource( 2 )
+skeleton = NodePath("")
+material/0 = SubResource( 1 )
+
+[node name="col" type="CollisionShape" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.291141, 0 )
+shape = ExtResource( 3 )

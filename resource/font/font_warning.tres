@@ -1,0 +1,10 @@
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[sub_resource type="DynamicFontData" id=1]
+antialiased = false
+font_path = "res://resource/font/bin/JLX_Pixel.ttf"
+
+[resource]
+size = 51
+outline_size = 7
+font_data = SubResource( 1 )

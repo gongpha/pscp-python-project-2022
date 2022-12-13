@@ -3,7 +3,7 @@ from godot import *
 
 
 @exposed
-class mainmenu_row(HBoxContainer):
+class MainMenuRow(HBoxContainer):
     """ Main menu choices """
 
     on_clicked = signal()
@@ -16,15 +16,19 @@ class mainmenu_row(HBoxContainer):
 
         # Get node references
         self.text_node = self.get_node("text")
+        self.text_node.connect("gui_input", self, "_on_text_gui_input")
+        self.text_node.connect("mouse_entered", self, "_on_text_mouse_entered")
+        self.text_node.connect("mouse_exited", self, "_on_text_mouse_exited")
         self.animation: AnimationPlayer = self.get_node("ani")
 
     def _on_text_gui_input(self, event):
         """ Called when the text is clicked """
         # Check if the mouse was clicked on the text
-        if isinstance(event, InputEventMouseButton): # is the event a mouse button event ?
-            if event.button_index == BUTTON_LEFT: # CLICKING ON A LEFT BUTTON ???
-                if not event.pressed: # Is the button released ? (not pressed)
+        if isinstance(event, InputEventMouseButton):  # is the event a mouse button event ?
+            if event.button_index == BUTTON_LEFT:  # CLICKING ON A LEFT BUTTON ???
+                if not event.pressed:  # Is the button released ? (not pressed)
                     # I was clicked !
+                    self.animation.play("click")
                     self.call("emit_signal", "on_clicked")
 
     def _on_text_mouse_entered(self):

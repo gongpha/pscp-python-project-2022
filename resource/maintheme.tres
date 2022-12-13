@@ -1,9 +1,88 @@
-[gd_resource type="Theme" load_steps=3 format=2]
+[gd_resource type="Theme" load_steps=14 format=2]
 
-[ext_resource path="res://resource/font/bin/minecraftia.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://resource/font/font_regular.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resource/texture/ui1.png" type="Texture" id=2]
+[ext_resource path="res://resource/panel.tres" type="StyleBox" id=3]
 
-[sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 1 )
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 2 )
+region_rect = Rect2( 48, 32, 16, 16 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id=8]
+content_margin_right = 0.0
+content_margin_bottom = 1.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 32, 16, 16 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id=9]
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 32, 16, 16 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+modulate_color = Color( 0.756863, 0.756863, 0.756863, 1 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="StyleBoxLine" id=10]
+color = Color( 0.27451, 0.278431, 0.384314, 1 )
+thickness = 2
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 16, 16, 16 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 2 )
+region_rect = Rect2( 32, 32, 16, 16 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 2 )
+region_rect = Rect2( 32, 0, 16, 16 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
 
 [resource]
-default_font = SubResource( 1 )
+default_font = ExtResource( 1 )
+Button/colors/font_color = Color( 1, 1, 1, 1 )
+Button/styles/focus = SubResource( 7 )
+Button/styles/hover = SubResource( 8 )
+Button/styles/normal = SubResource( 8 )
+Button/styles/pressed = SubResource( 9 )
+CheckBox/icons/checked = SubResource( 1 )
+CheckBox/icons/unchecked = SubResource( 2 )
+CheckBox/styles/focus = SubResource( 7 )
+HSeparator/styles/separator = SubResource( 10 )
+HSlider/icons/grabber = SubResource( 3 )
+HSlider/icons/grabber_highlight = SubResource( 4 )
+HSlider/styles/grabber_area = SubResource( 6 )
+HSlider/styles/grabber_area_highlight = SubResource( 6 )
+HSlider/styles/slider = SubResource( 5 )
+PanelContainer/styles/panel = ExtResource( 3 )

@@ -3,17 +3,27 @@ from godot import *
 
 # inspired (?) from half-life WON-edition menu
 
+from .utils import GDPORT
+
 @exposed
-class mainmenu(Control):
+class MainMenu(Control):
     """ Main menu """
 
-    def_item_scale = Vector2(0.25, 0.25)
+    def_item_scale = Vector2(0.343, 0.343)
     current_menu_list = {}
     previous_clicked_item_name = None
 
+    item_scene : PackedScene
+
+    title : Label
+
     def _ready(self):
         """ Ready ! """
+        self.item_scene = ResourceLoader.load("res://scene/mainmenu_row.tscn")
+
         # Setup nodes
+        self.pause_mode = Node.PAUSE_MODE_PROCESS
+
         self.menu_list = self.get_node("menu_list")
         self.tween = self.get_node("tween")
         self.title = self.get_node("title")
@@ -22,6 +32,12 @@ class mainmenu(Control):
         self.things = self.get_node("things/inside")
         self.settings_node = self.things.get_node("SETTINGS")
 
+        self.layout()
+
+        # Create a default menu
+        self.go_to(self.item_list)
+
+    def layout(self) :
         # Customize this to change the menu list
         self.item_list = {
             "Start": {
@@ -42,9 +58,6 @@ class mainmenu(Control):
             }
         }
 
-        # Create a default menu
-        self.go_to(self.item_list)
-
     def _animated_normal(self, attached_scene):
         """ Called when the title animation is done """
         # K, continue the below function (without playing the animation)
@@ -56,7 +69,9 @@ class mainmenu(Control):
         self.title.text = self.title_original
         self.ani.play("re_glow_title")
         self.title.margin_top = 0.0
-        self.title.margin_left = 0.0
+        self.title.margin_left = 0.5
+        self.title.set_anchors_and_margins_preset(Control.LayoutPreset.PRESET_CENTER_TOP)
+        self.title.anchor_top = 0.1
         self.title.rect_scale = Vector2(1.0, 1.0)
         # And the item too
         target_item.get_node("text").modulate = Color(1, 1, 1, 1)
@@ -78,9 +93,17 @@ class mainmenu(Control):
                 self.title.rect_global_position = current_item.rect_global_position
                 self.title.rect_scale = self.def_item_scale
                 self.tween.interpolate_property(
-                    self.title, "margin_left", self.title.margin_left, 0.0, duration, trans, ease)
+                    self.title, "margin_left", self.title.margin_left, 0.5, duration, trans, ease)
+                self.tween.interpolate_property(
+                    self.title, "margin_right", self.title.margin_right, 0.0, duration, trans, ease)
                 self.tween.interpolate_property(
                     self.title, "margin_top", self.title.margin_top, 0.0, duration, trans, ease)
+
+                self.tween.interpolate_property(
+                    self.title, "anchor_left", self.title.anchor_left, 0.5, duration, trans, ease)
+                self.tween.interpolate_property(
+                    self.title, "anchor_top", self.title.anchor_top, 0.1, duration, trans, ease)
+
                 self.tween.interpolate_property(
                     self.title, "rect_scale", self.title.rect_scale, Vector2(1.0, 1.0), duration, trans, ease)
                 self.tween.start()
@@ -98,11 +121,11 @@ class mainmenu(Control):
         self.settings_node.hide()
 
         # Load "Menu Items" scene
-        row_scene = ResourceLoader.load("res://scene/mainmenu_row.tscn")
+        
 
         # Add each item to the menu list
         for name, data in item_list.items():
-            row_node = row_scene.instance()  # Create a new instance of the item
+            row_node = self.item_scene.instance()  # Create a new instance of the item
             row_node.name = name  # Set the name of the item
             row_node.get_node("text").text = name  # Set item name
             # Set item description
@@ -133,8 +156,8 @@ class mainmenu(Control):
     def reverse_animation(self, current_item):
         """ Reverse the animation (Click a back button) """
         duration = 0.2
-        trans = 1  # Sine
-        ease = 1  # Out
+        trans = 7  # Cubic
+        ease = 2  # In
         self.title.text = current_item
         target_item = self.menu_list.get_node(str(current_item))
         target_item.get_node("text").modulate = Color(1, 1, 1, 0) # Hide that item !
@@ -207,4 +230,4 @@ class mainmenu(Control):
 
     def start(self, _):
         """ LET'S GOOOOOOOOOO """
-        self.get_tree().change_scene("res://scene/game.tscn")
+        GDPORT(self).call("go_to_intro")
