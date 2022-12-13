@@ -379,10 +379,10 @@ class Game(Control):
                 available[kkk][3],
             ]
 
-        if 1 >= self.current_day >= 3:
+        if self.current_day >= 1 and self.current_day < 3:
             ddd = "[color={icolor}]%s[/color]" % self.dialogue_pick(
                 dialogue.order_item)
-        elif self.current_day < 7:
+        elif self.current_day < 6:
             ddd = "[color=yellow]%s[/color]" % self.dialogue_pick(
                 dialogue.order_item)
         else:
