@@ -85,15 +85,17 @@ margin_right = -849.296
 grow_vertical = 0
 
 [node name="title" type="Label" parent="."]
-anchor_left = 0.1
+anchor_left = 0.5
 anchor_top = 0.1
-anchor_right = 0.1
+anchor_right = 0.5
 anchor_bottom = 0.1
-margin_right = 289.973
-margin_bottom = 61.0
+margin_left = -144.986
+margin_right = 144.986
+margin_bottom = 64.0
 custom_colors/font_color = Color( 3, 2, 1, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "PAUSED"
+align = 1
 
 [node name="tween" type="Tween" parent="."]
 
