@@ -742,6 +742,7 @@ class Game(Control):
         self.tv_arrow.hide()
         self.tv_translated.hide()
         self.tv_description.hide()
+        self.tv_ani.play("RESET")
         
         self.tv_translated.text = self.tv_raw.text
         self.tv_is_translated = False
