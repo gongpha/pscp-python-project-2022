@@ -351,14 +351,16 @@ class Game(Control):
                 available[kkk][2],
             ]
 
+        ddd = "[color=yellow]%s[/color]" % self.dialogue_pick(dialogue.order_item)
+
         # Prepare the texts
-        order_dialogue = [self.dialogue_pick(dialogue.order_item).format(**{
+        order_dialogue = [ddd.format(**{
             'translated' : vvv[0],
             'count' : vvv[1],
             'itemname' : vvv[2]
         })for vvv in order_item.values()]
 
-        self.dialogue_repeat = ', '.join(order_dialogue)
+        self.dialogue_repeat = ' [code]i[/code] '.join(order_dialogue)
         self.dialogue_lines = [
             self.dialogue_pick(dialogue.greeting),
             self.dialogue_pick(dialogue.order).format(self.dialogue_repeat)
