@@ -12,9 +12,9 @@ custom_constants/separation = 16
 
 [node name="id" type="Label" parent="."]
 margin_top = 3.0
-margin_right = 125.0
+margin_right = 250.0
 margin_bottom = 28.0
-rect_min_size = Vector2( 125, 0 )
+rect_min_size = Vector2( 250, 0 )
 custom_colors/font_color = Color( 1, 1, 1, 0.752941 )
 custom_fonts/font = ExtResource( 2 )
 text = "65070013"
@@ -22,8 +22,8 @@ align = 1
 valign = 1
 
 [node name="name" type="Label" parent="."]
-margin_left = 141.0
-margin_right = 388.0
+margin_left = 266.0
+margin_right = 514.0
 margin_bottom = 32.0
 custom_fonts/font = ExtResource( 3 )
 text = "Kongfa Waroros"

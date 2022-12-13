@@ -13,6 +13,7 @@ script = ExtResource( 1 )
 item_name = "Purple Crisps"
 item_conname = "a.ka. fri.t:"
 impact = ExtResource( 4 )
+color = "#d00a73"
 
 [node name="mesh" type="MeshInstance" parent="."]
 transform = Transform( 0.64, 0, 0, 0, -2.79753e-08, -0.64, 0, 0.64, -2.79753e-08, 0, 0, -0.5 )

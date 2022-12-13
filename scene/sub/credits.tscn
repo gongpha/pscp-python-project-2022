@@ -1,13 +1,14 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scene/sub/people.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resource/font/bin/cooper.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://resource/audio/pscp_project_grouppe.ogg" type="AudioStream" id=3]
 [ext_resource path="res://scene/sub/pscp_project_grouppe2.gd" type="Script" id=4]
 [ext_resource path="res://resource/texture/pscp_project_grouppe.png" type="Texture" id=5]
+[ext_resource path="res://resource/font/font_title_2.tres" type="DynamicFont" id=6]
 
 [sub_resource type="DynamicFont" id=1]
-size = 48
+size = 32
 font_data = ExtResource( 2 )
 
 [node name="credits" type="VBoxContainer"]
@@ -16,123 +17,96 @@ anchor_bottom = 1.0
 size_flags_vertical = 3
 custom_constants/separation = 16
 
-[node name="hbox" type="HBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 220.0
-size_flags_vertical = 3
+[node name="hbox" type="VBoxContainer" parent="."]
+margin_left = 232.0
+margin_top = 178.0
+margin_right = 791.0
+margin_bottom = 422.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
 
 [node name="hbox" parent="hbox" instance=ExtResource( 1 )]
-margin_top = 69.0
-margin_right = 510.0
-margin_bottom = 150.0
+margin_right = 559.0
 
 [node name="hbox2" parent="hbox" instance=ExtResource( 1 )]
-margin_left = 514.0
-margin_top = 69.0
-margin_right = 1024.0
-margin_bottom = 150.0
+margin_top = 36.0
+margin_right = 559.0
+margin_bottom = 68.0
 
-[node name="pic" parent="hbox/hbox2" index="0"]
-margin_right = 244.0
-
-[node name="vbox" parent="hbox/hbox2" index="1"]
-margin_right = 510.0
-
-[node name="name" parent="hbox/hbox2/vbox" index="0"]
-margin_right = 510.0
-text = "Kullapat Kematorn"
-
-[node name="id" parent="hbox/hbox2/vbox" index="1"]
-margin_right = 510.0
+[node name="id" parent="hbox/hbox2" index="0"]
 text = "65070024"
 
-[node name="hbox2" type="HBoxContainer" parent="."]
-margin_top = 236.0
-margin_right = 1024.0
-margin_bottom = 456.0
-size_flags_vertical = 3
+[node name="name" parent="hbox/hbox2" index="1"]
+margin_right = 559.0
+text = "Kullapat Kematorn"
 
-[node name="hbox3" parent="hbox2" instance=ExtResource( 1 )]
-margin_top = 69.0
-margin_right = 510.0
-margin_bottom = 150.0
+[node name="hbox3" parent="hbox" instance=ExtResource( 1 )]
+margin_top = 72.0
+margin_right = 559.0
+margin_bottom = 104.0
 
-[node name="pic" parent="hbox2/hbox3" index="0"]
-margin_right = 244.0
-
-[node name="vbox" parent="hbox2/hbox3" index="1"]
-margin_right = 510.0
-
-[node name="name" parent="hbox2/hbox3/vbox" index="0"]
-margin_right = 510.0
-text = "Nakarin Tiprat"
-
-[node name="id" parent="hbox2/hbox3/vbox" index="1"]
-margin_right = 510.0
+[node name="id" parent="hbox/hbox3" index="0"]
 text = "65070110"
 
-[node name="hbox4" parent="hbox2" instance=ExtResource( 1 )]
-margin_left = 514.0
-margin_top = 69.0
-margin_right = 1024.0
-margin_bottom = 150.0
+[node name="name" parent="hbox/hbox3" index="1"]
+margin_right = 496.0
+text = "Nakarin Tiprat"
 
-[node name="pic" parent="hbox2/hbox4" index="0"]
-margin_right = 244.0
+[node name="hbox4" parent="hbox" instance=ExtResource( 1 )]
+margin_top = 108.0
+margin_right = 559.0
+margin_bottom = 140.0
 
-[node name="vbox" parent="hbox2/hbox4" index="1"]
-margin_right = 510.0
-
-[node name="name" parent="hbox2/hbox4/vbox" index="0"]
-margin_right = 510.0
-text = "Soraphon Natnan"
-
-[node name="id" parent="hbox2/hbox4/vbox" index="1"]
-margin_right = 510.0
+[node name="id" parent="hbox/hbox4" index="0"]
 text = "65070231"
 
-[node name="hbox3" type="HBoxContainer" parent="."]
-margin_top = 472.0
-margin_right = 1024.0
-margin_bottom = 600.0
-alignment = 1
+[node name="name" parent="hbox/hbox4" index="1"]
+margin_right = 529.0
+text = "Soraphon Natnan"
 
-[node name="pscp_project_grouppe" type="TextureRect" parent="hbox3"]
-margin_left = 146.0
-margin_right = 274.0
-margin_bottom = 128.0
-rect_min_size = Vector2( 128, 128 )
+[node name="hbox5" type="HBoxContainer" parent="hbox"]
+margin_left = 40.0
+margin_top = 144.0
+margin_right = 519.0
+margin_bottom = 244.0
+size_flags_horizontal = 4
+
+[node name="pscpprojectgrouppe" type="TextureRect" parent="hbox/hbox5"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
 texture = ExtResource( 5 )
 expand = true
 
-[node name="vbox" type="VBoxContainer" parent="hbox3"]
-margin_left = 278.0
-margin_top = 22.0
-margin_right = 878.0
-margin_bottom = 105.0
-rect_min_size = Vector2( 600, 0 )
-size_flags_vertical = 4
+[node name="vbox" type="VBoxContainer" parent="hbox/hbox5"]
+margin_left = 104.0
+margin_right = 479.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
 
-[node name="pscp_project_grouppe" type="Label" parent="hbox3/vbox"]
-margin_right = 600.0
-margin_bottom = 22.0
-text = "Bring you by"
-
-[node name="pscp_project_grouppe2" type="RichTextLabel" parent="hbox3/vbox"]
-margin_top = 26.0
-margin_right = 600.0
-margin_bottom = 83.0
-custom_fonts/normal_font = SubResource( 1 )
-bbcode_enabled = true
-bbcode_text = "[shake rate=50 level=70]PSCP Project Grouppe[/shake]"
-text = "PSCP Project Grouppe"
-fit_content_height = true
-
-[node name="pscp_project_grouppe2" type="AudioStreamPlayer" parent="hbox3"]
+[node name="pscpprojectgrouppe" type="AudioStreamPlayer" parent="hbox/hbox5/vbox"]
 stream = ExtResource( 3 )
 volume_db = -10.0
 autoplay = true
 script = ExtResource( 4 )
+
+[node name="bring" type="Label" parent="hbox/hbox5/vbox"]
+margin_right = 375.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 6 )
+text = "Bring you by"
+
+[node name="pscpprojectgrouppe2" type="RichTextLabel" parent="hbox/hbox5/vbox"]
+margin_top = 36.0
+margin_right = 375.0
+margin_bottom = 94.0
+rect_min_size = Vector2( 375, 58 )
+rect_clip_content = false
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[shake rate=50 level=70]PSCP Project Grouppe[/shake]"
+text = "PSCP Project Grouppe"
+scroll_active = false
 
 [editable path="hbox/hbox2"]
 [editable path="hbox/hbox3"]

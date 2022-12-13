@@ -24,3 +24,6 @@ func go_to_game() :
 func go_to_intro() :
 	#warning-ignore:return_value_discarded
 	get_tree().change_scene_to(intr_scene)
+
+func lerpa(a, b, t) :
+	return lerp_angle(a, b, t)

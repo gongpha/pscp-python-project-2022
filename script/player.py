@@ -34,23 +34,26 @@ class Player(KinematicBody):
         self.ray = self.get_node("camera/ray")
         self.itemfront = self.get_node("camera/itemfront")
 
-    def _physics_process(self, delta : float):
-        if not self.noclip : return
+    def _physics_process(self, delta: float):
+        if not self.noclip:
+            return
 
         move_axis = Vector2(
-            Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-            Input.get_action_strength("move_forward") - Input.get_action_strength("move_back"),
+            Input.get_action_strength("move_right") -
+            Input.get_action_strength("move_left"),
+            Input.get_action_strength(
+                "move_forward") - Input.get_action_strength("move_back"),
         )
 
         aim = self.camera.get_global_transform().basis
         direction = Vector3()
-        if move_axis.x >= 0.5 :
+        if move_axis.x >= 0.5:
             direction += aim.x
-        if move_axis.x <= -0.5 :
+        if move_axis.x <= -0.5:
             direction -= aim.x
-        if move_axis.y <= -0.5 :
+        if move_axis.y <= -0.5:
             direction += aim.z
-        if move_axis.y >= 0.5 :
+        if move_axis.y >= 0.5:
             direction -= aim.z
         direction = direction.normalized()
         self.translation += (direction * 10 * delta)
@@ -70,7 +73,7 @@ class Player(KinematicBody):
                     self.camera.rotation_degrees.x, -90.0, 90.0
                 ), self.camera.rotation_degrees.y, self.camera.rotation_degrees.z
             )
-            
+
             # new_look = abs(self.rotation_degrees.y) < 45
             # if new_look != self.get("is_look_front"):
             #     if new_look:

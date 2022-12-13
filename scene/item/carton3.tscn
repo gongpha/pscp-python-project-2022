@@ -16,6 +16,7 @@ item_name = "Goat Milk"
 item_conname = "evu mjo"
 fridge = true
 impact = ExtResource( 5 )
+color = "#4f683d"
 
 [node name="cube" type="MeshInstance" parent="."]
 transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.291141, 0 )

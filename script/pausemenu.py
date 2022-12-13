@@ -4,6 +4,7 @@ from godot import *
 from .mainmenu import MainMenu
 from .utils import GDPORT
 
+
 @exposed
 class PauseMenu(MainMenu):
     """ Pause menu """
@@ -53,7 +54,7 @@ class PauseMenu(MainMenu):
         """ Exit (REAL) """
         self.get_tree().paused = False
         GDPORT(self).call("go_to_mainmenu")
-        
+
     def reset(self):
         self.go_to(self.item_list)
 

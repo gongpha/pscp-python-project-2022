@@ -24,9 +24,9 @@ class MainMenuRow(HBoxContainer):
     def _on_text_gui_input(self, event):
         """ Called when the text is clicked """
         # Check if the mouse was clicked on the text
-        if isinstance(event, InputEventMouseButton): # is the event a mouse button event ?
-            if event.button_index == BUTTON_LEFT: # CLICKING ON A LEFT BUTTON ???
-                if not event.pressed: # Is the button released ? (not pressed)
+        if isinstance(event, InputEventMouseButton):  # is the event a mouse button event ?
+            if event.button_index == BUTTON_LEFT:  # CLICKING ON A LEFT BUTTON ???
+                if not event.pressed:  # Is the button released ? (not pressed)
                     # I was clicked !
                     self.animation.play("click")
                     self.call("emit_signal", "on_clicked")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://resource/worldspawn_env.tres" type="Environment" id=1]
 [ext_resource path="res://resource/audio/confirm_order.wav" type="AudioStream" id=2]
@@ -8,13 +8,9 @@
 [ext_resource path="res://scene/stall.tscn" type="PackedScene" id=6]
 [ext_resource path="res://resource/mesh/building1.mesh" type="ArrayMesh" id=7]
 [ext_resource path="res://resource/audio/ambience/chin200fest.ogg" type="AudioStream" id=8]
-[ext_resource path="res://resource/mesh/stool.mesh" type="ArrayMesh" id=11]
 [ext_resource path="res://resource/texture/ejudge_blueberry_bot.png" type="Texture" id=12]
 [ext_resource path="res://resource/mesh/lamp.mesh" type="ArrayMesh" id=15]
 [ext_resource path="res://resource/mesh/clock.mesh" type="ArrayMesh" id=20]
-
-[sub_resource type="ConvexPolygonShape" id=39]
-points = PoolVector3Array( -0.23813, 0.677948, -0.2375, 0.253207, 1.27835, 0.410858, -0.2563, 1.2757, 0.409385, -0.182281, 0.0836699, 0.1875, 0.1875, 0.0845333, -0.182162, 0.243115, 0.8125, -0.236981, 0.1875, 0.0845333, 0.187346, -0.251131, 1.30776, 0.263391, -0.185679, 0.0723743, -0.1875, 0.257103, 1.30776, 0.263391, -0.237745, 0.8125, -0.236981, -0.252759, 0.7563, 0.139331, 0.243516, 0.677948, -0.2375, 0.240132, 0.744466, 0.270379, -0.252759, 0.7563, -0.234081, -0.244365, 0.744466, 0.270379, -0.2563, 1.29562, 0.339571, 0.25273, 1.29721, 0.340245, 0.235288, 0.6688, 0.229346, -0.2563, 1.28566, 0.379372, -0.239522, 0.6688, 0.229346 )
 
 [sub_resource type="BoxShape" id=20]
 extents = Vector3( 2, 1, 0.5 )
@@ -49,16 +45,6 @@ stream = ExtResource( 5 )
 unit_db = -34.934
 unit_size = 100.0
 autoplay = true
-
-[node name="stool" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0, 0 )
-
-[node name="stool" type="MeshInstance" parent="stool"]
-mesh = ExtResource( 11 )
-skeleton = NodePath("../..")
-
-[node name="stoolcol" type="CollisionShape" parent="stool"]
-shape = SubResource( 39 )
 
 [node name="stall" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0302835, 0.112267, 0.0306592 )

@@ -12,7 +12,7 @@ order = [
 ]
 order_item = [
     "{count} [code]{itemname}[/code]"
-] # use {translated} for translated item name
+]  # use {translated} for translated item name
 order_ok = [
     "[code]grama.t:a![/code]",
     "[code]aN:ka.ratl![/code]",

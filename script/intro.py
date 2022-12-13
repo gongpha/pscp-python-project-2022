@@ -4,6 +4,7 @@ from godot import *
 
 from .utils import GDPORT
 
+
 @exposed
 class intro(Control):
     """intro"""
@@ -14,7 +15,6 @@ class intro(Control):
         Initialization here.
         """
         pass
-
 
         self.get_node("next").connect("pressed", self, "next")
 

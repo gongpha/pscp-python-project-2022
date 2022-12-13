@@ -92,6 +92,8 @@ anchor_top = 0.25
 anchor_right = 0.9
 anchor_bottom = 0.85
 rect_clip_content = false
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
 
 [node name="inside" type="VBoxContainer" parent="things"]
 margin_right = 819.2

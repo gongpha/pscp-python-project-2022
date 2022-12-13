@@ -9,7 +9,7 @@ from .utils import GDPORT
 class MainMenu(Control):
     """ Main menu """
 
-    def_item_scale = Vector2(0.25, 0.25)
+    def_item_scale = Vector2(0.343, 0.343)
     current_menu_list = {}
     previous_clicked_item_name = None
 
@@ -157,7 +157,7 @@ class MainMenu(Control):
         """ Reverse the animation (Click a back button) """
         duration = 0.2
         trans = 7  # Cubic
-        ease = 0  # In
+        ease = 2  # In
         self.title.text = current_item
         target_item = self.menu_list.get_node(str(current_item))
         target_item.get_node("text").modulate = Color(1, 1, 1, 0) # Hide that item !

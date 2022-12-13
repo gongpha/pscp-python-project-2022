@@ -39,6 +39,7 @@ CUSTOMER_TIMER = 15.0
 STREAK_BONUS = 20
 TRANSLATION_COUNT = 6
 
+
 @exposed
 class Game(Control):
     worldspawn: Worldspawn
@@ -51,10 +52,10 @@ class Game(Control):
     confirmorder: Control
     confirmorder_hbox: HBoxContainer
     pick: Control
-    endday_final : VBoxContainer
+    endday_final: VBoxContainer
 
-    sun : DirectionalLight
-    clock_hand_root : Spatial
+    sun: DirectionalLight
+    clock_hand_root: Spatial
 
     player: Player
 
@@ -76,30 +77,30 @@ class Game(Control):
     motd_day: Label  # The current day in MOTD (THE BIG TEXT)
 
     hint_day: Label  # Day text
-    customer_counter: Label # Customer Label
+    customer_counter: Label  # Customer Label
 
     customer_sprite3d: AnimatedSprite3D
 
     sold: Label
     streak_label: Label
 
-    counting : bool = False
-    #tscale: float = 0.04  # Time scale
+    counting: bool = False
+    # tscale: float = 0.04  # Time scale
     current_day: int = 1
 
-    tv_raw : Label
-    tv_arrow : Label
-    tv_translated : Label
-    tv_is_translated : bool = False
-    tv_tobe_show : list
-    tv_timer : SceneTreeTimer
-    tv_description : RichTextLabel
+    tv_raw: Label
+    tv_arrow: Label
+    tv_translated: Label
+    tv_is_translated: bool = False
+    tv_tobe_show: list
+    tv_timer: SceneTreeTimer
+    tv_description: RichTextLabel
 
     ###########################
 
     order = None  # Order
     dialogue_lines: list = ["hello"]
-    translator_lines : str
+    translator_lines: str
 
     dialogue_repeat: list
 
@@ -107,32 +108,36 @@ class Game(Control):
     holding_confirm: bool = False
     confirm_order_value: float = 0.0
 
-    day_counter_item : int = 0
+    day_counter_item: int = 0
 
-    customer_count : int = 0
-    customer_count_total : int = 0
+    customer_count: int = 0
+    customer_count_total: int = 0
+    backup_won_total: int = 0
+    backup_customer_count_total: int = 0
 
-    won : int = 0
-    won_total : int = 0
-    streak : int = 0
-    next_button : Button
+    won: int = 0
+    won_total: int = 0
+    streak: int = 0
+    next_button: Button
 
-    pausemenu : Control
+    pausemenu: Control
 
-    cheat_attempt : float = 0.0
-    cheat_mode : bool = False
-    cheat_label : Label
-    cheatfx : AudioStreamPlayer
-    clock_freezing : bool = False
-    anicheat : AnimationPlayer
+    cheat_attempt: float = 0.0
+    cheat_mode: bool = False
+    cheat_label: Label
+    cheatfx: AudioStreamPlayer
+    clock_freezing: bool = False
+    anicheat: AnimationPlayer
 
-    confirm_fx : AudioStreamPlayer
-    dialogue_fx : AudioStreamPlayer3D
+    confirm_fx: AudioStreamPlayer
+    dialogue_fx: AudioStreamPlayer3D
 
-    win_music : AudioStreamPlayer
+    win_music: AudioStreamPlayer
 
-    tv_ani : AnimationPlayer
-    thx : Label
+    tv_ani: AnimationPlayer
+    thx: Label
+
+    stool: StaticBody
 
     def _ready(self):
         self.pause_mode = Node.PAUSE_MODE_PROCESS
@@ -192,8 +197,10 @@ class Game(Control):
 
         self.tv_raw = self.get_node("tv/screen/tvcontent/tvscreen/raw")
         self.tv_arrow = self.get_node("tv/screen/tvcontent/tvscreen/arrow")
-        self.tv_translated = self.get_node("tv/screen/tvcontent/tvscreen/translated")
-        self.tv_description = self.get_node("tv/screen/tvcontent/tvscreen/description")
+        self.tv_translated = self.get_node(
+            "tv/screen/tvcontent/tvscreen/translated")
+        self.tv_description = self.get_node(
+            "tv/screen/tvcontent/tvscreen/description")
 
         input_node: Node = self.get_node("input")
         input_node.connect("input", self, "_input_proxy",
@@ -209,7 +216,7 @@ class Game(Control):
 
         self.confirm_fx = self.worldspawn.get_node("confirm")
         self.dialogue_fx = self.get_node("customer/dialogue_fx")
-        
+
         self.win_music = self.get_node("endday/endday/endday")
 
         # Then, let's initialize the random number generator
@@ -217,6 +224,8 @@ class Game(Control):
 
         self.tv_ani = self.get_node("tv/screen/ani")
         self.thx = self.get_node("endday/endday/vbox/vbox/thx")
+
+        self.stool = self.get_node("stool")
 
         # Now, LET'S GOOOOOOOOOOOOOOOOO
         self.newday()
@@ -238,7 +247,7 @@ class Game(Control):
         for item in self.get_all_item_objects():
             item.free()
 
-    def newday(self):
+    def newday(self, sameday=False):
         """ Called when a game day starts """
 
         self.rng.randomize()  # Randomize the seed
@@ -259,9 +268,17 @@ class Game(Control):
         self.counting = False
 
         self.update_customer_count(0)
-        self.customer_count_total += DAY_CUSTOMER[self.current_day]
         self.update_streak_count(0)
         self.day_counter_item = 0
+
+        if not sameday:
+            self.backup_won_total = self.won_total
+            self.backup_customer_count_total = self.customer_count_total
+        else:
+            self.won_total = self.backup_won_total
+            self.customer_count_total = self.backup_customer_count_total
+
+        self.customer_count_total += DAY_CUSTOMER[self.current_day]
 
         # Show MOTD screen
         self.motd_day.text = "Day %d" % self.current_day
@@ -293,16 +310,16 @@ class Game(Control):
                     self.ani.play("customer_exit")
                     self.order = None
                     self.dialogue_repeat = []
-                else :
+                else:
                     self.counting = True
                     self.tv_show_translation()
         elif ani_name == "customer_exit":
             # NEXT
             self.update_customer_count(self.customer_count + 1)
             if self.customer_count >= DAY_CUSTOMER[self.current_day]:
-                self.go_endday(self.current_day == 7) # end
-            else :
-                self.feed_customer() # NEXT !
+                self.go_endday(self.current_day == 7)  # end
+            else:
+                self.feed_customer()  # NEXT !
 
     def feed_customer(self):
         """ Summon the customer """
@@ -313,7 +330,7 @@ class Game(Control):
         self.customer_sprite3d.frames = ResourceLoader.load(CUSTOMER_SHEETS[
             self.rng.randi_range(0, len(CUSTOMER_SHEETS) - 1)
         ])
-        
+
         self.ani.play("customer_enter")
         self.tv_clear()
 
@@ -321,7 +338,7 @@ class Game(Control):
         """ Get all item objects """
         return self.get_tree().get_nodes_in_group("item")
 
-    def dialogue_pick(self, lll : list) -> str:
+    def dialogue_pick(self, lll: list) -> str:
         """ Pick a random dialogue from a list """
         return lll[self.rng.randi_range(0, len(lll) - 1)]
 
@@ -344,7 +361,8 @@ class Game(Control):
         available = {}
 
         for item in items:
-            ttt = available.get(item.filename, [item.item_name, 0, item.item_conname])
+            ttt = available.get(
+                item.filename, [item.item_name, 0, item.item_conname, item.color])
             ttt[1] += 1
             available[item.filename] = ttt
 
@@ -352,21 +370,30 @@ class Game(Control):
         random.shuffle(keyshuffled)
         item_count = self.rng.randi_range(1, 3)
         keyshuffled = keyshuffled[:item_count]
-        
+
         for kkk in keyshuffled:
             order_item[kkk] = [
                 available[kkk][0],
                 self.rng.randi_range(1, available[kkk][1]),
                 available[kkk][2],
+                available[kkk][3],
             ]
 
-        ddd = "[color=yellow]%s[/color]" % self.dialogue_pick(dialogue.order_item)
+        if 1 >= self.current_day >= 3:
+            ddd = "[color={icolor}]%s[/color]" % self.dialogue_pick(
+                dialogue.order_item)
+        elif self.current_day < 7:
+            ddd = "[color=yellow]%s[/color]" % self.dialogue_pick(
+                dialogue.order_item)
+        else:
+            ddd = self.dialogue_pick(dialogue.order_item)
 
         # Prepare the texts
         order_dialogue = [ddd.format(**{
-            'translated' : vvv[0],
-            'count' : vvv[1],
-            'itemname' : vvv[2]
+            'translated': vvv[0],
+            'count': vvv[1],
+            'itemname': vvv[2],
+            'icolor': vvv[3]
         })for vvv in order_item.values()]
 
         self.dialogue_repeat = ' [code]i[/code] '.join(order_dialogue)
@@ -436,11 +463,11 @@ class Game(Control):
                 item.home_place = area.global_translation
                 break
 
-    def update_customer_count(self, ccc : int):
+    def update_customer_count(self, ccc: int):
         self.customer_count = ccc
         self.customer_counter.text = "Encountered %d Customers" % ccc
 
-    def update_streak_count(self, ccc : int):
+    def update_streak_count(self, ccc: int):
         self.streak = ccc
         self.streak_label.text = "%d STREAK" % ccc
 
@@ -491,6 +518,14 @@ class Game(Control):
         else:
             self.cheat_attempt = 0.0
 
+        rot = self.stool.rotation
+        self.stool.set_rotation(Vector3(
+            rot.x,
+            GDPORT(self).call("lerpa", rot.y,
+                              self.player.rotation.y, 15.0 * delta),
+            rot.z
+        ))
+
     def reset_clock(self):
         self.clock_hand_root.rotation = Vector3()
         self.tv_ani.stop()
@@ -500,19 +535,19 @@ class Game(Control):
         if self.clock_freezing:
             return
 
-        def check_hand(after : float) :
+        def check_hand(after: float):
             sss = (2 * math.pi / after) if after != 0.0 else 0.0
             return sss + 0.001 < self.clock_hand_root.rotation.z < 0.01 + sss
 
-        if check_hand(0.0) :
+        if check_hand(0.0):
             # when the clock hand is about to reach the 12 o'clock
             # TIMEOUT !!!
             self.counting = False
             self.reset_clock()
             self.force_timeout()
-            #self.go_endday()
-        else :
-            if self.counting :
+            # self.go_endday()
+        else:
+            if self.counting:
                 if check_hand(5.0) and not self.tv_ani.is_playing():
                     self.tv_ani.play("warning")
                 add = (delta / DAY_TIME[self.current_day])
@@ -531,7 +566,7 @@ class Game(Control):
         """ Check items on the counter """
         if self.order is None:
             return
-            
+
         clone_list = {}
         item_on_counter = 0
         added = []
@@ -540,16 +575,13 @@ class Game(Control):
         if not force_complete:
             items = self.get_all_item_objects()
             clone_list = self.copy_order_items()
-            
-            
 
             for c in clone_list:
                 total += clone_list[c][1]
 
-            
-
             for item in items:
-                in_good = self.worldspawn.get("counter_good").overlaps_body(item)
+                in_good = self.worldspawn.get(
+                    "counter_good").overlaps_body(item)
 
                 if not in_good:
                     # the item isn't placed on the counter
@@ -564,12 +596,14 @@ class Game(Control):
                 item_on_counter += 1
 
         if item_on_counter > total:
-            self.dialogue_lines = [self.dialogue_pick(dialogue.order_too_many_items)]
+            self.dialogue_lines = [self.dialogue_pick(
+                dialogue.order_too_many_items)]
             self.tv_set_description(dialogue.translator_too_many_items)
             self.update_streak_count(0)
         elif clone_list:
             # not completed
-            self.dialogue_lines = [self.dialogue_pick(dialogue.order_not_complete)]
+            self.dialogue_lines = [
+                self.dialogue_pick(dialogue.order_not_complete)]
             self.tv_set_description(dialogue.translator_not_complete)
             self.update_streak_count(0)
         else:
@@ -588,7 +622,7 @@ class Game(Control):
         self.dialogue_lines = self.dialogue_lines.copy()
         self.show_dialogue()
 
-    def _input_proxy(self, event : InputEvent):
+    def _input_proxy(self, event: InputEvent):
         """ Proxy for the input event """
         if event.is_action_released("ui_cancel"):
             self.toggle_pausemenu()
@@ -626,12 +660,12 @@ class Game(Control):
         else:
             self.pick.modulate = Color(1, 1, 1, 1)
 
-        if self.cheat_mode :
+        if self.cheat_mode:
             self.cheat_input(event)
 
         self.player._input_proxy(event)
 
-    def repeat_dialogue(self, ignore_counting : bool = False):
+    def repeat_dialogue(self, ignore_counting: bool = False):
         """ Repeat the dialogue """
         if self.dialogue_panel.visible or not self.order:
             return
@@ -640,13 +674,15 @@ class Game(Control):
         if not ignore_counting:
             self.order["repeat"] += 1
         if self.order["repeat"] > 6:
-            self.dialogue_lines = [self.dialogue_pick(dialogue.repeat_too_much_final)]
+            self.dialogue_lines = [self.dialogue_pick(
+                dialogue.repeat_too_much_final)]
             self.tv_set_description(dialogue.translator_repeat_too_much_final)
             self.order["status"] = "failed"
             self.update_streak_count(0)
             self.counting = False
         elif self.order["repeat"] == 3:
-            self.dialogue_lines += [self.dialogue_pick(dialogue.repeat_too_much)]
+            self.dialogue_lines += [
+                self.dialogue_pick(dialogue.repeat_too_much)]
             self.tv_set_description(dialogue.translator_repeat_too_much)
         self.show_dialogue()
 
@@ -669,7 +705,7 @@ class Game(Control):
     #     if items.size() < 6 :
     #         self.prepare_items()
 
-    def go_endday(self, real_end : bool):
+    def go_endday(self, real_end: bool):
         """ Emit the end day screen """
         self.endday_final.show()
         self.thx.hide()
@@ -677,7 +713,7 @@ class Game(Control):
         self.endday_day.text = str(self.current_day)
         self.daystat.text = "%s\n%s" % (
             ("%d items sold" % self.day_counter_item) if self.day_counter_item > 0 else (
-                "No items sold" # POSSBILE ?
+                "No items sold"  # POSSBILE ?
             ),
             (
                 "%d completed customers" % self.customer_count
@@ -685,8 +721,6 @@ class Game(Control):
                 "No completed customers"
             )
         )
-
-        self.win_music.play()
 
         if real_end:
             self.won_left.text = "Won : %d/%d" % (
@@ -703,10 +737,11 @@ class Game(Control):
             )
             final = self.won_total + (self.streak * STREAK_BONUS)
             self.rank.text = get_rank_by_score(final)
-            self.rank.add_color_override("font_color", RANK_COLOR[str(self.rank.text)])
+            self.rank.add_color_override(
+                "font_color", RANK_COLOR[str(self.rank.text)])
             self.thx.show()
             self.next_button.text = "Back to the mainmenu"
-        else :
+        else:
             self.won_left.text = "Won : %d/%d" % (
                 self.won, DAY_CUSTOMER[self.current_day]
             )
@@ -720,9 +755,22 @@ class Game(Control):
                 self.streak, self.streak * 50
             )
             final = self.won + (self.streak * STREAK_BONUS)
-            self.rank.text = get_rank_by_score_day(final, DAY_CUSTOMER[self.current_day])
-            self.rank.add_color_override("font_color", RANK_COLOR[str(self.rank.text)])
-            
+            rank = get_rank_by_score_day(
+                final, DAY_CUSTOMER[self.current_day])
+            self.rank.text = rank
+
+            if rank == "E":
+                # RIP
+                self.next_button.text = "Restart a day"
+                self.win_music.pitch_scale = 0.5
+            else:
+                self.next_button.text = "Go to the next day"
+                self.win_music.pitch_scale = 1.0
+
+            self.rank.add_color_override(
+                "font_color", RANK_COLOR[str(self.rank.text)])
+
+        self.win_music.play()
         self.endday.show()
         self.set_process(False)
 
@@ -732,9 +780,12 @@ class Game(Control):
             self.get_tree().paused = False
             GDPORT(self).call("go_to_mainmenu")
             return
-        self.current_day += 1
+        elif str(self.next_button.text) != "Restart a day":
+            self.current_day += 1
         self.ani.play("RESET")
-        self.get_tree().create_timer(0.001).connect("timeout", self, "newday")
+        self.get_tree().create_timer(0.001, False).connect("timeout", self, "newday", Array([
+            str(self.next_button.text) == "Restart a day"
+        ]))
 
     def tv_clear(self):
         """ Clear the text """
@@ -743,13 +794,14 @@ class Game(Control):
         self.tv_translated.hide()
         self.tv_description.hide()
         self.tv_ani.play("RESET")
-        
+
         self.tv_translated.text = self.tv_raw.text
         self.tv_is_translated = False
 
-    def tv_set_description(self, texts : list):
+    def tv_set_description(self, texts: list):
         """ Set the description """
-        self.tv_description.bbcode_text = "[center]%s[/center]" % texts[self.rng.randi_range(0, len(texts) - 1)]
+        self.tv_description.bbcode_text = "[center]%s[/center]" % texts[self.rng.randi_range(
+            0, len(texts) - 1)]
         self.tv_raw.hide()
         self.tv_arrow.hide()
         self.tv_translated.hide()
@@ -759,13 +811,14 @@ class Game(Control):
     def tv_show_translation(self):
         """ Show the translation """
 
-        if self.tv_is_translated : return
+        if self.tv_is_translated:
+            return
 
         other = ITEM_PATHS.copy()
         random.shuffle(other)
 
         self.tv_tobe_show = []
-        
+
         for _, vvv in self.order["items"].items():
             self.tv_tobe_show.append((str(vvv[2]), str(vvv[0])))
         while len(self.tv_tobe_show) < TRANSLATION_COUNT:
@@ -779,11 +832,12 @@ class Game(Control):
                 self.tv_tobe_show.append(tup)
             item.free()
             other.pop(0)
-        
+
         random.shuffle(self.tv_tobe_show)
         self.tv_is_translated = True
 
-        self.tv_timer = self.get_tree().create_timer(DAY_DELAY[self.current_day])
+        self.tv_timer = self.get_tree().create_timer(
+            DAY_DELAY[self.current_day], False)
         self.tv_timer.connect("timeout", self, "_tv_advance")
 
         self.tv_raw.text = ''
@@ -802,13 +856,14 @@ class Game(Control):
         self.tv_arrow.text += builtins.GDString('->\n')
         if len(self.tv_tobe_show) != 0:
             # re add the timer
-            self.tv_timer = self.get_tree().create_timer(DAY_DELAY[self.current_day])
+            self.tv_timer = self.get_tree().create_timer(
+                DAY_DELAY[self.current_day], False)
             self.tv_timer.connect("timeout", self, "_tv_advance")
-
 
     def activate_cheat_mode(self):
         """ Activate the cheat mode """
-        if self.cheat_mode : return
+        if self.cheat_mode:
+            return
         self.cheat_mode = True
         self.cheat_label.show()
         self.cheatfx.play()
@@ -816,12 +871,13 @@ class Game(Control):
         self.anicheat.stop()
         self.anicheat.play("show")
 
-    def cheat_input(self, event : InputEvent):
+    def cheat_input(self, event: InputEvent):
         """ CHEAT INPUT """
         if event.is_action_pressed("cheat_freeze_clock"):
             self.cheatfx.play()
             self.clock_freezing = not self.clock_freezing
-            self.cheat_label.text = "!!! Clock Freezing : %s" % str(self.clock_freezing)
+            self.cheat_label.text = "!!! Clock Freezing : %s" % str(
+                self.clock_freezing)
             self.anicheat.stop()
             self.anicheat.play("show")
         elif event.is_action_pressed("cheat_force_complete_order") and self.order:
@@ -839,7 +895,8 @@ class Game(Control):
         elif event.is_action_pressed("cheat_noclip"):
             self.cheatfx.play()
             self.player.set("noclip", not self.player.get("noclip"))
-            self.cheat_label.text = "!!! Noclip : %s" % str(self.player.get("noclip"))
+            self.cheat_label.text = "!!! Noclip : %s" % str(
+                self.player.get("noclip"))
             self.anicheat.stop()
             self.anicheat.play("show")
         elif event.is_action_pressed("cheat_force_endday_god"):

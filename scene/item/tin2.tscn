@@ -17,6 +17,7 @@ script = ExtResource( 1 )
 item_name = "Fish Soup"
 item_conname = "u.Kan nuNa."
 impact = ExtResource( 4 )
+color = "#3d4fde"
 
 [node name="mesh" type="MeshInstance" parent="."]
 transform = Transform( 0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, -0.24466, 0 )

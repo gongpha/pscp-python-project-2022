@@ -1,4 +1,5 @@
 """ rank table """
+import math
 from godot import Color
 
 RANK_COLOR = {
@@ -25,7 +26,6 @@ def get_rank_by_score(score: int):
         return 'A'
     return 'P'
 
-import math
 
 def get_rank_by_score_day(score: int, smax: int):
     """ Get rank by score """
@@ -34,13 +34,13 @@ def get_rank_by_score_day(score: int, smax: int):
 
 
 DAY_TIME = {
-    1: 30, # 14
-    2: 28, # 13
-    3: 26, # 12
-    4: 24, # 11
-    5: 22, # 10
-    6: 21, # 9
-    7: 21, # 8
+    1: 30,  # 14
+    2: 28,  # 13
+    3: 26,  # 12
+    4: 24,  # 11
+    5: 22,  # 10
+    6: 21,  # 9
+    7: 21,  # 8
 }
 
 DAY_CUSTOMER = {

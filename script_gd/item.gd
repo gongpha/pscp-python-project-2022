@@ -7,6 +7,7 @@ export var item_name : String
 export var item_conname : String = "<null>"
 export var fridge : bool = false
 export var impact : AudioStream
+export var color : String = "yellow"
 
 var get_picking : Spatial
 var picking_rot_input : Vector3
@@ -29,11 +30,8 @@ func _integrate_forces(state : PhysicsDirectBodyState) :
 			last_contact = null
 
 		for i in state.get_contact_count() :
-			#var contact := state.get_contact_collider_object(i)
 			if last_contact == state.get_contact_collider_object(i) :
 				break
-			#print(state.get_contact_impulse(i))
-			#if state.get_contact_collider_velocity_at_position(i).length() > 0.33 :
 			play_impact()
 			last_contact = state.get_contact_collider_object(i)
 
