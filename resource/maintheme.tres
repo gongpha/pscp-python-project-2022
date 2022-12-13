@@ -13,6 +13,8 @@ margin_top = 8.0
 margin_bottom = 8.0
 
 [sub_resource type="StyleBoxTexture" id=8]
+content_margin_right = 0.0
+content_margin_bottom = 1.0
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 32, 16, 16 )
 margin_left = 8.0
@@ -21,6 +23,8 @@ margin_top = 8.0
 margin_bottom = 8.0
 
 [sub_resource type="StyleBoxTexture" id=9]
+content_margin_right = 0.0
+content_margin_bottom = 0.0
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 32, 16, 16 )
 margin_left = 8.0
