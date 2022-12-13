@@ -61,6 +61,8 @@ anchor_top = 0.25
 anchor_right = 0.9
 anchor_bottom = 0.85
 rect_clip_content = false
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
 
 [node name="inside" type="VBoxContainer" parent="things"]
 margin_right = 819.2
@@ -91,6 +93,9 @@ anchor_right = 0.5
 anchor_bottom = 0.1
 grow_horizontal = 2
 custom_colors/font_color = Color( 3, 2, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 4
+custom_constants/shadow_offset_y = 4
 custom_fonts/font = ExtResource( 2 )
 text = "PAUSED"
 align = 1
