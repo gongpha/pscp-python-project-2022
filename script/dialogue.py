@@ -47,3 +47,31 @@ order_timeout = [
     "[code]ja. ko. a.laN raNi. xa. Pjetl![/code] Y^Y",
     "[code]raNi jasil, apr[/code] >:<"
 ]
+
+translator_greeting = [
+    "Conversation Detected\nInitiate traslation module",
+]
+
+translator_ok = [
+    "Transaction Sucessful\nWell done!",
+]
+
+translator_not_complete = [
+    "Transaction Failed\nPlease complete the order",
+]
+
+translator_too_many_items = [
+    "Transaction Failed\nToo many items",
+]
+
+translator_repeat_too_much = [
+    "WARNING\nCease asking the customer to repeat their order",
+]
+
+translator_repeat_too_much_final = [
+    "Transaction Failed\nCustomer got annoyed",
+]
+
+translator_order_timeout = [
+    "Transaction Failed\nCustomer lost patience",
+]
