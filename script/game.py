@@ -1,4 +1,4 @@
-from godot import exposed, Vector2, Array, Color, Vector3
+from godot import exposed, Vector2, Array, Color, Vector3, builtins
 from godot import *
 
 from .worldspawn import Worldspawn
@@ -6,7 +6,7 @@ from . import dialogue
 from .player import Player
 from .utils import lerp
 
-from .rank_table import get_rank_by_score, DAY_TIME, DAY_CUSTOMER, RANK_COLOR
+from .rank_table import get_rank_by_score, DAY_TIME, DAY_CUSTOMER, RANK_COLOR, DAY_DELAY
 from .utils import GDPORT
 
 import math
@@ -91,11 +91,16 @@ class Game(Control):
     tv_arrow : Label
     tv_translated : Label
     tv_is_translated : bool = False
+    tv_tobe_show : list
+    tv_timer : SceneTreeTimer
+    tv_description : RichTextLabel
 
     ###########################
 
     order = None  # Order
     dialogue_lines: list = ["hello"]
+    translator_lines : str
+
     dialogue_repeat: list
 
     dialogue_animating_chars: bool = False
@@ -184,6 +189,7 @@ class Game(Control):
         self.tv_raw = self.get_node("tv/screen/tvcontent/tvscreen/raw")
         self.tv_arrow = self.get_node("tv/screen/tvcontent/tvscreen/arrow")
         self.tv_translated = self.get_node("tv/screen/tvcontent/tvscreen/translated")
+        self.tv_description = self.get_node("tv/screen/tvcontent/tvscreen/description")
 
         input_node: Node = self.get_node("input")
         input_node.connect("input", self, "_input_proxy",
@@ -357,6 +363,7 @@ class Game(Control):
             self.dialogue_pick(dialogue.greeting),
             self.dialogue_pick(dialogue.order).format(self.dialogue_repeat)
         ]
+        self.tv_set_description(dialogue.translator_ordering)
 
         self.show_dialogue()
 
@@ -540,10 +547,12 @@ class Game(Control):
 
         if item_on_counter > total:
             self.dialogue_lines = [self.dialogue_pick(dialogue.order_too_many_items)]
+            self.tv_set_description(dialogue.translator_too_many_items)
             self.update_streak_count(0)
         elif clone_list:
             # not completed
             self.dialogue_lines = [self.dialogue_pick(dialogue.order_not_complete)]
+            self.tv_set_description(dialogue.translator_not_complete)
             self.update_streak_count(0)
         else:
             # YES
@@ -553,6 +562,7 @@ class Game(Control):
             self.update_streak_count(self.streak + 1)
             self.won += 1
             self.dialogue_lines = [self.dialogue_pick(dialogue.order_ok)]
+            self.tv_set_description(dialogue.translator_ok)
             self.order["status"] = "completed"
             self.counting = False
             self.prepare_items()
@@ -608,15 +618,17 @@ class Game(Control):
             return
 
         self.dialogue_lines = [self.dialogue_repeat]
-        if ignore_counting:
+        if not ignore_counting:
             self.order["repeat"] += 1
         if self.order["repeat"] > 6:
             self.dialogue_lines = [self.dialogue_pick(dialogue.repeat_too_much_final)]
+            self.tv_set_description(dialogue.translator_repeat_too_much_final)
             self.order["status"] = "failed"
             self.update_streak_count(0)
             self.counting = False
         elif self.order["repeat"] == 3:
             self.dialogue_lines += [self.dialogue_pick(dialogue.repeat_too_much)]
+            self.tv_set_description(dialogue.translator_repeat_too_much)
         self.show_dialogue()
 
     def force_timeout(self):
@@ -626,6 +638,7 @@ class Game(Control):
             self.order["status"] = "failed"
             self.update_streak_count(0)
         self.dialogue_lines = [self.dialogue_pick(dialogue.order_timeout)]
+        self.tv_set_description(dialogue.translator_order_timeout)
         self.show_dialogue()
 
     # def _on_player_look_front(self) :
@@ -687,9 +700,21 @@ class Game(Control):
 
     def tv_clear(self):
         """ Clear the text """
-        self.tv_raw.text = '\n'.join(['...'] * TRANSLATION_COUNT)
-        self.tv_arrow.text = '\n'.join(['->'] * TRANSLATION_COUNT)
+        self.tv_raw.hide()
+        self.tv_arrow.hide()
+        self.tv_translated.hide()
+        self.tv_description.hide()
+        
         self.tv_translated.text = self.tv_raw.text
+        self.tv_is_translated = False
+
+    def tv_set_description(self, texts : list):
+        """ Set the description """
+        self.tv_description.bbcode_text = "[center]%s[/center]" % texts[self.rng.randi_range(0, len(texts) - 1)]
+        self.tv_raw.hide()
+        self.tv_arrow.hide()
+        self.tv_translated.hide()
+        self.tv_description.show()
         self.tv_is_translated = False
 
     def tv_show_translation(self):
@@ -700,26 +725,47 @@ class Game(Control):
         other = ITEM_PATHS.copy()
         random.shuffle(other)
 
-        texts = []
+        self.tv_tobe_show = []
         
         for _, vvv in self.order["items"].items():
-            texts.append((str(vvv[2]), str(vvv[0])))
-        while len(texts) < TRANSLATION_COUNT:
+            self.tv_tobe_show.append((str(vvv[2]), str(vvv[0])))
+        while len(self.tv_tobe_show) < TRANSLATION_COUNT:
             item_scene: PackedScene = ResourceLoader.load(other[0])
             item: RigidBody = item_scene.instance()
             tup = (
                 str(item.item_conname),
                 str(item.item_name)
             )
-            if tup not in texts:
-                texts.append(tup)
+            if tup not in self.tv_tobe_show:
+                self.tv_tobe_show.append(tup)
             item.free()
             other.pop(0)
         
-        random.shuffle(texts)
-        self.tv_raw.text = '\n'.join([t for t, _ in texts])
-        self.tv_translated.text = '\n'.join([t for _, t in texts])
+        random.shuffle(self.tv_tobe_show)
         self.tv_is_translated = True
+
+        self.tv_timer = self.get_tree().create_timer(DAY_DELAY[self.current_day])
+        self.tv_timer.connect("timeout", self, "_tv_advance")
+
+        self.tv_raw.text = ''
+        self.tv_translated.text = ''
+        self.tv_arrow.text = ''
+
+        self.tv_raw.show()
+        self.tv_arrow.show()
+        self.tv_translated.show()
+        self.tv_description.hide()
+
+    def _tv_advance(self):
+        first = self.tv_tobe_show.pop(0)
+        self.tv_raw.text += builtins.GDString(first[0] + '\n')
+        self.tv_translated.text += builtins.GDString(first[1] + '\n')
+        self.tv_arrow.text += builtins.GDString('->\n')
+        if len(self.tv_tobe_show) != 0:
+            # re add the timer
+            self.tv_timer = self.get_tree().create_timer(DAY_DELAY[self.current_day])
+            self.tv_timer.connect("timeout", self, "_tv_advance")
+
 
     def activate_cheat_mode(self):
         """ Activate the cheat mode """

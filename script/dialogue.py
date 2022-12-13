@@ -49,29 +49,33 @@ order_timeout = [
 ]
 
 translator_greeting = [
-    "Conversation Detected\nInitiate traslation module",
+    "[color=teal]Conversation Detected[/color]\nInitiate traslation module",
+]
+
+translator_ordering = [
+    "[color=teal]Ordering in progress[/color]\nTranslating order...",
 ]
 
 translator_ok = [
-    "Transaction Sucessful\nWell done!",
+    "[color=green]Transaction Sucessful[/color]\nWell done!",
 ]
 
 translator_not_complete = [
-    "Transaction Failed\nPlease complete the order",
+    "[color=red]Transaction Failed[/color]\nPlease complete the order",
 ]
 
 translator_too_many_items = [
-    "Transaction Failed\nToo many items",
+    "[color=red]Transaction Failed[/color]\nToo many items",
 ]
 
 translator_repeat_too_much = [
-    "WARNING\nCease asking the customer to repeat their order",
+    "[color=yellow]!!WARNING!![/color]\nCease asking the customer to repeat their order",
 ]
 
 translator_repeat_too_much_final = [
-    "Transaction Failed\nCustomer got annoyed",
+    "[color=red]Transaction Failed[/color]\nCustomer got annoyed",
 ]
 
 translator_order_timeout = [
-    "Transaction Failed\nCustomer lost patience",
+    "[color=red]Transaction Failed[/color]\nCustomer lost patience",
 ]
