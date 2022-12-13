@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=8 format=2]
+[gd_resource type="AudioBusLayout" load_steps=9 format=2]
 
 [sub_resource type="AudioEffectEQ10" id=2]
 resource_name = "EQ10"
@@ -38,6 +38,11 @@ resource_name = "LowPassFilter"
 [sub_resource type="AudioEffectPitchShift" id=10]
 resource_name = "PitchShift"
 pitch_scale = 4.0
+
+[sub_resource type="AudioEffectLimiter" id=11]
+resource_name = "Limiter"
+ceiling_db = -20.0
+threshold_db = -30.0
 
 [resource]
 bus/1/name = "Music"
@@ -84,3 +89,11 @@ bus/5/volume_db = 0.0
 bus/5/send = "Master"
 bus/5/effect/0/effect = SubResource( 10 )
 bus/5/effect/0/enabled = true
+bus/6/name = "Console"
+bus/6/solo = false
+bus/6/mute = false
+bus/6/bypass_fx = false
+bus/6/volume_db = -4.65416
+bus/6/send = "Music"
+bus/6/effect/0/effect = SubResource( 11 )
+bus/6/effect/0/enabled = true

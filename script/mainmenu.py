@@ -34,6 +34,9 @@ class MainMenu(Control):
 
         self.layout()
 
+        if self.has_node("console") :
+            self.get_node("console").connect("pressed", self, "go_to_console")
+
         # Create a default menu
         self.go_to(self.item_list)
 
@@ -231,3 +234,7 @@ class MainMenu(Control):
     def start(self, _):
         """ LET'S GOOOOOOOOOO """
         GDPORT(self).call("go_to_intro")
+
+    def go_to_console(self):
+        """ Go to the console """
+        GDPORT(self).call("go_to_console")
