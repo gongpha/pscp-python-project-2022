@@ -345,6 +345,10 @@ class Game(Control):
                 available[kkk][2],
             ]
 
+        order_item_selected = self.dialogue_pick(dialogue.order_item)
+        if self.current_day == 1:
+            order_item_selected = "[color=yellow]%s[/color]" % order_item_selected
+
         # Prepare the texts
         order_dialogue = [self.dialogue_pick(dialogue.order_item).format(**{
             'translated' : vvv[0],
